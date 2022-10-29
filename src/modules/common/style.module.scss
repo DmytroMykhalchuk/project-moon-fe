@@ -1,0 +1,8 @@
+@import './../global.module.scss';
+.inputError{
+   border: 2px solid wheat;
+}
+.inputErrorMessage{
+   color: $color-error;
+   padding: 1px 5px;
+}
