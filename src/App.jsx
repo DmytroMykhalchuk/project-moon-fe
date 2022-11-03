@@ -4,15 +4,21 @@ import { getIsAuthorize, getIsFetching } from "./redux/authSelector";
 import { Route, Routes } from "react-router-dom";
 import AuthRouter from "./modules/auth/AuthRouter";
 import AppRouter from "./modules/main/AppRouter";
+import Preloader from "./modules/common/Preloader";
 
 const App = ({ isFetching, isAuthorize }) => {
   if (!isAuthorize) { //!!!jkhfghdgfhfdghfgthfghngcf jchgfj cgf jcfghj hcfhg jcfghj cfhgj hf
-    return <Routes>
-      <Route path="*" element={<AuthRouter />} />
-    </Routes>
+    return (
+      <>
+      <Preloader isFetching={isFetching}  />
+        <Routes>
+          <Route path="*" element={<AuthRouter />} />
+        </Routes>
+      </>
+    )
   } else {
     return <Routes>
-      <Route path="/*" element={<AppRouter/>} />
+      <Route path="/*" element={<AppRouter />} />
     </Routes>
   }
 };

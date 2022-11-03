@@ -1,12 +1,10 @@
 import axios from "axios";
 
-// const axios = require("axios").default;
-
-const url = "http://127.0.0.1:8000/api/";
+// const url=`https://projectmoon.000webhostapp.com/api/`;
+const url = `http://127.0.0.1:8000/api/`;
 const instance = axios.create({
   baseURL: url,
 });
-//do something...
 instance.interceptors.request.use(
   (config) => {
     if (localStorage.access_token) {
@@ -50,7 +48,6 @@ instance.interceptors.response.use(
 export const api = {
   register: function (formData) {
     return instance.post("users", { ...formData }).then((response) => {
-      console.log(response);
       localStorage.access_token = response.data.access_token;
     });
   },
@@ -65,8 +62,32 @@ export const api = {
     });
   },
   me: function () {
-    return instance.get("users/me").then((responce) => {
+    return instance.get("auth/users/me").then((responce) => {
       return responce.data;
     });
+  },
+  createTask: function (task) {
+    return instance
+      .post("auth/dreams", { dreams: JSON.stringify(task) })
+      .then((responce) => {
+        return responce.data[0];
+      });
+  },
+  updateTask: function (task) {
+    return instance
+      .post("auth/dreams/update", { dreams: JSON.stringify(task) })
+      .then((responce) => {});
+  },
+  deleteTask: function (task) {
+    return instance
+      .post("auth/dreams/delete", { dreams: JSON.stringify(task) })
+      .then((responce) => {});
+  },
+  createDailyRecord: function (record) {
+    return instance
+      .post("auth/daily", { daily: JSON.stringify(record) })
+      .then((responce) => {
+        return responce.data;
+      });
   },
 };
