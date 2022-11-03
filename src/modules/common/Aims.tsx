@@ -6,7 +6,7 @@ import AimsListItem from './AimsListItem'
 import { getDay, getMain, getMonth, getWeek } from "../../redux/appStateSelector";
 import { connect, ConnectedProps } from 'react-redux';
 import { AppStateType } from '../../redux/store';
-import { completeTask, editTask, rePut } from '../../redux/appReducer';
+import { finishTaskThunk, editTask, rePutTaskThunk, TaskType, editTaskThunk } from '../../redux/appReducer';
 import DialogWindow from './DialogWindow';
 
 type AimsOwnType = {
@@ -14,7 +14,7 @@ type AimsOwnType = {
 }
 
 
-const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName = '' }: HeaderProps & AimsOwnType) => {
+const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName = '' }: HeaderProps & AimsOwnType) => {
    const swipedLeft = (el: any) => {
       // el = el.target;
       const maxDepth = 5;
@@ -69,6 +69,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
    const [textDW, setTextDW] = useState('')
    const [categoryDW, setCategoryDW] = useState('')
    const [idWindow, setIdWindow] = useState('')
+   const [task, setTask] = useState({} as any);
+   const [oldCategory, setOldCategory] = useState('')
    const handlers = useSwipeable({
       onSwiping: (data) => {
          if (data.dir === "Left") {
@@ -80,7 +82,7 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
       }
    });
    const completeHandler = (cat: string, id: string | number) => {
-      switchList(completeTask, cat, id);
+      switchList(finishTask, cat, id);
 
    }
    const toogleWindow = (category: string, text: string) => {
@@ -90,10 +92,10 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
       setIsOpenDialog(true);
    }
    const rePutHandler = (cat: string, id: string | number) => {
-      switchList(rePut, cat, id);
+      switchList(rePutTask, cat, id);
    }
    const editItem = (cat: string, text: string) => {
-      editAim(cat, idWindow, text);
+      editAim(oldCategory,cat, idWindow, text, task);
    }
 
 
@@ -134,6 +136,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                </List>
             </Box>)
@@ -174,6 +178,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                </List>
             </Box>
@@ -215,6 +221,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                </List>
             </Box>)
@@ -256,6 +264,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                </List>
             </Box>)
@@ -296,6 +306,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                   <AimsListItem
                      currentItem={currentItem}
@@ -309,6 +321,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                   <AimsListItem
                      currentItem={currentItem}
@@ -322,6 +336,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                   <AimsListItem
                      currentItem={currentItem}
@@ -335,6 +351,8 @@ const Aims = ({ main, month, week, day, completeTask, rePut, editAim, listName =
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}
                      setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
                   />
                </List>
             </Box>
@@ -353,14 +371,14 @@ const mapStateToProps = (state: AppStateType) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
    return {
-      completeTask: (category: string, id: string | number, object: Object) => {
-         dispatch(completeTask(category, id, object));
+      finishTask: (category: string, id: string, task: TaskType) => {
+         dispatch(finishTaskThunk(category, id, task));
       },
-      rePut: (category: string, id: string | number, object: Object) => {
-         dispatch(rePut(category, id, object))
+      rePutTask: (category: string, id: string, task: TaskType) => {
+         dispatch(rePutTaskThunk(category, id, task))
       },
-      editAim: (category: string, id: string, text: string) => {
-         dispatch(editTask(category, id, text))
+      editAim: (oldCategory:string,category: string, id: string, text: string, task: TaskType) => {
+         dispatch(editTaskThunk(oldCategory,category,id, text, task))
       }
    }
 }

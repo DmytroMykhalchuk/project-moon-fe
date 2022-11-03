@@ -14,6 +14,8 @@ const EDIT_TASK = 'EDIT_TASK';
 const RESTORE_TASK = 'RESTORE_TASK';
 const SET_CURRENT_DAY = 'SET_CURRENT_DAY'
 const SET_DAILY = 'SET_DAILY'
+const UPDATE_TASK = 'UPDATE_TASK'
+
 
 const initialState: any = {
 
@@ -36,42 +38,21 @@ type StateType = any;
 const appReducer = (state = initialState, action: any): any => {
    switch (action.type) {
       case INIT: {
-         // let currentDay: number | string;
-         // let recordsSize=Object.keys({...state.daily, ...action.state.daily}).length;
-
-         // if(recordsSize===0){
-         //    currentDay='0'
-         // }else{
-         //    let date = new Date();
-         //    let lastDateRecord = Object.keys(state).pop();
-         //    if (lastDateRecord) {
-         //       let [lastDayRecord, lastMonthRecord, lastYearRecord] = lastDateRecord.split('.')
-         //       // console.log(lastDayRecord,lastMonthRecord,lastYearRecord)
-         //       console.log(lastDayRecord)
-         //    }
-
-         // }
          return {
             ...state,
             ...action.state,
-            isInitialize: true
+            isInitialize: true,
+            daily: JSON.parse(action.state.daily)
          }
       }
       case SET_CURRENT_DAY: {
          let currentDay = 0;
-
-         let dailySize = Object.keys(state.daily).length;
-         if (dailySize === 0) {
-            currentDay = 0;
-         } else {
-            let firstDateRecord = Object.keys(state.daily).shift();
-            if (!firstDateRecord) return;
-            let currentDate = new Date();
-            let [lastDayRecord, lastMonthRecord, lastYearRecord] = firstDateRecord.split('.')
-            //@ts-ignore
-            const diffDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - new Date(+lastYearRecord, +lastMonthRecord - 1, +lastDayRecord);
-            currentDay = ((diffDate / (3600 * 24) / 1000))
-         }
+         let createdDate = new Date(state.created_at)
+         let currentDate = new Date();
+         currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+         createdDate = new Date(new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate()));
+         let diffDate = +currentDate - +createdDate;
+         currentDay = Math.round((diffDate / (3600 * 24) / 1000))
          return {
             ...state,
             currentDay
@@ -81,6 +62,12 @@ const appReducer = (state = initialState, action: any): any => {
          return {
             ...state,
             isFetching: !state.isFetching
+         }
+      }
+      case UPDATE_TASK: {
+         return {
+            ...state,
+            [action.category]: { ...state[action.category], [action.id]: { ...action.task } }
          }
       }
       case COMPLETE_TASK: {
@@ -104,6 +91,7 @@ const appReducer = (state = initialState, action: any): any => {
          }
       }
       case CREATE_TASK: {
+
          let changedTaskList = { [action.category]: { ...state[action.category], [new Date().getTime()]: { aim: action.aim, isFinished: false, isInTrash: false } } };
          return {
 
@@ -129,24 +117,24 @@ const appReducer = (state = initialState, action: any): any => {
          return {
             ...state,
             ...changedTaskList,
-            [action.category]: { ...state[action.category], [action.id]: { aim: action.aim, isFinished: false, isIntTrash: false } }
+            [action.category]: { ...state[action.category], [action.id]: { aim: action.text, isFinished: false, isIntTrash: false } }
          }
       }
       case DELETE_TASK: {
          // delete state.{action.category]
          // debugger
-         if (action.object.isFinished && !action.object.isInTrash) {
-            return {
-               ...state,
-               [action.category]: {
-                  ...state[action.category],
-                  [action.id]: {
-                     ...action.object,
-                     isInTrash: true
-                  }
-               }
-            }
-         }
+         // if (action.object.isFinished && !action.object.isInTrash) {
+         //    return {
+         //       ...state,
+         //       [action.category]: {
+         //          ...state[action.category],
+         //          [action.id]: {
+         //             ...action.object,
+         //             isInTrash: true
+         //          }
+         //       }
+         //    }
+         // }
          delete state[action.category][action.id];
          return {
             ...state
@@ -168,18 +156,12 @@ const appReducer = (state = initialState, action: any): any => {
          }
       }
       case SET_DAILY: {
-         const currentTime = new Date();
-         let idNewDaily = ''
-         idNewDaily += currentTime.getDate() < 10 ? `0${currentTime.getDate()}` : `${currentTime.getDate()}.`;
-         idNewDaily += currentTime.getMonth() + 1 < 10 ? `0${currentTime.getMonth() + 1}` : `${currentTime.getMonth() + 1}.`;
-         idNewDaily += currentTime.getFullYear();
+         console.log(action,action.daily)
          return {
             ...state,
             daily: {
-               ...state.daily, [idNewDaily]: {
-                  aim: action.aim,
-                  day: state.currentDay
-               }
+               ...state.daily,
+               ...action.record
             }
          }
       }
@@ -187,6 +169,13 @@ const appReducer = (state = initialState, action: any): any => {
    }
 }
 //actction creators
+export type TaskType = {
+   aim: string
+   isFinished: boolean
+   isInTrash: boolean
+}
+
+
 type Init = { type: typeof INIT, state: object }
 type Fetching = { type: typeof FETCHING }
 type CompleteTask = { type: typeof COMPLETE_TASK, id: string | number, object: Object, category: string }
@@ -196,10 +185,12 @@ type RePutType = { type: typeof REPUT_TASK, id: string | number, category: strin
 type CreateAimType = { type: typeof CREATE_TASK, text: string, category: string }
 type EditTaskType = { type: typeof EDIT_TASK, category: string, id: string, text: string }
 type SetCurrentDay = { type: typeof SET_CURRENT_DAY }
-type SetDaily = { type: typeof SET_DAILY, text: string }
+type SetDaily = { type: typeof SET_DAILY, record: Object }
+type UpdateTaskType = { type: typeof UPDATE_TASK, category: string, id: string, task: TaskType }
 
+export type ActionsTypes = Init | SetCurrentDay | Fetching | CompleteTask | DeleteTask | UpdateTaskType |
+   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily;
 
-export type ActionsTypes = Init | SetCurrentDay | Fetching | CompleteTask | DeleteTask | RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily;
 export type DispatchType = Dispatch<ActionsTypes>;
 export type TaskItemModify = { category: string, id: string | number, object: Object }
 
@@ -219,7 +210,7 @@ const toggleFetching = (): ActionsTypes => {
       type: FETCHING
    }
 }
-export const completeTask = (category: string, id: string | number, object: Object): ActionsTypes => {
+const finishTask = (category: string, id: string | number, object: Object): ActionsTypes => {
    return {
       type: COMPLETE_TASK,
       category,
@@ -227,7 +218,15 @@ export const completeTask = (category: string, id: string | number, object: Obje
       id
    }
 }
-export const deleteTask = (category: string, id: string | number, object: Object): ActionsTypes => {
+const updateTask = (category: string, id: string, task: TaskType): ActionsTypes => {
+   return {
+      type: UPDATE_TASK,
+      category,
+      id,
+      task
+   }
+}
+const deleteTask = (category: string, id: string | number, object: Object): ActionsTypes => {
 
    return {
       type: DELETE_TASK,
@@ -236,7 +235,7 @@ export const deleteTask = (category: string, id: string | number, object: Object
       id
    }
 }
-export const restoreTask = (category: string, id: string | number, object: Object): ActionsTypes => {
+export const restoreTask = (category: string, id: string, object: TaskType): ActionsTypes => {
    return {
       type: RESTORE_TASK,
       category,
@@ -244,7 +243,7 @@ export const restoreTask = (category: string, id: string | number, object: Objec
       object
    }
 }
-export const rePut = (category: string, id: string | number, object: Object): ActionsTypes => {
+export const rePutTask = (category: string, id: string | number, object: Object): ActionsTypes => {
    return {
       type: REPUT_TASK,
       category,
@@ -252,7 +251,7 @@ export const rePut = (category: string, id: string | number, object: Object): Ac
       id
    }
 }
-export const createTask = (text: string, category: string): ActionsTypes => {
+export const createTask = (category: string, text: string): ActionsTypes => {
    return {
       type: CREATE_TASK,
       text,
@@ -267,10 +266,10 @@ export const editTask = (category: string, id: string, text: string): ActionsTyp
       text,
    }
 }
-export const setDaily = (text: string): ActionsTypes => {
+export const setDaily = (record: Object): ActionsTypes => {
    return {
       type: SET_DAILY,
-      text
+      record
    }
 }
 //thunks
@@ -283,11 +282,139 @@ export const getInfoUser = (): ThunksTypes => {
       //    setTimeout(() => { resolve(dispatch(init(testState))) }, 1000)
       // );
       api.me().then((response) => {
-         console.log(response);
          dispatch(init(response))
          dispatch(setCurrentDay())
          dispatch(toggleFetching())
       })
    }
 }
+export const createTaskThunk = (category: string, text: string,): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(toggleFetching());
+
+      const taskSend = {
+         [category]: text
+      }
+      const newTask = {
+         aim: text,
+         isFinished: false,
+         isInTrash: false
+      }
+      console.log(taskSend)
+      api.createTask(taskSend).then((responce) => {
+         const aim = JSON.parse(responce)
+         const id = Object.keys(aim)[0];
+         dispatch(updateTask(category, id, aim[id]));
+         dispatch(toggleFetching());
+      });
+   }
+}
+export const finishTaskThunk = (category: string, id: string, task: TaskType): ThunksTypes => {
+
+   return async (dispatch) => {
+      // dispatch(toggleFetching());
+      const newTask = { ...task, isFinished: true };
+      const taskSend = {
+         [category]: {
+            [id]: newTask
+         }
+      }
+
+      dispatch(updateTask(category, id, newTask));
+      api.updateTask(taskSend).then(() => {
+      }).then(() => {
+         // dispatch(toggleFetching());
+      })
+   }
+}
+export const deleteTaskThunk = (category: string, id: string, task: TaskType): ThunksTypes => {
+   return async (dispatch) => {
+      // dispatch(toggleFetching());
+
+      let taskSend: Object;
+      taskSend = {
+         [category]: {
+            [id]: { ...task, isInTrash: true }
+         }
+      }
+      if (task.isFinished && !task.isInTrash) {
+         api.updateTask(taskSend).then(() => {
+            dispatch(updateTask(category, id, { ...task, isInTrash: true }))
+         }).then(() => { dispatch(toggleFetching()) })
+      } else {
+         api.deleteTask(taskSend)
+         // .then(() => { dispatch(toggleFetching()) })
+      }
+   }
+}
+export const rePutTaskThunk = (category: string, id: string, task: TaskType): ThunksTypes => {
+   return async (dispatch) => {
+      // dispatch(toggleFetching());
+      const deleteTaskSend = {
+         [category]: {
+            [id]: { ...task }
+         }
+      }
+      let taskSend = {
+         [category]: task.aim
+      }
+      dispatch(rePutTask(category, id, task))
+      api.deleteTask(deleteTaskSend).then(() => {
+         api.createTask(taskSend).then(() => {
+         })
+      })
+      // .then(() => { dispatch(toggleFetching()) })
+   }
+}
+export const editTaskThunk = (oldCategory: string, category: string, id: string, aim: string, task: TaskType): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(toggleFetching());
+      const deleteTaskSend = {
+         [oldCategory]: {
+            [id]: { aim }
+         }
+      }
+      let taskSend = {
+         [category]: aim
+      }
+      console.log(oldCategory, category, id, aim, task, deleteTaskSend, taskSend)
+      api.deleteTask(deleteTaskSend).then(() => {
+         api.createTask(taskSend).then(() => {
+            dispatch(editTask(category, id, aim))
+         })
+      }).then(() => { dispatch(toggleFetching()) })
+
+   }
+}
+export const toTrashTask = (category: string, id: string, task: TaskType): ThunksTypes => {
+   return async (dispatch) => {
+      task.isInTrash = true;
+      console.log(task)
+      dispatch(updateTask(category, id, task));
+      api.updateTask(task);
+   }
+}
+export const restoreTaskThunk = (category: string, id: string, task: TaskType): ThunksTypes => {
+   return async (dispatch) => {
+      if (task.isInTrash) {
+         task.isInTrash = false;
+      } else {
+         task.isFinished = false;
+      }
+      console.log(task)
+      dispatch(updateTask(category, id, task));
+      api.updateTask({ [category]: { [id]: { ...task } } });
+   }
+}
+export const setNewDailyRecord = (day: string, text: string): ThunksTypes => {
+   return async (dispatch) => {
+
+
+      console.log({ day, text })
+      api.createDailyRecord({ day, text }).then(responce => {
+         dispatch(setDaily(responce[0]));
+      })
+   }
+}
+
 export default appReducer;

@@ -11,6 +11,9 @@ const FrontPageContainer = ({ initApp, isFetching, isInit}: HeaderProps) => {
    useEffect(() => {
       isInit || initApp()
    }, [])
+
+
+
    return (<>
       <Backdrop
          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

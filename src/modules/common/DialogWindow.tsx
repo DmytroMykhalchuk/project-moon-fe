@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { createTask } from '../../redux/appReducer';
+import { createTask, createTaskThunk } from '../../redux/appReducer';
 type DialogWindowType = {
    isOpenDialog: boolean
    setIsOpenDialog: (bool: boolean) => void
@@ -27,13 +27,13 @@ const DialogWindow = ({ isOpenDialog, setIsOpenDialog, createAim, categoryDialog
       setCategory(event.target.value);
    };
    const sendForm = () => {
-      setCategory('');
-      setAim('')
-      if(props.editItemWindow){
-         props.editItemWindow(category,aim)
-      }else{
-         createAim(aim, category)
+      if (props.editItemWindow) {
+         props.editItemWindow(category, aim)
+      } else {
+         createAim(category, aim)
       }
+      setAim('')
+      setCategory('');
    }
 
    return (
@@ -88,8 +88,8 @@ const DialogWindow = ({ isOpenDialog, setIsOpenDialog, createAim, categoryDialog
 }
 const mapDispatchToProps = (dispatch: any) => {
    return {
-      createAim: (text: string, category: string) => {
-         dispatch(createTask(text, category))
+      createAim: (category: string, text: string) => {
+         dispatch(createTaskThunk(category, text))
       }
    }
 }

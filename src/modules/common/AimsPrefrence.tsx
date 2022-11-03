@@ -7,7 +7,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../redux/store";
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
-import { deleteTask, restoreTask } from "../../redux/appReducer";
+import { deleteTaskThunk, restoreTaskThunk, TaskType, } from "../../redux/appReducer";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,11 +17,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from "react";
 
 type ActionButtonsType = {
-   restoreTask: (arg1: string, arg2: string, arg3: Object) => void
-   deleteTask: (arg1: string, arg2: string, arg3: Object) => void
+   restoreTask: (arg1: string, arg2: string, arg3: TaskType) => void
+   deleteTask: (arg1: string, arg2: string, arg3: TaskType) => void
    category: string
    id: string
-   object: string
+   object: TaskType
    setIsOpenConfirmation?: (arg1: boolean) => void
    isOpenConfirmation?: boolean
 
@@ -69,8 +69,8 @@ type ConfirmWindowType = {
    setIsOpenConfirmation: (arg: boolean) => void
    category: string
    id: string
-   object: Object
-   deleteTask: (arg1: string, arg2: string, arg3: Object) => void
+   object: TaskType
+   deleteTask: (arg1: string, arg2: string, arg3: TaskType) => void
 }
 const ConfirmWindow = ({
    isOpenConfirmation,
@@ -141,7 +141,7 @@ const AimsPreference = ({
                >
                   <ListItemText primary={
                      <Typography variant="body2">
-                        {element.text}
+                        {element.aim}
                      </Typography>
                   } />
 
@@ -194,7 +194,7 @@ const AimsPreference = ({
                >
                   <ListItemText primary={
                      <Typography variant="body2">
-                        {element.text}
+                        {element.aim}
                      </Typography>
                   } />
 
@@ -250,12 +250,16 @@ const mapStateToProps = (state: AppStateType) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
    return {
-      restoreTask: (category: string, id: string | number, object: Object) => {
-         dispatch(restoreTask(category, id, object))
+      restoreTask: (category: string, id: string, object: TaskType) => {
+         dispatch(restoreTaskThunk(category, id, object))
       },
-      deleteTask: (category: string, id: string | number, object: Object) => {
-         dispatch(deleteTask(category, id, object))
+      deleteTask: (category: string, id: string, object: TaskType) => {
+         dispatch(deleteTaskThunk(category, id, object))
+         // console.log(category, id, object);
       }
+      // toTrash:(category: string, id: string, object: TaskType)=>{
+      //    dispatch(toTrashTask(category,id,task))
+      // }
    }
 }
 

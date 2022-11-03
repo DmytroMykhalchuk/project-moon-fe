@@ -15,19 +15,35 @@ type DailyPageType = {
    isAlredyAdd: boolean
    setIsAlredyAdd: (arg: boolean) => void
    records: any,
-   currentDay: number | string
-   setDaily: (arg1: string) => void
+   currentDay: string
+   setDaily: (arg1: string, arg2: string) => void
 }
 const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyAdd, currentDay, setDaily }: DailyPageType) => {
+   
+   let isEditMode=true;
 
+   // console.log(t)
    const [newDaily, setNewDaily] = useState('')
-   const [isExtended, setIsExtended] = useState(true)
+   const [isExtended, setIsExtended] = useState(()=>{
+      if (Object.keys(records).length > 0) {
+         // @ts-ignore
+         let lastRecordDate = new Date(+(Object.keys(records).pop()) * 1000);
+         let lastRecordTime=new Date(lastRecordDate.getFullYear(),lastRecordDate.getMonth(),lastRecordDate.getDate()).getTime();
+   
+         let currentDate = new Date();
+         let currentTime=new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate()).getTime();
+         return !(currentTime===lastRecordTime)
+      }else{
+         return false;
+      }
+   })
    const saveDaily = () => {
       setIsAlredyAdd(true)
       setIsExtended(false)
       setIsOpenFab(false)
-      setDaily(newDaily)
+      setDaily(`${currentDay}`, newDaily)
    }
+   
    const showAllRecords = () => {
       let elementRecords = [];
       let i = 0;
@@ -35,6 +51,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
       for (const recordDate in records) {
          if (Object.prototype.hasOwnProperty.call(records, recordDate)) {
             const element = records[recordDate];
+            const createDate = new Date(+recordDate * 1000);
 
             elementRecords.push(
                <Accordion key={recordDate}>
@@ -44,7 +61,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
 
                      id={recordDate}
                   >
-                     <Typography>{`${recordDate} День ${element.day}`}</Typography>
+                     <Typography>{`${createDate.getDay()}.${createDate.getMonth() + 1}.${createDate.getFullYear()} День ${element.day}`}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                      <Typography>
@@ -75,9 +92,9 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
                <CheckIcon />
             </Fab>
          </Zoom>
-         <Collapse in={isAlredyAdd}>
-            <Zoom in={isAlredyAdd}>
-               <Accordion>
+         <Collapse in={!isExtended||isAlredyAdd}>
+            <Zoom in={!isExtended||isAlredyAdd}>
+               <Accordion sx={{mb:2}}>
                   <AccordionSummary
                      expandIcon={<ExpandMoreIcon />}
                      aria-controls="panel2a-content"
@@ -111,7 +128,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
                      // label="Multiline"
 
                      multiline
-                     rows={4}
+                     rows={3}
                      placeholder={`День ${currentDay}`}
                      fullWidth
                      onFocus={() => { setIsOpenFab(true) }}

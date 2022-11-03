@@ -32,11 +32,14 @@ type AimsListItem = {
    rePutHandler: (arg1: string, arg2: string | number) => void
    toggleWindow: (arg1: string, arg2: string) => void
    setIdWindow: (arg1: string) => void
+   setTask: (arg1: Object) => void
+   setOldCategory:(arg1:string)=>void
+   
 }
 
 const AimsListItem = ({ currentItem, setCurrentItem, side,
-   setSide, listAims, category,
-   header, completeHandler, setIdWindow,
+   setSide, listAims, category,setOldCategory,
+   header, completeHandler, setIdWindow, setTask,
    rePutHandler, toggleWindow }: AimsListItem) => {
    const createTask = () => {
       let i = 0;
@@ -103,7 +106,7 @@ const AimsListItem = ({ currentItem, setCurrentItem, side,
                                  <Box sx={{
                                     width: '60px', borderLeft: '2px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '13px'
                                  }}
-                                    onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(key) }}
+                                    onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(key); setTask(element);setOldCategory(category) }}
                                  >
                                     <Slide direction="left"
                                        in={currentItem === `${category}-${key}` && side === 'left'}

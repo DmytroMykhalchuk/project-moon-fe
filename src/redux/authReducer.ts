@@ -11,7 +11,7 @@ const TOGGLE_FATCHING = "TOGGLE_FATCHING";
 
 const initialState = {
    isAuthorize: localStorage.access_token ? true : false as boolean,
-   isFetching: true as boolean,
+   isFetching: false as boolean,
 }
 type InitialState = typeof initialState;
 
@@ -39,28 +39,30 @@ const authReducer = (state = initialState, action: any): InitialState => {
 export default authReducer;
 
 //action creators
-export type ActionsTypes = Authorize | ToggleFetching | UnAuth;
-export type DispatchType=Dispatch<ActionsTypes>;
+
 type Authorize = {
    type: typeof AUTHORIZE
-}
-const authorize = (): Authorize => {
-   return {
-      type: AUTHORIZE
-   }
 }
 type ToggleFetching = {
    type: typeof TOGGLE_FATCHING
 }
-export const toggleFetching = (): ToggleFetching => {
+type UnAuth = {
+   type: typeof UNAUTHORIZE
+}
+export type ActionsTypes = Authorize | ToggleFetching | UnAuth;
+export type DispatchType = Dispatch<ActionsTypes>;
+const authorize = (): ActionsTypes => {
+   return {
+      type: AUTHORIZE
+   }
+}
+export const toggleFetching = (): ActionsTypes => {
    return {
       type: TOGGLE_FATCHING
    }
 }
-type UnAuth = {
-   type: typeof UNAUTHORIZE
-}
-const unAuth = (): UnAuth => {
+
+const unAuth = (): ActionsTypes => {
    return {
       type: UNAUTHORIZE
    }
@@ -80,10 +82,11 @@ export const register = (formData: FormDataReg): ThunkTypes => {
 
 export const login = (formData: FormDataLog): ThunkTypes => {
    return async (dispatch) => {
-      api.login(formData).then(res => {
-         console.log(res);
-      }).then(() => {
+      dispatch(toggleFetching());
+      api.login(formData).then(() => {
          dispatch(authorize());
+      }).then(() => {
+         dispatch(toggleFetching());
       })
    }
 }

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../../redux/store";
 import { getCurrentDay, getDaily } from "../../../redux/appStateSelector";
-import { setDaily } from "../../../redux/appReducer";
+import { setNewDailyRecord } from "../../../redux/appReducer";
 
 const DailyPageContainer = ({ dailyRecords, currentDay, setDaily }: DailyPageMapsType) => {
    const [isOpenFab, setIsOpenFab] = useState(false);
@@ -32,8 +32,8 @@ const mapStateToProps = (state: AppStateType) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
    return {
-      setDaily: (text: string) => {
-         dispatch(setDaily(text))
+      setDaily: (day: string, text: string) => {
+         dispatch(setNewDailyRecord(day, text))
       }
    }
 }
