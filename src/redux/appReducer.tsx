@@ -329,8 +329,6 @@ export const finishTaskThunk = (category: string, id: string, task: TaskType): T
 }
 export const deleteTaskThunk = (category: string, id: string, task: TaskType): ThunksTypes => {
    return async (dispatch) => {
-      // dispatch(toggleFetching());
-
       let taskSend: Object;
       taskSend = {
          [category]: {

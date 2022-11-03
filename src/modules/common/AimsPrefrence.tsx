@@ -41,8 +41,19 @@ const ActionButtonsFinished = ({ restoreTask, deleteTask, category, id, object }
    )
 }
 const ActionButtonsTrash = ({ restoreTask, deleteTask, category, id, object, setIsOpenConfirmation = () => { }, isOpenConfirmation = false }: ActionButtonsType) => {
+   const [idd, setId] = useState('')
    return (
       <>
+         <Box sx={{ display: 'flex', }}>
+            <IconButton aria-label="restore"
+               onClick={() => { restoreTask(category, id, object) }}>
+               <RestoreIcon />
+            </IconButton>
+            <IconButton aria-label="delete"
+               onClick={() => { setId(id); setIsOpenConfirmation(false); deleteTask(category, id, object) }}>
+               <DeleteForeverIcon />
+            </IconButton>
+         </Box>
          <ConfirmWindow
             setIsOpenConfirmation={setIsOpenConfirmation}
             isOpenConfirmation={isOpenConfirmation}
@@ -51,16 +62,6 @@ const ActionButtonsTrash = ({ restoreTask, deleteTask, category, id, object, set
             object={object}
             deleteTask={deleteTask}
          />
-         <Box sx={{ display: 'flex', }}>
-            <IconButton aria-label="restore"
-               onClick={() => { restoreTask(category, id, object) }}>
-               <RestoreIcon />
-            </IconButton>
-            <IconButton aria-label="delete"
-               onClick={() => { setIsOpenConfirmation(true) }}>
-               <DeleteForeverIcon />
-            </IconButton>
-         </Box>
       </>
    )
 }

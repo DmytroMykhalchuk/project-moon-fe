@@ -10,7 +10,7 @@ const UNAUTHORIZE = 'UNAUTHORIZE';
 const TOGGLE_FATCHING = "TOGGLE_FATCHING";
 
 const initialState = {
-   isAuthorize: localStorage.access_token ? true : false as boolean,
+   isAuthorize: localStorage.access_token ? true : true as boolean, //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
    isFetching: false as boolean,
 }
 type InitialState = typeof initialState;
