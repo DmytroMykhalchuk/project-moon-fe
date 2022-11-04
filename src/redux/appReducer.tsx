@@ -122,21 +122,6 @@ const appReducer = (state = initialState, action: any): any => {
          }
       }
       case DELETE_TASK: {
-         // delete state.{action.category]
-         // debugger
-         // if (action.object.isFinished && !action.object.isInTrash) {
-         //    return {
-         //       ...state,
-         //       [action.category]: {
-         //          ...state[action.category],
-         //          [action.id]: {
-         //             ...action.object,
-         //             isInTrash: true
-         //          }
-         //       }
-         //    }
-         // }
-         delete state[action.category][action.id];
          return {
             ...state
          }
@@ -338,10 +323,10 @@ export const deleteTaskThunk = (category: string, id: string, task: TaskType): T
       if (task.isFinished && !task.isInTrash) {
          api.updateTask(taskSend).then(() => {
             dispatch(updateTask(category, id, { ...task, isInTrash: true }))
-         }).then(() => { dispatch(toggleFetching()) })
+         })
       } else {
          api.deleteTask(taskSend)
-         // .then(() => { dispatch(toggleFetching()) })
+         dispatch(deleteTask(category, id, task))
       }
    }
 }

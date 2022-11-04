@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { createTask, createTaskThunk } from '../../redux/appReducer';
+import { createTaskThunk } from '../../redux/appReducer';
 type DialogWindowType = {
    isOpenDialog: boolean
    setIsOpenDialog: (bool: boolean) => void
@@ -20,7 +20,14 @@ type DialogWindowType = {
    editItemWindow?: (arg1: string, arg2: string) => void
 
 }
-const DialogWindow = ({ isOpenDialog, setIsOpenDialog, createAim, categoryDialog = "", aimDialog = "", ...props }: DialogWindowType & HeaderProps) => {
+const DialogWindow = ({ 
+isOpenDialog, 
+setIsOpenDialog, 
+createAim, 
+categoryDialog = "", 
+aimDialog = "", 
+...props 
+}: DialogWindowType & HeaderProps) => {
    const [category, setCategory] = useState(categoryDialog);
    const [aim, setAim] = useState(aimDialog)
    const handleChangeCategory = (event: any) => {
@@ -42,10 +49,9 @@ const DialogWindow = ({ isOpenDialog, setIsOpenDialog, createAim, categoryDialog
          fullWidth
          maxWidth="md"
       >
-         <DialogTitle>Нова ціль</DialogTitle>
+         <DialogTitle>Нова мета</DialogTitle>
          <DialogContent>
             <DialogContentText>
-
             </DialogContentText>
             <TextField
                autoFocus

@@ -1,111 +1,12 @@
-import { ListItem, IconButton, Box, Typography } from "@mui/material";
-import RestoreIcon from '@mui/icons-material/Restore';
-import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import ListItemButton from '@mui/material/ListItemButton';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../redux/store";
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import { deleteTaskThunk, restoreTaskThunk, TaskType, } from "../../redux/appReducer";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from "react";
+import { ListItem, IconButton, Box, Typography } from "@mui/material";
+import {ActionButtonsTrash,ActionButtonsFinished} from './ActionButtons'
 
-type ActionButtonsType = {
-   restoreTask: (arg1: string, arg2: string, arg3: TaskType) => void
-   deleteTask: (arg1: string, arg2: string, arg3: TaskType) => void
-   category: string
-   id: string
-   object: TaskType
-   setIsOpenConfirmation?: (arg1: boolean) => void
-   isOpenConfirmation?: boolean
-
-}
-const ActionButtonsFinished = ({ restoreTask, deleteTask, category, id, object }: ActionButtonsType) => {
-   return (
-      <Box sx={{ display: 'flex', }}>
-         <IconButton aria-label="restore"
-            onClick={() => { restoreTask(category, id, object) }}>
-            <RestoreIcon />
-         </IconButton>
-         <IconButton aria-label="delete"
-            onClick={() => { deleteTask(category, id, object) }}>
-            <DeleteSweepIcon />
-         </IconButton>
-      </Box>
-   )
-}
-const ActionButtonsTrash = ({ restoreTask, deleteTask, category, id, object, setIsOpenConfirmation = () => { }, isOpenConfirmation = false }: ActionButtonsType) => {
-   const [idd, setId] = useState('')
-   return (
-      <>
-         <Box sx={{ display: 'flex', }}>
-            <IconButton aria-label="restore"
-               onClick={() => { restoreTask(category, id, object) }}>
-               <RestoreIcon />
-            </IconButton>
-            <IconButton aria-label="delete"
-               onClick={() => { setId(id); setIsOpenConfirmation(false); deleteTask(category, id, object) }}>
-               <DeleteForeverIcon />
-            </IconButton>
-         </Box>
-         <ConfirmWindow
-            setIsOpenConfirmation={setIsOpenConfirmation}
-            isOpenConfirmation={isOpenConfirmation}
-            category={category}
-            id={id}
-            object={object}
-            deleteTask={deleteTask}
-         />
-      </>
-   )
-}
-type ConfirmWindowType = {
-   isOpenConfirmation: boolean,
-   setIsOpenConfirmation: (arg: boolean) => void
-   category: string
-   id: string
-   object: TaskType
-   deleteTask: (arg1: string, arg2: string, arg3: TaskType) => void
-}
-const ConfirmWindow = ({
-   isOpenConfirmation,
-   setIsOpenConfirmation,
-   category, id, object,
-   deleteTask
-}: ConfirmWindowType) => {
-   return (
-      <Dialog
-         open={isOpenConfirmation}
-         onClose={() => { setIsOpenConfirmation(false) }}
-         aria-labelledby="alert-dialog-title"
-         aria-describedby="alert-dialog-description"
-      >
-         <DialogTitle id="alert-dialog-title">
-            Видалити запис?
-         </DialogTitle>
-         <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-               Відновити запис буде неможливо, ви дійсно хочете видалити запис назавжди?
-            </DialogContentText>
-         </DialogContent>
-         <DialogActions>
-            <Button onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
-            <Button onClick={() => {
-               deleteTask(category, id, object);
-               setIsOpenConfirmation(false);
-            }} autoFocus>
-               Підтвердити
-            </Button>
-         </DialogActions>
-      </Dialog>
-   )
-}
 type AimPreferenceType = {
    listFinished?: any
    listInTrash?: any

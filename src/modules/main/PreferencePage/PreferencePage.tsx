@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Fab, Typography } from "@mui/material";
+import { Card, CardContent, Fab, Typography } from "@mui/material";
 import { Box } from "@mui/system"
 import Aims from "../../common/Aims";
 import EditIcon from '@mui/icons-material/Edit';
@@ -40,6 +40,16 @@ const PreferencePage = ({
    week, month, main
 }: PrefrencePageType & HeaderProps) => {
 
+   const listConfig: any = {
+      main: {
+         main,
+         header: "Мрія"
+      }, month: { month, header: "Цілі на місяць" },
+      week: { week, header: "Цілі на тиждень" },
+      day: { day, header: "Цілі на день" },
+      trashName: 'Корзина',
+      finishedName: 'Завершені'
+   }
    return (
       <Box>
 
@@ -55,126 +65,36 @@ const PreferencePage = ({
             <EditIcon />
          </Fab>
 
-         <Card variant='outlined' sx={{ mb: 3 }}>
-            <CardContent>
-               <Typography variant="h5" color="text.secondary" component="div">
-                  Цілі на день
-               </Typography>
-               <Aims listName={'day'} />
-
-               <ListItemButton data-list-name="finished-day" onClick={onOpenFinishedList}>
-                  <ListItemIcon>
-                     <DoneAllIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Завершені" />
-                  {openFinished === 'finished-main' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openFinished === 'finished-day'}>
-                  <AimsPreference listName={'day'} listFinished={day} />
-               </Collapse>
-               <ListItemButton data-list-name="trash-day" onClick={onOpenTrashList}>
-                  <ListItemIcon>
-                     <DeleteOutlineIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Корзина" />
-                  {openTrash === 'trash-main' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openTrash === 'trash-day'}>
-                  <AimsPreference listName={'day'} listInTrash={day} />
-               </Collapse>
-            </CardContent>
-         </Card>
-         
-         <Card variant='outlined' sx={{ mb: 3 }}>
-            <CardContent>
-               <Typography variant="h5" color="text.secondary" component="div">
-                  Цілі на week
-               </Typography>
-               <Aims listName={'week'} />
-
-               <ListItemButton data-list-name="finished-week" onClick={onOpenFinishedList}>
-                  <ListItemIcon>
-                     <DoneAllIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Завершені" />
-                  {openFinished === 'finished-week' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openFinished === 'finished-week'}>
-                  <AimsPreference listName={'week'} listFinished={week} />
-               </Collapse>
-               <ListItemButton data-list-name="trash-week" onClick={onOpenTrashList}>
-                  <ListItemIcon>
-                     <DeleteOutlineIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Корзина" />
-                  {openTrash === 'trash-week' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openTrash === 'trash-week'}>
-                  <AimsPreference listName={'week'} listInTrash={week} />
-               </Collapse>
-            </CardContent>
-         </Card>
-
-
-         <Card variant='outlined' sx={{ mb: 3 }}>
-            <CardContent>
-               <Typography variant="h5" color="text.secondary" component="div">
-                  Цілі на month
-               </Typography>
-               <Aims listName={'month'} />
-
-               <ListItemButton data-list-name="finished-month" onClick={onOpenFinishedList}>
-                  <ListItemIcon>
-                     <DoneAllIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Завершені" />
-                  {openFinished === 'finished-month' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openFinished === 'finished-month'}>
-                  <AimsPreference listName={'month'} listFinished={month} />
-               </Collapse>
-               <ListItemButton data-list-name="trash-month" onClick={onOpenTrashList}>
-                  <ListItemIcon>
-                     <DeleteOutlineIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Корзина" />
-                  {openTrash === 'trash-month' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openTrash === 'trash-month'}>
-                  <AimsPreference listName={'month'} listInTrash={month} />
-               </Collapse>
-            </CardContent>
-         </Card>
-
-         <Card variant='outlined' sx={{ mb: 3 }}>
-            <CardContent>
-               <Typography variant="h5" color="text.secondary" component="div">
-                  Цілі на день
-               </Typography>
-               <Aims listName={'main'} />
-
-               <ListItemButton data-list-name="finished-main" onClick={onOpenFinishedList}>
-                  <ListItemIcon>
-                     <DoneAllIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Завершені" />
-                  {openFinished === 'finished-main' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openFinished === 'finished-main'}>
-                  <AimsPreference listName={'main'} listFinished={main} />
-               </Collapse>
-               <ListItemButton data-list-name="trash-main" onClick={onOpenTrashList}>
-                  <ListItemIcon>
-                     <DeleteOutlineIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Корзина" />
-                  {openTrash === 'trash-main' ? <ExpandLess /> : <ExpandMore />}
-               </ListItemButton>
-               <Collapse in={openTrash === 'trash-main'}>
-                  <AimsPreference listName={'main'} listInTrash={main} />
-               </Collapse>
-            </CardContent>
-         </Card>
+         {['day', 'week', 'month', 'main'].map(item => {
+            return <Card variant='outlined' sx={{ mb: 3 }}>
+               <CardContent>
+                  <Typography variant="h5" color="text.secondary" component="div">
+                     {listConfig[item].header}
+                  </Typography>
+                  <Aims listName={item} />
+                  <ListItemButton data-list-name={`finished-${item}`} onClick={onOpenFinishedList}>
+                     <ListItemIcon>
+                        <DoneAllIcon />
+                     </ListItemIcon>
+                     <ListItemText primary={listConfig.finishedName} />
+                     {openFinished === `finished-${item}` ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                  <Collapse in={openFinished === `finished-${item}`}>
+                     <AimsPreference listName={item} listFinished={listConfig[item][item]} />
+                  </Collapse>
+                  <ListItemButton data-list-name={`trash-${item}`} onClick={onOpenTrashList}>
+                     <ListItemIcon>
+                        <DeleteOutlineIcon />
+                     </ListItemIcon>
+                     <ListItemText primary={listConfig.trashName} />
+                     {openTrash === 'trash-main' ? <ExpandLess /> : <ExpandMore />}
+                  </ListItemButton>
+                  <Collapse in={openTrash === `trash-${item}`}>
+                     <AimsPreference listName={item} listInTrash={listConfig[item][item]} />
+                  </Collapse>
+               </CardContent>
+            </Card>
+         })}
       </Box>
    )
 }
@@ -189,7 +109,7 @@ const mapStateToProps = (state: AppStateType) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
    return {
-      
+
    }
 }
 
