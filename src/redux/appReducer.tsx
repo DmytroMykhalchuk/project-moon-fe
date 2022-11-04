@@ -52,6 +52,7 @@ const appReducer = (state = initialState, action: any): any => {
          currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
          createdDate = new Date(new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate()));
          let diffDate = +currentDate - +createdDate;
+         console.log(diffDate)
          currentDay = Math.round((diffDate / (3600 * 24) / 1000))
          return {
             ...state,
@@ -156,7 +157,6 @@ const appReducer = (state = initialState, action: any): any => {
          }
       }
       case SET_DAILY: {
-         console.log(action,action.daily)
          return {
             ...state,
             daily: {
@@ -281,7 +281,7 @@ export const getInfoUser = (): ThunksTypes => {
       // const result1 = new Promise((resolve) =>
       //    setTimeout(() => { resolve(dispatch(init(testState))) }, 1000)
       // );
-      api.me().then((response) => {
+      api.me().then((response: any) => {
          dispatch(init(response))
          dispatch(setCurrentDay())
          dispatch(toggleFetching())
@@ -301,7 +301,7 @@ export const createTaskThunk = (category: string, text: string,): ThunksTypes =>
          isInTrash: false
       }
       console.log(taskSend)
-      api.createTask(taskSend).then((responce) => {
+      api.createTask(taskSend).then((responce: any) => {
          const aim = JSON.parse(responce)
          const id = Object.keys(aim)[0];
          dispatch(updateTask(category, id, aim[id]));
@@ -408,8 +408,7 @@ export const setNewDailyRecord = (day: string, text: string): ThunksTypes => {
    return async (dispatch) => {
 
 
-      console.log({ day, text })
-      api.createDailyRecord({ day, text }).then(responce => {
+      api.createDailyRecord({ day, text }).then((responce: any) => {
          dispatch(setDaily(responce[0]));
       })
    }

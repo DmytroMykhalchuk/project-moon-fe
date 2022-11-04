@@ -1,6 +1,6 @@
 import DailyPage from "./DailyPage";
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../../redux/store";
 import { getCurrentDay, getDaily } from "../../../redux/appStateSelector";
@@ -8,8 +8,23 @@ import { setNewDailyRecord } from "../../../redux/appReducer";
 
 const DailyPageContainer = ({ dailyRecords, currentDay, setDaily }: DailyPageMapsType) => {
    const [isOpenFab, setIsOpenFab] = useState(false);
-   const [isAlredyAdd, setIsAlredyAdd] = useState(false)
+   const [isAlredyAdd, setIsAlredyAdd] = useState(() => {
+      if (Object.keys(dailyRecords).length > 0) {
 
+         const idRecords = Object.keys(dailyRecords).pop()
+
+         if (idRecords === undefined) return false;
+
+         const dateLastRecord = new Date(+idRecords);
+         const currentDate = new Date();
+         if (dateLastRecord.getMonth() === currentDate.getMonth() && dateLastRecord.getDate() === currentDate.getDate())
+            return true;
+
+         return false;
+      } else {
+         return false;
+      }
+   })
    return (
       <Box>
          <DailyPage

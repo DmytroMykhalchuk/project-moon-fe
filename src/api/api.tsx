@@ -79,7 +79,8 @@ export const api = {
         finishedWeek: localStorage.finishedWeek ? localStorage.finishedWeek : 0,
         finishedDay: localStorage.finishedDay ? localStorage.finishedDay : 0,
         createdAt: localStorage.createdAt ? localStorage.createdAt : 0,
-        lastOnline: localStorage.lastOnline ? localStorage.lastOnline : 0
+        lastOnline: localStorage.lastOnline ? localStorage.lastOnline : 0,
+        created_at: localStorage.created_at ? localStorage.created_at : localStorage.created_at= new Date()
       };
       return new Promise((resolve, reject) => { resolve(state) })
     }
@@ -132,28 +133,37 @@ export const api = {
         .then((responce) => { });
     } else {
       return new Promise(resolve => {
-        console.log(task)
         const category = Object.keys(task)[0];
         const id = Object.keys(task[category])[0];
-        console.log(category,id)
+        console.log(category, id)
         let state = JSON.parse(localStorage[category]);
         // let test={...state};
         // console.log(id,test);
         // delete test[id];
         // console.log(test)
-        
+
         delete state[id];
         localStorage[category] = JSON.stringify(state);
         resolve('OK');
       })
     }
   },
-  createDailyRecord: function (record: Object) {
-    // if()
-    return instance
-      .post("auth/daily", { daily: JSON.stringify(record) })
-      .then((responce) => {
-        return responce.data;
-      });
+  createDailyRecord: function (record: any) {
+    if (isConnected) {
+
+      return instance
+        .post("auth/daily", { daily: JSON.stringify(record) })
+        .then((responce) => {
+          return responce.data;
+        });
+    } else {
+      let daily = localStorage.daily ? JSON.parse(localStorage.daily) : {};
+      const id = new Date().getTime();
+      daily[id]={text:record.text,day:record.day}
+      localStorage.daily=JSON.stringify(daily);
+      return new Promise(resolve => {
+        resolve([{[id]:{text:record.text,day:record.day}}])
+      })
+    }
   },
 };

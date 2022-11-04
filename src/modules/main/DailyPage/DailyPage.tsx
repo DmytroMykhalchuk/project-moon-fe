@@ -43,7 +43,6 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
       setIsOpenFab(false)
       setDaily(`${currentDay}`, newDaily)
    }
-   
    const showAllRecords = () => {
       let elementRecords = [];
       let i = 0;
@@ -51,8 +50,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
       for (const recordDate in records) {
          if (Object.prototype.hasOwnProperty.call(records, recordDate)) {
             const element = records[recordDate];
-            const createDate = new Date(+recordDate * 1000);
-
+            const createDate = new Date(+recordDate);
             elementRecords.push(
                <Accordion key={recordDate}>
                   <AccordionSummary
@@ -61,7 +59,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
 
                      id={recordDate}
                   >
-                     <Typography>{`${createDate.getDay()}.${createDate.getMonth() + 1}.${createDate.getFullYear()} День ${element.day}`}</Typography>
+                     <Typography>{`${createDate.getDate()}.${createDate.getMonth() + 1}.${createDate.getFullYear()} День ${element.day}`}</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                      <Typography>
@@ -92,7 +90,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
                <CheckIcon />
             </Fab>
          </Zoom>
-         <Collapse in={!isExtended||isAlredyAdd}>
+         <Collapse in={isAlredyAdd}>
             <Zoom in={!isExtended||isAlredyAdd}>
                <Accordion sx={{mb:2}}>
                   <AccordionSummary
@@ -111,7 +109,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
                </Accordion>
             </Zoom>
          </Collapse>
-         <Collapse in={isExtended}>
+         <Collapse in={!isAlredyAdd}> {/*isisExtended*/}
             <Accordion
                defaultExpanded
             >
