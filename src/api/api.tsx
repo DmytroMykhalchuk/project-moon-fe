@@ -1,5 +1,4 @@
 import axios from "axios";
-import { resolve } from "path";
 const isConnected = false;
 // const url=`https://projectmoon.000webhostapp.com/api/`;
 const url = `http://127.0.0.1:8000/api/`;
@@ -135,13 +134,7 @@ export const api = {
       return new Promise(resolve => {
         const category = Object.keys(task)[0];
         const id = Object.keys(task[category])[0];
-        console.log(category, id)
         let state = JSON.parse(localStorage[category]);
-        // let test={...state};
-        // console.log(id,test);
-        // delete test[id];
-        // console.log(test)
-
         delete state[id];
         localStorage[category] = JSON.stringify(state);
         resolve('OK');

@@ -4,8 +4,8 @@ import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import { deleteTaskThunk, restoreTaskThunk, TaskType, } from "../../redux/appReducer";
 import { useState } from "react";
-import { ListItem, IconButton, Box, Typography } from "@mui/material";
-import {ActionButtonsTrash,ActionButtonsFinished} from './ActionButtons'
+import { ListItem, Typography } from "@mui/material";
+import { ActionButtonsTrash, ActionButtonsFinished } from './ActionButtons'
 
 type AimPreferenceType = {
    listFinished?: any

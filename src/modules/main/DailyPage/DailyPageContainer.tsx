@@ -1,6 +1,6 @@
 import DailyPage from "./DailyPage";
 import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../../redux/store";
 import { getCurrentDay, getDaily } from "../../../redux/appStateSelector";

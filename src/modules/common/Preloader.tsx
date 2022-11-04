@@ -1,5 +1,4 @@
 import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 import styles from  './stylePreloader.module.scss';
 
 type PreloaderType = {
@@ -15,7 +14,7 @@ const Preloader = ({ isFetching }: PreloaderType) => {
          {/* <CircularProgress color="inherit" /> */}
          <div className={styles.moon}>
             <img src="https://cdn2.iconfinder.com/data/icons/thesquid-ink-40-free-flat-icon-pack/64/space-rocket-512.png"
-             style={{width:"30px",height:"20px"}} className={styles.loader}/>
+             style={{width:"30px",height:"20px"}} className={styles.loader} alt="rocket"/>
                <ul>
                   <li></li>
                   <li></li>

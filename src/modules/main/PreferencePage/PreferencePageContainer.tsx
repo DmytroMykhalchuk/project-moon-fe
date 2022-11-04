@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { EventHandler } from "redux-form";
-import { JsxElement } from "typescript";
 import PreferencePage from "./PreferencePage";
-
 
 const PreferencePageContainer = () => {
    const [openFinished, setOpenFinished] = useState('')
@@ -19,16 +16,16 @@ const PreferencePageContainer = () => {
          el = currentEl;
          i++;
          if (maxDepth < i || el.hasAttribute('data-list-name')) {
-            setOpenFinished(prev => {
-               if (prev === el.getAttribute('data-list-name')) {
-                  return false;
-               } else {
-                  return el.getAttribute('data-list-name');
-               }
-            });
             break;
          }
       }
+      setOpenFinished(prev => {
+         if (prev === el.getAttribute('data-list-name')) {
+            return false;
+         } else {
+            return el.getAttribute('data-list-name');
+         }
+      });
    }
    const onOpenTrashList = (el:any) => {
       el = el.target;
@@ -40,16 +37,16 @@ const PreferencePageContainer = () => {
          el = currentEl;
          i++;
          if (maxDepth < i || el.hasAttribute('data-list-name')) {
-            setOpenTrash(prev => {
-               if (prev === el.getAttribute('data-list-name')) {
-                  return false;
-               } else {
-                  return el.getAttribute('data-list-name');
-               }
-            });
             break;
          }
       }
+      setOpenTrash(prev => {
+         if (prev === el.getAttribute('data-list-name')) {
+            return false;
+         } else {
+            return el.getAttribute('data-list-name');
+         }
+      });
    }
  
    return (

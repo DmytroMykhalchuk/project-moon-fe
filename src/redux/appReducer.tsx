@@ -2,7 +2,6 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { api } from "../api/api";
 import { AppStateType } from "./store";
-import testState from "./testState";
 
 const INIT = "INIT";
 const FETCHING = 'FETCHING';
@@ -32,9 +31,6 @@ const initialState: any = {
    daily: {
    }
 }
-
-type StateType = any;
-
 const appReducer = (state = initialState, action: any): any => {
    switch (action.type) {
       case INIT: {
@@ -52,7 +48,6 @@ const appReducer = (state = initialState, action: any): any => {
          currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
          createdDate = new Date(new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate()));
          let diffDate = +currentDate - +createdDate;
-         console.log(diffDate)
          currentDay = Math.round((diffDate / (3600 * 24) / 1000))
          return {
             ...state,
@@ -153,7 +148,6 @@ const appReducer = (state = initialState, action: any): any => {
       default: return state;
    }
 }
-//actction creators
 export type TaskType = {
    aim: string
    isFinished: boolean
@@ -193,14 +187,6 @@ const setCurrentDay = (): ActionsTypes => {
 const toggleFetching = (): ActionsTypes => {
    return {
       type: FETCHING
-   }
-}
-const finishTask = (category: string, id: string | number, object: Object): ActionsTypes => {
-   return {
-      type: COMPLETE_TASK,
-      category,
-      object,
-      id
    }
 }
 const updateTask = (category: string, id: string, task: TaskType): ActionsTypes => {
@@ -257,8 +243,8 @@ export const setDaily = (record: Object): ActionsTypes => {
       record
    }
 }
-//thunks
 
+//thunks
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 export const getInfoUser = (): ThunksTypes => {
    return async (dispatch) => {
@@ -280,12 +266,6 @@ export const createTaskThunk = (category: string, text: string,): ThunksTypes =>
       const taskSend = {
          [category]: text
       }
-      const newTask = {
-         aim: text,
-         isFinished: false,
-         isInTrash: false
-      }
-      console.log(taskSend)
       api.createTask(taskSend).then((responce: any) => {
          const aim = JSON.parse(responce)
          const id = Object.keys(aim)[0];
@@ -360,7 +340,6 @@ export const editTaskThunk = (oldCategory: string, category: string, id: string,
       let taskSend = {
          [category]: aim
       }
-      console.log(oldCategory, category, id, aim, task, deleteTaskSend, taskSend)
       api.deleteTask(deleteTaskSend).then(() => {
          api.createTask(taskSend).then(() => {
             dispatch(editTask(category, id, aim))
@@ -372,7 +351,6 @@ export const editTaskThunk = (oldCategory: string, category: string, id: string,
 export const toTrashTask = (category: string, id: string, task: TaskType): ThunksTypes => {
    return async (dispatch) => {
       task.isInTrash = true;
-      console.log(task)
       dispatch(updateTask(category, id, task));
       api.updateTask(task);
    }
@@ -384,7 +362,6 @@ export const restoreTaskThunk = (category: string, id: string, task: TaskType): 
       } else {
          task.isFinished = false;
       }
-      console.log(task)
       dispatch(updateTask(category, id, task));
       api.updateTask({ [category]: { [id]: { ...task } } });
    }

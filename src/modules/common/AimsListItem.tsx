@@ -19,7 +19,7 @@ type ListAimsType = {
    }
 }
 
-type AimsListItem = {
+type AimsListItemType = {
    currentItem: string
    setCurrentItem: (currentItem: string) => void
    side: string
@@ -39,7 +39,7 @@ type AimsListItem = {
 const AimsListItem = ({ currentItem, setCurrentItem, side,
    setSide, listAims, category, setOldCategory,
    header, completeHandler, setIdWindow, setTask,
-   rePutHandler, toggleWindow }: AimsListItem) => {
+   rePutHandler, toggleWindow }: AimsListItemType) => {
    const createTask = () => {
       let i = 0;
 

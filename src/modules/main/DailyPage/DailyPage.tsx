@@ -19,21 +19,18 @@ type DailyPageType = {
    setDaily: (arg1: string, arg2: string) => void
 }
 const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyAdd, currentDay, setDaily }: DailyPageType) => {
-   
-   let isEditMode=true;
 
-   // console.log(t)
    const [newDaily, setNewDaily] = useState('')
-   const [isExtended, setIsExtended] = useState(()=>{
+   const [isExtended, setIsExtended] = useState(() => {
       if (Object.keys(records).length > 0) {
          // @ts-ignore
          let lastRecordDate = new Date(+(Object.keys(records).pop()) * 1000);
-         let lastRecordTime=new Date(lastRecordDate.getFullYear(),lastRecordDate.getMonth(),lastRecordDate.getDate()).getTime();
-   
+         let lastRecordTime = new Date(lastRecordDate.getFullYear(), lastRecordDate.getMonth(), lastRecordDate.getDate()).getTime();
+
          let currentDate = new Date();
-         let currentTime=new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate()).getTime();
-         return !(currentTime===lastRecordTime)
-      }else{
+         let currentTime = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).getTime();
+         return !(currentTime === lastRecordTime)
+      } else {
          return false;
       }
    })
@@ -45,8 +42,6 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
    }
    const showAllRecords = () => {
       let elementRecords = [];
-      let i = 0;
-      let numberDay: number;
       for (const recordDate in records) {
          if (Object.prototype.hasOwnProperty.call(records, recordDate)) {
             const element = records[recordDate];
@@ -91,8 +86,8 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
             </Fab>
          </Zoom>
          <Collapse in={isAlredyAdd}>
-            <Zoom in={!isExtended||isAlredyAdd}>
-               <Accordion sx={{mb:2}}>
+            <Zoom in={!isExtended || isAlredyAdd}>
+               <Accordion sx={{ mb: 2 }}>
                   <AccordionSummary
                      expandIcon={<ExpandMoreIcon />}
                      aria-controls="panel2a-content"
