@@ -117,6 +117,7 @@ const appReducer = (state = initialState, action: any): any => {
          }
       }
       case DELETE_TASK: {
+        delete state[action.category][action.id];
          return {
             ...state
          }
@@ -198,7 +199,6 @@ const updateTask = (category: string, id: string, task: TaskType): ActionsTypes 
    }
 }
 const deleteTask = (category: string, id: string | number, object: Object): ActionsTypes => {
-
    return {
       type: DELETE_TASK,
       category,
@@ -305,6 +305,7 @@ export const deleteTaskThunk = (category: string, id: string, task: TaskType): T
             dispatch(updateTask(category, id, { ...task, isInTrash: true }))
          })
       } else {
+
          api.deleteTask(taskSend)
          dispatch(deleteTask(category, id, task))
       }

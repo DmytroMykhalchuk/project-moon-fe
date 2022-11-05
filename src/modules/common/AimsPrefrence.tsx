@@ -4,7 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import { deleteTaskThunk, restoreTaskThunk, TaskType, } from "../../redux/appReducer";
 import { useState } from "react";
-import { ListItem, Typography } from "@mui/material";
+import { Collapse, ListItem, Typography } from "@mui/material";
 import { ActionButtonsTrash, ActionButtonsFinished } from './ActionButtons'
 
 type AimPreferenceType = {
@@ -21,36 +21,41 @@ const AimsPreference = ({
    const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
    const showListFinished = (currentList: any) => {
       const ret = [];
+      let counter = 0;
       for (const key in currentList) {
          if (Object.prototype.hasOwnProperty.call(currentList, key)) {
             const element = currentList[key];
-            if (element.isFinished && !element.isInTrash)
-               ret.push(<ListItem
-                  key={key}
-                  disablePadding
-                  disableGutters
-                  divider
-                  sx={{ height: '50px', padding: '0 10px' }}
-                  secondaryAction={
-                     <ActionButtonsFinished
-                        restoreTask={restoreTask}
-                        deleteTask={deleteTask}
-                        category={listName}
-                        id={key}
-                        object={element}
-                     />
-                  }
-               >
-                  <ListItemText primary={
-                     <Typography variant="body2">
-                        {element.aim}
-                     </Typography>
-                  } />
+            counter += element.isFinished && !element.isInTrash;
+            ret.push(
+               <Collapse key={key} in={element.isFinished && !element.isInTrash}>
+                  <ListItem
 
-               </ListItem>)
+                     disablePadding
+                     disableGutters
+                     divider
+                     sx={{ height: '50px', padding: '0 10px' }}
+                     secondaryAction={
+                        <ActionButtonsFinished
+                           restoreTask={restoreTask}
+                           deleteTask={deleteTask}
+                           category={listName}
+                           id={key}
+                           object={element}
+                        />
+                     }
+                  >
+                     <ListItemText primary={
+                        <Typography variant="body2">
+                           {element.aim}
+                        </Typography>
+                     } />
+
+                  </ListItem>
+               </Collapse >
+            )
          }
       }
-      if (ret.length === 0) {
+      if (counter === 0) {
          ret.push(<ListItem
             key={1}
             disablePadding
@@ -67,43 +72,49 @@ const AimsPreference = ({
 
          </ListItem>)
       }
+
       return ret;
    }
    const showListInTrash = (currentList: any) => {
       const ret = [];
+      let counter = 0;
       for (const key in currentList) {
          if (Object.prototype.hasOwnProperty.call(currentList, key)) {
             const element = currentList[key];
-            if (element.isInTrash)
+            counter += element.isFinished && element.isInTrash;
 
-               ret.push(<ListItem
-                  key={key}
-                  disablePadding
-                  disableGutters
-                  divider
-                  sx={{ height: '50px', padding: '0 10px' }}
-                  secondaryAction={
-                     <ActionButtonsTrash
-                        restoreTask={restoreTask}
-                        deleteTask={deleteTask}
-                        category={listName}
-                        id={key}
-                        object={element}
-                        setIsOpenConfirmation={setIsOpenConfirmation}
-                        isOpenConfirmation={isOpenConfirmation}
-                     />
-                  }
-               >
-                  <ListItemText primary={
-                     <Typography variant="body2">
-                        {element.aim}
-                     </Typography>
-                  } />
+            ret.push(
+               <Collapse in={element.isFinished && element.isInTrash} key={key}>
+                  <ListItem
+                     key={key}
+                     disablePadding
+                     disableGutters
+                     divider
+                     sx={{ height: '50px', padding: '0 10px' }}
+                     secondaryAction={
+                        <ActionButtonsTrash
+                           restoreTask={restoreTask}
+                           deleteTask={deleteTask}
+                           category={listName}
+                           id={key}
+                           object={element}
+                           setIsOpenConfirmation={setIsOpenConfirmation}
+                           isOpenConfirmation={isOpenConfirmation}
+                        />
+                     }
+                  >
+                     <ListItemText primary={
+                        <Typography variant="body2">
+                           {element.aim}
+                        </Typography>
+                     } />
 
-               </ListItem>)
+                  </ListItem>
+               </Collapse>
+            )
          }
       }
-      if (ret.length === 0) {
+      if (counter === 0) {
          ret.push(<ListItem
             key={1}
             disablePadding
@@ -122,6 +133,7 @@ const AimsPreference = ({
       }
       return ret;
    }
+
    if (listFinished) {
       return (
          <>

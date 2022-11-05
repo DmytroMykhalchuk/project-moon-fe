@@ -15,7 +15,7 @@ import DialogWindow from "../../common/DialogWindow";
 import { getDay, getMain, getMonth, getWeek } from "../../../redux/appStateSelector";
 import { connect, ConnectedProps } from "react-redux";
 import { AppStateType } from "../../../redux/store";
-
+import AddIcon from '@mui/icons-material/Add';
 
 type PrefrencePageType = {
    openFinished: string
@@ -60,13 +60,14 @@ const PreferencePage = ({
             sx={{
                position: 'fixed',
                bottom: '80px',
-               right: '16px'
+               right: '16px',
+               backgroundColor:'#fff'
             }}>
-            <EditIcon />
+               <AddIcon />
          </Fab>
 
          {['day', 'week', 'month', 'main'].map(item => {
-            return <Card variant='outlined' sx={{ mb: 3 }}>
+            return <Card variant='outlined' sx={{ mb: 3 }} key={item}>
                <CardContent>
                   <Typography variant="h5" color="text.secondary" component="div">
                      {listConfig[item].header}
