@@ -73,6 +73,7 @@ export const api = {
         month: localStorage.month ? JSON.parse(localStorage.month) : {},
         week: localStorage.week ? JSON.parse(localStorage.week) : {},
         day: localStorage.day ? JSON.parse(localStorage.day) : {},
+<<<<<<< HEAD
         daily: localStorage.daily ? localStorage.daily : '{}',
         finishedMonth: localStorage.finishedMonth ? localStorage.finishedMonth : 0,
         finishedWeek: localStorage.finishedWeek ? localStorage.finishedWeek : 0,
@@ -82,6 +83,21 @@ export const api = {
         created_at: localStorage.created_at ? localStorage.created_at : localStorage.created_at= new Date()
       };
       return new Promise((resolve, reject) => { resolve(state) })
+=======
+        daily: localStorage.daily ? localStorage.daily : "{}",
+        // finishedMonth: localStorage.finishedMonth ? localStorage.finishedMonth : 0,
+        // finishedWeek: localStorage.finishedWeek ? localStorage.finishedWeek : 0,
+        // finishedDay: localStorage.finishedDay ? localStorage.finishedDay : 0,
+        createdAt: localStorage.createdAt ? localStorage.createdAt : 0,
+        lastOnline: localStorage.lastOnline ? localStorage.lastOnline : 0,
+        created_at: localStorage.created_at ? localStorage.created_at : localStorage.created_at = new Date(),
+        statisticday: localStorage.statisticday ? localStorage.statisticday : 0,
+        statisticweek: localStorage.statisticweek ? localStorage.statisticweek : 0,
+        statisticmonth: localStorage.statisticmonth ? localStorage.statisticmonth : 0,
+      };
+
+      return new Promise((resolve) => { resolve(state) })
+>>>>>>> d5b297a (minimal functioanal completed)
     }
   },
   createTask: function (task: any) {
@@ -119,9 +135,15 @@ export const api = {
 
         let state = JSON.parse(localStorage[category]);
 
+        const isFinished=(state[id].isFinished===false&&task[category][id].isFinished===true)
         state[id] = task[category][id];
         localStorage[category] = JSON.stringify(state);
-        resolve('OK');
+        let statisticCategory=`statistic${category}`
+        if(isFinished){
+          localStorage[statisticCategory]=localStorage[statisticCategory]?+localStorage[statisticCategory]+1:1;
+        }
+        let ret={category:localStorage[statisticCategory]};
+        resolve(ret);
       })
     }
   },
@@ -159,4 +181,31 @@ export const api = {
       })
     }
   },
+  completeAllDayTasks: function () {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      const state = JSON.parse(localStorage.day);
+      const dayTasks: any = {};
+      let count = 0;
+      for (const key in state) {
+        if (!state[key].isFinished) {
+          count++;
+        }
+        dayTasks[key] = { ...state[key], isFinished: true }
+
+      }
+      localStorage.day = JSON.stringify(dayTasks);
+      if (localStorage.statisticday) {
+
+        localStorage.statisticday = +localStorage.statisticday+count;
+      } else {
+        localStorage.statisticday = count;
+      }
+      count = 0;
+    }
+  }
+
 };
+
+

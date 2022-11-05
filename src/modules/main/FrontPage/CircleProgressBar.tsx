@@ -6,15 +6,19 @@ import styles from './styles.module.scss'
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { IconButton } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-
+import { AppStateType } from '../../../redux/store';
+import { connect, ConnectedProps } from 'react-redux';
+import { completeAllDayTaskThunk } from '../../../redux/appReducer';
+import AvTimerIcon from '@mui/icons-material/AvTimer';
 type CircleProgress = {
    value: number
    currtimeh: number
    currtimem: number
    currtimes: number
+   completeAllDayTask:()=>void
 }
 
-function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes }: CircleProgress) {
+function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes,completeAllDayTask }: CircleProgress) {
    const isDevider = currtimes % 2 === 0;
    return (
       <>
@@ -24,7 +28,7 @@ function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes }: C
                годин </sub></Typography>
             <Box className={styles.circleWrapper}>
                <Box className={styles.boxSide}>
-                  <IconButton color='default' aria-label='show all' size='large'><AssignmentIcon fontSize="inherit" /></IconButton>
+                  <IconButton color='default' aria-label='show all' size='large'><AvTimerIcon fontSize="inherit" color='disabled' /></IconButton>
                </Box>
                <Box sx={{ position: 'relative', display: 'inline-flex', }}>
                   <CircularProgress variant="determinate" size={200} sx={{ margin: '0 auto', width: '100%' }} value={value} color='primary' />
@@ -63,7 +67,11 @@ function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes }: C
                   </Box>
                </Box>
                <Box className={styles.boxSide}>
-                  <IconButton aria-label='confirm all done' size='large'><DoneAllIcon fontSize="inherit" /></IconButton>
+                  <IconButton 
+                  onClick={()=>{completeAllDayTask()}}
+                  aria-label='confirm all done' 
+                  size='large'>
+                     <DoneAllIcon fontSize="inherit" /></IconButton>
                </Box>
 
             </Box>
@@ -72,7 +80,7 @@ function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes }: C
    );
 }
 
-export default function CircleProgressBar() {
+const CircleProgressBar = ({ completeAllDayTask }: HeaderProps) => {
    const [progress, setProgress] = useState(100 - (getSecondsToTomorrow() / (24 * 3600) * 100));
    const [currTimeH, setCurrentTimeH] = useState(new Date().getHours());
    const [currTimeM, setCurrentTimeM] = useState(new Date().getMinutes());
@@ -96,9 +104,25 @@ export default function CircleProgressBar() {
       currtimeh={currTimeH}
       currtimem={currTimeM}
       currtimes={currTimeS}
+      completeAllDayTask={completeAllDayTask}
    />;
 }
 
+
+const mapStateToProps = (state: AppStateType) => {
+   return {
+   }
+}
+const mapDispatchToProps = (dispatch: any) => {
+   return {
+      completeAllDayTask: () => {
+         dispatch(completeAllDayTaskThunk())
+      }
+   }
+}
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type HeaderProps = ConnectedProps<typeof connector>;
+export default connector(CircleProgressBar);
 
 
 

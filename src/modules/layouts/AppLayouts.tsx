@@ -20,7 +20,7 @@ const TabItems =
 
 const AppLayouts = () => {
 
-   const [page, setPage] = useState(2);
+   const [page, setPage] = useState(0);
    return <article className={styles.appWrapper}>
       <AppTitle />
       <Container maxWidth={'md'} disableGutters >

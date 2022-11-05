@@ -10,7 +10,7 @@ const FrontPage = () => {
       <Box>
         <CircleProgressBar />
         <Box>
-          <Aims/>
+          <Aims isHome />
         </Box>
       </Box>
     </>

@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { api } from "../api/api";
+import { monthDiff } from "../utils/functions";
 import { AppStateType } from "./store";
 
 const INIT = "INIT";
@@ -14,6 +15,7 @@ const RESTORE_TASK = 'RESTORE_TASK';
 const SET_CURRENT_DAY = 'SET_CURRENT_DAY'
 const SET_DAILY = 'SET_DAILY'
 const UPDATE_TASK = 'UPDATE_TASK'
+const COMPLETE_ALL_DAY_TASK = "COMPLETE_ALL_DAY_TASK";
 
 
 const initialState: any = {
@@ -45,13 +47,31 @@ const appReducer = (state = initialState, action: any): any => {
          let currentDay = 0;
          let createdDate = new Date(state.created_at)
          let currentDate = new Date();
+
+         let day = createdDate.getDate();
+         let month = createdDate.getMonth();
+         let year = createdDate.getFullYear();
+
          currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-         createdDate = new Date(new Date(createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate()));
+         createdDate = new Date(new Date(year, month, day));
+
          let diffDate = +currentDate - +createdDate;
          currentDay = Math.round((diffDate / (3600 * 24) / 1000))
+
+         let cuurTime = new Date(year, month, day).getTime();
+
+         let endPointDate = new Date(year + 1, month + 6, day).getTime();
+         const maxDays = Math.round((endPointDate - cuurTime) / (3600 * 24 * 1000))
+
+         let currMonth = monthDiff(new Date(createdDate), new Date(currentDate));
+         currMonth++;
+         // let currMonth = monthDiff(new Date(2022, 11, 2), new Date(2025, 5, 1));
+         currMonth = currMonth >= 19 ? 18 : currMonth;
          return {
             ...state,
-            currentDay
+            currentDay,
+            currentMonth: currMonth,
+            maxDays: maxDays
          }
       }
       case FETCHING: {
@@ -72,10 +92,10 @@ const appReducer = (state = initialState, action: any): any => {
                ...state[action.category], [action.id]: { ...action.object, isFinished: true }
             }
          }
-
          return {
             ...state,
-            ...changedTaskList
+            ...changedTaskList,
+            [`statistic${action.category}`]: +state[`statistic${action.category}`] + 1
          }
       }
       case REPUT_TASK: {
@@ -117,7 +137,7 @@ const appReducer = (state = initialState, action: any): any => {
          }
       }
       case DELETE_TASK: {
-        delete state[action.category][action.id];
+         delete state[action.category][action.id];
          return {
             ...state
          }
@@ -146,6 +166,22 @@ const appReducer = (state = initialState, action: any): any => {
             }
          }
       }
+      case COMPLETE_ALL_DAY_TASK: {
+         const dayTasks: any = {};
+         let count = 0;
+         for (const key in state.day) {
+            if (!state.day[key].isFinished) {
+               count++;
+            }
+            dayTasks[key] = { ...state.day[key], isFinished: true }
+         }
+
+         return {
+            ...state,
+            day: dayTasks,
+            statisticDay: +state.statisticDay + count
+         }
+      }
       default: return state;
    }
 }
@@ -158,7 +194,7 @@ export type TaskType = {
 
 type Init = { type: typeof INIT, state: object }
 type Fetching = { type: typeof FETCHING }
-type CompleteTask = { type: typeof COMPLETE_TASK, id: string | number, object: Object, category: string }
+type CompleteTask = { type: typeof COMPLETE_TASK, category: string, id: string | number, task: TaskType }
 type DeleteTask = { type: typeof DELETE_TASK, category: string, id: string | number, object: Object }
 type RestoreTask = { type: typeof RESTORE_TASK, category: string, id: string | number, object: Object }
 type RePutType = { type: typeof REPUT_TASK, id: string | number, category: string, object: Object }
@@ -167,9 +203,11 @@ type EditTaskType = { type: typeof EDIT_TASK, category: string, id: string, text
 type SetCurrentDay = { type: typeof SET_CURRENT_DAY }
 type SetDaily = { type: typeof SET_DAILY, record: Object }
 type UpdateTaskType = { type: typeof UPDATE_TASK, category: string, id: string, task: TaskType }
+type completeDayTask = { type: typeof COMPLETE_ALL_DAY_TASK }
+
 
 export type ActionsTypes = Init | SetCurrentDay | Fetching | CompleteTask | DeleteTask | UpdateTaskType |
-   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily;
+   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily | completeDayTask;
 
 export type DispatchType = Dispatch<ActionsTypes>;
 export type TaskItemModify = { category: string, id: string | number, object: Object }
@@ -243,6 +281,19 @@ export const setDaily = (record: Object): ActionsTypes => {
       record
    }
 }
+export const completeAllDayTaskAction = (): ActionsTypes => {
+   return {
+      type: COMPLETE_ALL_DAY_TASK
+   }
+}
+const completeTask = (category: string, id: string, task: TaskType): ActionsTypes => {
+   return {
+      type: COMPLETE_TASK,
+      id,
+      category,
+      task
+   }
+}
 
 //thunks
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
@@ -285,10 +336,10 @@ export const finishTaskThunk = (category: string, id: string, task: TaskType): T
          }
       }
 
-      dispatch(updateTask(category, id, newTask));
+      // dispatch(updateTask(category, id, newTask));
       api.updateTask(taskSend).then(() => {
       }).then(() => {
-         // dispatch(toggleFetching());
+         dispatch(completeTask(category, id, newTask));
       })
    }
 }
@@ -374,6 +425,14 @@ export const setNewDailyRecord = (day: string, text: string): ThunksTypes => {
       api.createDailyRecord({ day, text }).then((responce: any) => {
          dispatch(setDaily(responce[0]));
       })
+   }
+}
+
+export const completeAllDayTaskThunk = (): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(completeAllDayTaskAction())
+      api.completeAllDayTasks();
+
    }
 }
 

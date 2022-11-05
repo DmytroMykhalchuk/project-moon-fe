@@ -1,7 +1,7 @@
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import { useSwipeable } from "react-swipeable";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AimsListItem from './AimsListItem'
 import { getDay, getMain, getMonth, getWeek } from "../../redux/appStateSelector";
 import { connect, ConnectedProps } from 'react-redux';
@@ -9,10 +9,21 @@ import { AppStateType } from '../../redux/store';
 import { finishTaskThunk, rePutTaskThunk, TaskType, editTaskThunk } from '../../redux/appReducer';
 import DialogWindow from './DialogWindow';
 
+const isNumberElementsToShow = (list: any) => {
+   let counter = 0;
+   for (const item in list) {
+      if (!list[item].isFinished) {
+         counter++;
+      }
+   }
+   return counter !== 0;
+}
+
 type AimsOwnType = {
    listName?: string
+   isHome?: boolean
 }
-const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName = '' }: HeaderProps & AimsOwnType) => {
+const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName = '', isHome }: HeaderProps & AimsOwnType) => {
    const listConfig: any = {
       main: {
          main,
@@ -21,6 +32,7 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
       week: { week, header: "Цілі на тиждень" },
       day: { day, header: "Цілі на день" }
    }
+
    const [currentItem, setCurrentItem] = useState('');
    const [side, setSide] = useState('');
    const [isOpenDialog, setIsOpenDialog] = useState(false)
@@ -29,7 +41,20 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
    const [idWindow, setIdWindow] = useState('')
    const [task, setTask] = useState({} as any);
    const [oldCategory, setOldCategory] = useState('')
+   const [listElements, setListElements] = useState(['day', 'week', 'month', 'main'])
 
+   useEffect(() => {
+      setListElements(() => {
+         let str = [] as Array<string>
+         if (isHome) {
+            isNumberElementsToShow(day) && str.push('day');
+            isNumberElementsToShow(week) && str.push('week')
+            isNumberElementsToShow(month) && str.push('month')
+            isNumberElementsToShow(main) && str.push('main')
+         }
+         return str;
+      });
+   }, [day, week, month, main])
    const swipedLeft = (el: any) => {
       const maxDepth = 5;
       let i = 0;
@@ -115,7 +140,7 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
    const editItem = (cat: string, text: string) => {
       editAim(oldCategory, cat, idWindow, text, task);
    }
-  
+
    if (listName) {
       return (
          <Box sx={{}}>
@@ -146,7 +171,7 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
                   side={side}
                   setSide={setSide}
                   listAims={listConfig
-               [listName][listName]}
+                  [listName][listName]}
                   category={listName}
                   header=""
                   completeHandler={completeHandler}
@@ -182,17 +207,21 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
                dense
                disablePadding
             >
-               {['day', 'week', 'month', 'main'].map(item => {
+               {listElements.map(item => {
                   return <AimsListItem
+<<<<<<< HEAD
+=======
+                     key={item}
+>>>>>>> d5b297a (minimal functioanal completed)
                      currentItem={currentItem}
                      setCurrentItem={setCurrentItem}
                      side={side}
                      setSide={setSide}
                      listAims={listConfig
-                  [item][item]}
+                     [item][item]}
                      category={`${item}`}
                      header={listConfig
-                  [item].header}
+                     [item].header}
                      completeHandler={completeHandler}
                      rePutHandler={rePutHandler}
                      toggleWindow={toogleWindow}

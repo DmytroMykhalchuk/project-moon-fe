@@ -9,7 +9,15 @@ import EventIcon from '@mui/icons-material/Event';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-const StatisticAims = (props: any) => {
+type StatisticAims = {
+   currentMonth: number,
+   statMonth: number | string
+   statWeek: number | string
+   statDay: number | string
+
+}
+
+const StatisticAims = ({ currentMonth, statMonth, statWeek, statDay }: any) => {
    return (
       <Box sx={{ width: '100%', pb: 3 }}>
          <List
@@ -19,7 +27,7 @@ const StatisticAims = (props: any) => {
             <ListItem disablePadding >
                <ListItemButton disabled>
 
-                  <ListItemText primary="Місяць 1/18" />
+                  <ListItemText primary={`Місяць ${currentMonth}/18`} />
                </ListItemButton>
             </ListItem>
 
@@ -30,7 +38,7 @@ const StatisticAims = (props: any) => {
                <ListItemText primary={
                   <Box sx={{ display: 'flex' }}>
                      <Typography variant="body1" sx={{ flexGrow: 1 }}>Завершено місячних цілей</Typography>
-                     <Typography variant="body1" >10</Typography>
+                     <Typography variant="body1" >{statMonth}</Typography>
                   </Box>
                } />
             </ListItem>
@@ -41,7 +49,7 @@ const StatisticAims = (props: any) => {
                <ListItemText primary={
                   <Box sx={{ display: 'flex' }}>
                      <Typography variant="body1" sx={{ flexGrow: 1 }}>Завершено тижневих цілей</Typography>
-                     <Typography variant="body1" >5</Typography>
+                     <Typography variant="body1" >{statWeek}</Typography>
                   </Box>
                } />
             </ListItem>
@@ -50,10 +58,10 @@ const StatisticAims = (props: any) => {
                   <EventIcon />
                </ListItemIcon>
                {/* {@ts-ignore} */}
-               <ListItemText inset={true} primary={
+               <ListItemText primary={
                   <Box sx={{ display: 'flex' }}>
                      <Typography variant="body1" sx={{ flexGrow: 1 }}>Завершено щоденних цілей</Typography>
-                     <Typography variant="body1" >140</Typography>
+                     <Typography variant="body1" >{statDay}</Typography>
                   </Box>
                } />
             </ListItem>
