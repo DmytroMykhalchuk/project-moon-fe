@@ -43,3 +43,9 @@ export const getStatMonthFinished = (state: AppStateType) => {
 export const getAchivments=(state:AppStateType)=>{
    return state.app.achivments;
 }
+export const getMessagesState=(state:AppStateType)=>{
+   return state.app.messages;
+}
+export const getIsBadge=(state:AppStateType)=>{
+   return state.app.isBadge;
+}

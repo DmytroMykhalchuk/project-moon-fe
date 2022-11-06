@@ -5,6 +5,13 @@ import { Fab } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useRef } from 'react';
 import DrawerSwipe from './DrawerSwipe';
+import { connect, ConnectedProps } from "react-redux";
+import { AppStateType } from "../../../redux/store";
+import { getIsBadge, getMessagesState } from "../../../redux/appStateSelector";
+import Collapse from '@mui/material/Collapse';
+import { checkMessage } from "../../../redux/appReducer";
+import DoneIcon from '@mui/icons-material/Done';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 type MessagePageType = {
    setOpen: (arg: boolean) => void
@@ -13,24 +20,67 @@ type MessagePageType = {
    switcherHandler: () => void
 }
 
-const MessagePage = ({ setOpen, open, sendMessageHandler, switcherHandler }: MessagePageType) => {
+const MessagePage = ({ setOpen, open, sendMessageHandler, switcherHandler, messages,checkMessage,isBadge }: MessagePageType & HeaderProps) => {
    const dummy = useRef();
    useEffect(() => {
       // @ts-ignore
       dummy.current.scrollIntoView();
    }, []);
+   // let isBadge = false;
+   // if (messages) {
 
+   //    for (const item in messages) {
+   //       if (Object.prototype.hasOwnProperty.call(messages, item)) {
+   //         const element=messages[item];
+   //       //   console.log(element.isChecked)
+   //          if (!element.isChecked) {
+   //             isBadge = true;
+   //             break;
+   //          }
+
+   //       }
+   //    }
+   // }
+   const showMessages = () => {
+      let ret = [];
+      let counter=0;
+      for (const item in messages) {
+         if (Object.prototype.hasOwnProperty.call(messages, item)) {
+            const element = messages[item];
+            // if(!element.isChecked&&counter===0){
+            //    element.isChecked=true;
+            //    counter++;
+            // }
+            ret.push(
+               <Collapse in={element.isChecked} key={item}>
+                  <Box sx={{ backgroundColor: '#3d3', width: '80%', margin: '0 0 30px 20px',p:2,borderRadius:'20px' }}> 
+                  {element.text}
+                  </Box>
+               </Collapse>
+            )
+         }
+      }
+      counter=0;
+      return (ret)
+   }
    return (
       <>
          <Fab color="secondary"
-            onClick={() => { setOpen(true); }}
+            onClick={() => { 
+            if(isBadge){
+               checkMessage()
+            }else{
+               setOpen(true);
+            }
+            
+            }}
             aria-label="edit"
             sx={{
                position: 'fixed',
                bottom: '80px',
                right: '16px'
             }}>
-            <EditIcon />
+            {isBadge?<DoneIcon/>:<SettingsIcon />}
          </Fab>
          <Global
             styles={{
@@ -42,15 +92,7 @@ const MessagePage = ({ setOpen, open, sendMessageHandler, switcherHandler }: Mes
          />
 
          <Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 4 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 5 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 6 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 7 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 8 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
-            <Box sx={{ backgroundColor: 'purple', width: '80%', margin: '0 0 30px 20px' }}> 1Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum autem illum est, dicta recusandae labore. Suscipit quam consequuntur, iure nam mollitia iste, exercitationem labore minima alias sed consequatur cum impedit? </Box>
+            {showMessages()}
             <Box ref={dummy} />
          </Box>
          <DrawerSwipe
@@ -63,6 +105,20 @@ const MessagePage = ({ setOpen, open, sendMessageHandler, switcherHandler }: Mes
    );
 }
 
+const mapStateToProps = (state: AppStateType) => {
+   return {
+      messages: getMessagesState(state),
+      isBadge:getIsBadge(state)
+   }
+}
+const mapDispatchToProps = (dispatch: any) => {
+   return {
+      checkMessage:()=>{
+         dispatch(checkMessage())
+      }
+   }
+}
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type HeaderProps = ConnectedProps<typeof connector>;
+export default connector(MessagePage);
 
-
-export default MessagePage;

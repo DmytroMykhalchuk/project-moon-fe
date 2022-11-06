@@ -17,6 +17,8 @@ const SET_DAILY = 'SET_DAILY'
 const UPDATE_TASK = 'UPDATE_TASK'
 const COMPLETE_ALL_DAY_TASK = "COMPLETE_ALL_DAY_TASK";
 const GET_ACHIVMENTS = "GET_ACHIVMENTS";
+const SET_MESSAGE = 'SET_MESSAGE';
+const CHECK_MESSAGE = 'CHECK_MESSAGE';
 
 const initialState: any = {
 
@@ -185,7 +187,58 @@ const appReducer = (state = initialState, action: any): any => {
       case GET_ACHIVMENTS: {
          return {
             ...state,
-            achivments:{...action.achivments}
+            achivments: { ...action.achivments }
+         }
+      }
+      case SET_MESSAGE: {
+         let isBadge = false;
+         // console.log(action.messages)
+         if (action.messages) {
+
+            for (const item in action.messages) {
+               if (Object.prototype.hasOwnProperty.call(action.messages, item)) {
+                  const element = action.messages[item];
+                  //   console.log(element.isChecked)
+                  if (!element.isChecked) {
+                     isBadge = true;
+                     break;
+                  }
+
+               }
+            }
+         }
+
+         return {
+            ...state,
+            messages: { ...action.messages },
+            isBadge
+         }
+      }
+
+      case CHECK_MESSAGE: {
+         // let count=0;
+         let isBadge = false;
+         // debugger
+         if (action.messages) {
+
+            for (const item in action.messages) {
+               if (Object.prototype.hasOwnProperty.call(action.messages, item)) {
+                  const element = action.messages[item];
+                  //   console.log(element.isChecked)
+                  if (!element.isChecked) {
+                     isBadge = true;
+                     // break;
+                     // count++;
+                  }
+
+               }
+            }
+         }
+         return {
+            ...state,
+            messages: action.messages,
+            // isBadge:count>1
+            isBadge
          }
       }
       default: return state;
@@ -211,9 +264,12 @@ type SetDaily = { type: typeof SET_DAILY, record: Object }
 type UpdateTaskType = { type: typeof UPDATE_TASK, category: string, id: string, task: TaskType }
 type completeDayTask = { type: typeof COMPLETE_ALL_DAY_TASK }
 type GetAchivmentType = { type: typeof GET_ACHIVMENTS, achivments: any }
+type SetMessages = { type: typeof SET_MESSAGE, messages: Object }
+type CheckMessageType = { type: typeof CHECK_MESSAGE, messages: Object }
 
 export type ActionsTypes = Init | SetCurrentDay | Fetching | CompleteTask | DeleteTask | UpdateTaskType |
-   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily | completeDayTask | GetAchivmentType;
+   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily | completeDayTask | GetAchivmentType
+   | SetMessages | CheckMessageType;
 
 export type DispatchType = Dispatch<ActionsTypes>;
 export type TaskItemModify = { category: string, id: string | number, object: Object }
@@ -300,12 +356,20 @@ const completeTask = (category: string, id: string, task: TaskType): ActionsType
       task
    }
 }
-const getAchivsAction=(achivments:any): ActionsTypes=>{
-   return{
+const getAchivsAction = (achivments: any): ActionsTypes => {
+   return {
       type: GET_ACHIVMENTS,
       achivments
    }
 }
+const setMessagesAction = (messages: Object): ActionsTypes => {
+   return {
+      type: SET_MESSAGE,
+      messages
+   }
+}
+const checkMessageAction = (messages: Object): ActionsTypes => { return { type: CHECK_MESSAGE, messages } }
+
 //thunks
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 export const getInfoUser = (): ThunksTypes => {
@@ -446,13 +510,29 @@ export const completeAllDayTaskThunk = (): ThunksTypes => {
 
    }
 }
-export const initAchivments=():ThunksTypes=>{
-   return async (dispatch)=>{
-    //@ts-ignore
-         api.getAchivments().then((responce)=>{
-            dispatch(getAchivsAction(responce));
-         })
-      
+export const initAchivments = (): ThunksTypes => {
+   return async (dispatch) => {
+      //@ts-ignore
+      api.getAchivments().then((responce) => {
+         dispatch(getAchivsAction(responce));
+      })
+
+   }
+}
+export const setMessages = (): ThunksTypes => {
+   return async (dispatch) => {
+      api.getMessages()?.then((responce: any) => {
+// console.log('')
+         dispatch(setMessagesAction(responce))
+      })
+   }
+}
+export const checkMessage = (): ThunksTypes => {
+   return async (dispatch) => {
+      api.checkMessage()?.then((responce: any) => {
+         dispatch(checkMessageAction(responce));
+      });
+
    }
 }
 export default appReducer;

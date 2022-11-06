@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import styles from './styleAppLayouts.module.scss';
 import FrontPageContainer from '../main/FrontPage/FrontPageContainer'
@@ -8,6 +8,10 @@ import MessagePageContainer from '../main/MessagePage/MessagePageContainer';
 import StatisticPageContainer from '../main/StatisticPage/StatisticPageContainer';
 import AppTitle from './AppTitle';
 import AppBottomBar from './AppBottomBar';
+import { connect, ConnectedProps } from 'react-redux';
+import { AppStateType } from '../../redux/store';
+import { setMessages } from '../../redux/appReducer';
+import { getIsBadge, getMessagesState } from '../../redux/appStateSelector';
 
 const TabItems =
    [
@@ -18,17 +22,56 @@ const TabItems =
       <DailyPageContainer />,
    ] as Array<JSX.Element>;
 
-const AppLayouts = () => {
+const AppLayouts: React.FC<HeaderProps> = ({ messages, init,isBadge }) => {
+   // const [isBadge, setIsBadge] = useState(false)
+   useEffect(() => {
 
-   const [page, setPage] = useState(0);
+      init();
+   }, [])
+   // useEffect(() => {
+   //    if (messages) {
+         
+   //       for (const item in messages) {
+   //          if (Object.prototype.hasOwnProperty.call(messages, item)) {
+   //             const element = messages[item];
+   //             if (!element.isChecked) {
+   //                setIsBadge(true);
+   //                break;
+   //             }
+
+   //          }
+   //       }
+   //    }
+   // }, [messages])
+
+
+   const [page, setPage] = useState(2);
    return <article className={styles.appWrapper}>
       <AppTitle />
       <Container maxWidth={'md'} disableGutters >
          {TabItems[page]}
       </Container>
-      <AppBottomBar page={page} setPage={setPage} />
+      <AppBottomBar page={page} setPage={setPage} isBadge={isBadge} />
    </article>;
 }
-export default AppLayouts;
+
+const mapStateToProps = (state: AppStateType) => {
+   return {
+      messages: getMessagesState(state),
+      isBadge:getIsBadge(state)
+   }
+}
+const mapDispatchToProps = (dispatch: any) => {
+   return {
+      init: () => {
+         dispatch(setMessages())
+      }
+   }
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type HeaderProps = ConnectedProps<typeof connector>;
+export default connector(AppLayouts);
+
 
 

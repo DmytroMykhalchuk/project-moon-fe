@@ -5,6 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
+import { Global } from '@emotion/react';
 import Box from '@mui/material/Box';
 const StyledBox = styled(Box)(({ theme }) => ({
    backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
@@ -25,21 +26,29 @@ type DrawerSwipeType = {
    open: boolean
    sendMessageHandler: () => void,
    switcherHandler: () => void
-   window?:any
+   window?: any
 }
 
 const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, window }: DrawerSwipeType) => {
    return (
       <>
+         <Global
+            styles={{
+               '.MuiDrawer-root > .MuiPaper-root': {
+                  height: `100px`,
+                  overflow: 'visible',
+               },
+            }}
+         />
          <SwipeableDrawer
             //@ts-ignore
             container={window !== undefined ? () => window().document.body : undefined}
             anchor="bottom"
             open={open}
-            onClose={()=>switcherHandler()}
-            onOpen={()=>switcherHandler()}
-            swipeAreaWidth={10}
-            disableSwipeToOpen={false}
+            onClose={() => switcherHandler()}
+            onOpen={() => switcherHandler()}
+            swipeAreaWidth={0}
+            disableSwipeToOpen={true}
             ModalProps={{
                keepMounted: false,
             }}
@@ -47,12 +56,14 @@ const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, windo
             <StyledBox
                sx={{
                   position: 'absolute',
-                  // top: -drawerBleeding,
+                  top: '-28px',
+                  height: '100%',
                   borderTopLeftRadius: 8,
                   borderTopRightRadius: 8,
                   visibility: 'visible',
                   right: 0,
                   left: 0,
+                  zIndex:'-1'
                }}
             >
                <Puller />
@@ -66,7 +77,8 @@ const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, windo
                   overflow: 'auto',
                }}
             >
-               <Box className='row'>
+              У розробці
+               {/* <Box className='row'>
 
                   <TextField
                      // onChange={onChangeMessageHandler}
@@ -86,7 +98,7 @@ const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, windo
                   <Button onClick={() => sendMessageHandler()}>
                      <SendIcon />
                   </Button>
-               </Box>
+               </Box> */}
             </StyledBox>
          </SwipeableDrawer>
       </>

@@ -7,14 +7,15 @@ import Paper from '@mui/material/Paper';
 import TodayIcon from '@mui/icons-material/Today';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import CommentBankIcon from '@mui/icons-material/CommentBank';
+import Badge from '@mui/material/Badge';
 
-type AppBottomBarType={
-   setPage:(page:number)=>void
-   page:number
+type AppBottomBarType = {
+   setPage: (page: number) => void
+   page: number,
+   isBadge:boolean
 }
-const AppBottomBar=({page,setPage}:AppBottomBarType)=>{
-   
-   return(
+const AppBottomBar = ({ page, setPage,isBadge }: AppBottomBarType) => {
+   return (
       <Box sx={{ pb: 5, }}>
          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }} elevation={3} square={false} >
             <BottomNavigation
@@ -27,7 +28,11 @@ const AppBottomBar=({page,setPage}:AppBottomBarType)=>{
                }}
             >
                <BottomNavigationAction label="Statistci" icon={<BubbleChartIcon />} />
-               <BottomNavigationAction label="Recents" icon={<CommentBankIcon />} />
+               <BottomNavigationAction label="Recents" icon={
+                  <Badge color="error" variant="dot" invisible={!isBadge}>
+                     <CommentBankIcon />
+                  </Badge>
+               } />
                <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
                <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
                <BottomNavigationAction label="Daily" icon={<TodayIcon />} />

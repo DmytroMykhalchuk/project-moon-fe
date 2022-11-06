@@ -9,12 +9,18 @@ import { AppStateType } from '../../redux/store';
 import { finishTaskThunk, rePutTaskThunk, TaskType, editTaskThunk } from '../../redux/appReducer';
 import DialogWindow from './DialogWindow';
 
-const isNumberElementsToShow = (list: any) => {
+const isNumberElementsToShow = (list: any,cat:string) => {
    let counter = 0;
    for (const item in list) {
       if (!list[item].isFinished) {
          counter++;
       }
+   }
+   if(cat==='day'){
+      return true
+   }
+   if(cat==='main'){
+      return true
    }
    return counter !== 0;
 }
@@ -47,10 +53,10 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
       setListElements(() => {
          let str = [] as Array<string>
          if (isHome) {
-            isNumberElementsToShow(day) && str.push('day');
-            isNumberElementsToShow(week) && str.push('week')
-            isNumberElementsToShow(month) && str.push('month')
-            isNumberElementsToShow(main) && str.push('main')
+            isNumberElementsToShow(day,'day') && str.push('day');
+            isNumberElementsToShow(week,'week') && str.push('week')
+            isNumberElementsToShow(month,'month') && str.push('month')
+            isNumberElementsToShow(main,'main') && str.push('main')
          }
          return str;
       });

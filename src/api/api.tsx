@@ -1,5 +1,6 @@
 import axios from "axios";
 import { achivmentsObj } from "./achivments";
+import { messagesObj } from "./messages";
 const isConnected = false;
 // const url=`https://projectmoon.000webhostapp.com/api/`;
 const url = `http://127.0.0.1:8000/api/`;
@@ -224,7 +225,7 @@ export const api = {
 
         let diffDate = +currentDate - +createdDate;
         currentDay = Math.round((diffDate / (3600 * 24) / 1000));
-        
+
         if (localStorage.main && localStorage.month && localStorage.week && localStorage.day || stateAchivs.has('1')) {
           responce.push(achivmentsObj['1'])
           stateAchivs.add('1')
@@ -248,6 +249,40 @@ export const api = {
 
         localStorage.achivments = JSON.stringify(Array.from(stateAchivs))
         resolve(responce)
+      })
+    }
+  },
+  getMessages: function () {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      const localMessages = localStorage.messages ? JSON.parse(localStorage.messages) : {};
+      const state = { ...messagesObj, ...localMessages };
+      return new Promise(resolve => {
+        resolve(state)
+      })
+    }
+  },
+  checkMessage: function () {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      let localMessages = localStorage.messages ? JSON.parse(localStorage.messages) : {...messagesObj};
+      for (const key in localMessages) {
+        if (Object.prototype.hasOwnProperty.call(localMessages, key)) {
+          //@ts-ignore
+          const element = localMessages[key];
+          if (!element.isChecked) {
+            element.isChecked = true;
+            break;
+          }
+        }
+      }
+      const state = { ...messagesObj, ...localMessages };
+      console.log(state)
+      localStorage.messages = JSON.stringify(state);
+      return new Promise(resolve => {
+        resolve(state)
       })
     }
   }
