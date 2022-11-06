@@ -16,7 +16,7 @@ const SET_CURRENT_DAY = 'SET_CURRENT_DAY'
 const SET_DAILY = 'SET_DAILY'
 const UPDATE_TASK = 'UPDATE_TASK'
 const COMPLETE_ALL_DAY_TASK = "COMPLETE_ALL_DAY_TASK";
-
+const GET_ACHIVMENTS = "GET_ACHIVMENTS";
 
 const initialState: any = {
 
@@ -182,6 +182,12 @@ const appReducer = (state = initialState, action: any): any => {
             statisticDay: +state.statisticDay + count
          }
       }
+      case GET_ACHIVMENTS: {
+         return {
+            ...state,
+            achivments:{...action.achivments}
+         }
+      }
       default: return state;
    }
 }
@@ -204,10 +210,10 @@ type SetCurrentDay = { type: typeof SET_CURRENT_DAY }
 type SetDaily = { type: typeof SET_DAILY, record: Object }
 type UpdateTaskType = { type: typeof UPDATE_TASK, category: string, id: string, task: TaskType }
 type completeDayTask = { type: typeof COMPLETE_ALL_DAY_TASK }
-
+type GetAchivmentType = { type: typeof GET_ACHIVMENTS, achivments: any }
 
 export type ActionsTypes = Init | SetCurrentDay | Fetching | CompleteTask | DeleteTask | UpdateTaskType |
-   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily | completeDayTask;
+   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily | completeDayTask | GetAchivmentType;
 
 export type DispatchType = Dispatch<ActionsTypes>;
 export type TaskItemModify = { category: string, id: string | number, object: Object }
@@ -294,7 +300,12 @@ const completeTask = (category: string, id: string, task: TaskType): ActionsType
       task
    }
 }
-
+const getAchivsAction=(achivments:any): ActionsTypes=>{
+   return{
+      type: GET_ACHIVMENTS,
+      achivments
+   }
+}
 //thunks
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 export const getInfoUser = (): ThunksTypes => {
@@ -435,5 +446,13 @@ export const completeAllDayTaskThunk = (): ThunksTypes => {
 
    }
 }
-
+export const initAchivments=():ThunksTypes=>{
+   return async (dispatch)=>{
+    //@ts-ignore
+         api.getAchivments().then((responce)=>{
+            dispatch(getAchivsAction(responce));
+         })
+      
+   }
+}
 export default appReducer;

@@ -40,4 +40,6 @@ export const getStatWeekFinished = (state: AppStateType) => {
 export const getStatMonthFinished = (state: AppStateType) => {
    return state.app.statisticmonth;
 }
-
+export const getAchivments=(state:AppStateType)=>{
+   return state.app.achivments;
+}

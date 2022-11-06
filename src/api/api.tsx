@@ -1,4 +1,5 @@
 import axios from "axios";
+import { achivmentsObj } from "./achivments";
 const isConnected = false;
 // const url=`https://projectmoon.000webhostapp.com/api/`;
 const url = `http://127.0.0.1:8000/api/`;
@@ -85,9 +86,6 @@ export const api = {
       return new Promise((resolve, reject) => { resolve(state) })
 =======
         daily: localStorage.daily ? localStorage.daily : "{}",
-        // finishedMonth: localStorage.finishedMonth ? localStorage.finishedMonth : 0,
-        // finishedWeek: localStorage.finishedWeek ? localStorage.finishedWeek : 0,
-        // finishedDay: localStorage.finishedDay ? localStorage.finishedDay : 0,
         createdAt: localStorage.createdAt ? localStorage.createdAt : 0,
         lastOnline: localStorage.lastOnline ? localStorage.lastOnline : 0,
         created_at: localStorage.created_at ? localStorage.created_at : localStorage.created_at = new Date(),
@@ -135,14 +133,14 @@ export const api = {
 
         let state = JSON.parse(localStorage[category]);
 
-        const isFinished=(state[id].isFinished===false&&task[category][id].isFinished===true)
+        const isFinished = (state[id].isFinished === false && task[category][id].isFinished === true)
         state[id] = task[category][id];
         localStorage[category] = JSON.stringify(state);
-        let statisticCategory=`statistic${category}`
-        if(isFinished){
-          localStorage[statisticCategory]=localStorage[statisticCategory]?+localStorage[statisticCategory]+1:1;
+        let statisticCategory = `statistic${category}`
+        if (isFinished) {
+          localStorage[statisticCategory] = localStorage[statisticCategory] ? +localStorage[statisticCategory] + 1 : 1;
         }
-        let ret={category:localStorage[statisticCategory]};
+        let ret = { category: localStorage[statisticCategory] };
         resolve(ret);
       })
     }
@@ -198,11 +196,59 @@ export const api = {
       localStorage.day = JSON.stringify(dayTasks);
       if (localStorage.statisticday) {
 
-        localStorage.statisticday = +localStorage.statisticday+count;
+        localStorage.statisticday = +localStorage.statisticday + count;
       } else {
         localStorage.statisticday = count;
       }
       count = 0;
+    }
+  },
+  getAchivments: function () {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      return new Promise(resolve => {
+        let responce = [];
+        // let achivs = [];
+        let stateAchivs = localStorage.achivments ? new Set(JSON.parse(localStorage.achivments)) : new Set();
+        let currentDay = 0;
+        let createdDate = new Date(localStorage.created_at)
+        let currentDate = new Date();
+
+        let day = createdDate.getDate();
+        let month = createdDate.getMonth();
+        let year = createdDate.getFullYear();
+
+        currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        createdDate = new Date(new Date(year, month, day));
+
+        let diffDate = +currentDate - +createdDate;
+        currentDay = Math.round((diffDate / (3600 * 24) / 1000));
+        
+        if (localStorage.main && localStorage.month && localStorage.week && localStorage.day || stateAchivs.has('1')) {
+          responce.push(achivmentsObj['1'])
+          stateAchivs.add('1')
+        }
+        if (currentDay >= 7 || stateAchivs.has('2')) {
+          stateAchivs.add('2')
+          responce.push(achivmentsObj['2'])
+        }
+        if (currentDay >= 21) {
+          stateAchivs.add('3')
+          responce.push(achivmentsObj['3'])
+        }
+        if (currentDay >= 30) {
+          stateAchivs.add('4')
+          responce.push(achivmentsObj['4'])
+        }
+        if (currentDay >= 66) {
+          stateAchivs.add('5')
+          responce.push(achivmentsObj['5'])
+        }
+
+        localStorage.achivments = JSON.stringify(Array.from(stateAchivs))
+        resolve(responce)
+      })
     }
   }
 
