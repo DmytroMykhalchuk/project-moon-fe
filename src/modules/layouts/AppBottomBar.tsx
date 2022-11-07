@@ -12,9 +12,9 @@ import Badge from '@mui/material/Badge';
 type AppBottomBarType = {
    setPage: (page: number) => void
    page: number,
-   isBadge:boolean
+   isBadge: boolean, setOldPage: (arg1: number) => void
 }
-const AppBottomBar = ({ page, setPage,isBadge }: AppBottomBarType) => {
+const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) => {
    return (
       <Box sx={{ pb: 5, }}>
          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }} elevation={3} square={false} >
@@ -24,7 +24,11 @@ const AppBottomBar = ({ page, setPage,isBadge }: AppBottomBarType) => {
                sx={{ color: '#fff', }}
 
                onChange={(event, newValue) => {
-                  setPage(newValue);
+                  //@ts-ignore
+                  setPage((oldValue): number => {
+                     setOldPage(oldValue)
+                     return newValue
+                  });
                }}
             >
                <BottomNavigationAction label="Statistci" icon={<BubbleChartIcon />} />

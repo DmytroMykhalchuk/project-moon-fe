@@ -21,9 +21,7 @@ type ListAimsType = {
 
 type AimsListItemType = {
    currentItem: string
-   setCurrentItem: (currentItem: string) => void
    side: string
-   setSide: (side: string) => void
    listAims: Array<ListAimsType>,
    category: string
    header: string
@@ -36,31 +34,35 @@ type AimsListItemType = {
 
 }
 
-const AimsListItem = ({ currentItem, setCurrentItem, side,
-   setSide, listAims, category, setOldCategory,
-   header, completeHandler, setIdWindow, setTask,
-   rePutHandler, toggleWindow }: AimsListItemType) => {
+const AimsListItem: React.FC<AimsListItemType> = ({
+   currentItem,
+   side,
+   listAims,
+   category,
+   setOldCategory,
+   header,
+   completeHandler,
+   setIdWindow,
+   setTask,
+   rePutHandler,
+   toggleWindow
+}) => {
+
    const createTask = () => {
       let i = 0;
 
-
       let listItems = [];
       if (listAims) {
-         for (const key in listAims) {
-            if (Object.prototype.hasOwnProperty.call(listAims, key)) {
-               const element = listAims[key];
-               // console.log(element.isFinished || element.isInTrash);
-               // let b:any=;
-               // console.log(b)
-               // if (element.isFinished || element.isInTrash) continue;
+         for (const id in listAims) {
+            if (Object.prototype.hasOwnProperty.call(listAims, id)) {
+               const element = listAims[id];
                listItems.push(
-                  <Collapse key={`${category}-${key}`} in={!(element.isFinished || element.isInTrash)} >
-                     <ListItem key={`${category}-${key}`}
-                        data-item={`${category}-${key}`}
+                  <Collapse key={`${category}-${id}`} in={!(element.isFinished || element.isInTrash)} >
+                     <ListItem key={`${category}-${id}`}
+                        data-item={`${category}-${id}`}
                         disablePadding
                         divider
                      >
-
                         <ListItemButton role={undefined}
                            sx={{ padding: 0 }}
                         >
@@ -68,7 +70,7 @@ const AimsListItem = ({ currentItem, setCurrentItem, side,
                               mr: '20px'
                            }}>
 
-                              <Collapse in={currentItem === `${category}-${key}` && side === 'right'}
+                              <Collapse in={currentItem === `${category}-${id}` && side === 'right'}
                                  orientation="horizontal"
                                  sx={{
                                     backgroundColor: '#EF8B6B', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center',
@@ -81,7 +83,7 @@ const AimsListItem = ({ currentItem, setCurrentItem, side,
                                        width: '60px',
                                        borderRight: '2px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '13px'
                                     }}
-                                    onClick={() => { rePutHandler(category, key) }}
+                                    onClick={() => { rePutHandler(category, id) }}
 
                                  >
                                     <RestoreIcon />
@@ -91,12 +93,12 @@ const AimsListItem = ({ currentItem, setCurrentItem, side,
                            <ListItemText id={`${i}`} primary={`${element.aim}`} sx={{ flexGrowh: 1 }} />
                            <Box sx={{ pr: 3 }} >
                               <IconButton edge="end" aria-label="completed" data-cat='cat'
-                                 onClick={() => { completeHandler(category, key) }}>
+                                 onClick={() => { completeHandler(category, id) }}>
                                  <EventAvailableIcon />
                               </IconButton>
                            </Box>
                            <Box sx={{ backgroundColor: '#EF8B6B', height: '50px' }}>
-                              <Collapse in={currentItem === `${category}-${key}` && side === 'left'}
+                              <Collapse in={currentItem === `${category}-${id}` && side === 'left'}
                                  style={{
                                     display: 'flex', justifyContent: 'center', alignItems: 'center'
                                  }}
@@ -105,10 +107,10 @@ const AimsListItem = ({ currentItem, setCurrentItem, side,
                                  <Box sx={{
                                     width: '60px', borderLeft: '2px solid #000', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '13px'
                                  }}
-                                    onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(key); setTask(element); setOldCategory(category) }}
+                                    onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(id); setTask(element); setOldCategory(category) }}
                                  >
                                     <Slide direction="left"
-                                       in={currentItem === `${category}-${key}` && side === 'left'}
+                                       in={currentItem === `${category}-${id}` && side === 'left'}
                                        style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                        className='s1'
                                        mountOnEnter unmountOnExit>
@@ -118,7 +120,6 @@ const AimsListItem = ({ currentItem, setCurrentItem, side,
                               </Collapse>
                            </Box>
                         </ListItemButton>
-
                      </ListItem>
                   </Collapse>
                )
@@ -144,7 +145,6 @@ const AimsListItem = ({ currentItem, setCurrentItem, side,
          return <Typography variant="subtitle1" color="initial">Not found</Typography>
       }
    }
-
    return (
       <>
          {createTask()}

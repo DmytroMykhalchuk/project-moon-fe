@@ -7,7 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AvTimerOutlinedIcon from '@mui/icons-material/AvTimerOutlined';
 
-const StatisticPomodoro = (props: any) => {
+const StatisticPomodoro: React.FC = () => {
    return (
       <Box sx={{ width: '100%', pb: 3 }}>
          <List

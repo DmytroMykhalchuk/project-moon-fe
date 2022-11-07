@@ -1,13 +1,14 @@
 import DailyPage from "./DailyPage";
 import Box from '@mui/material/Box';
-import {  useState } from 'react';
-import { connect, ConnectedProps } from "react-redux";
-import { AppStateType } from "../../../redux/store";
+import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../redux/store";
 import { getCurrentDay, getDaily } from "../../../redux/appStateSelector";
 import { setNewDailyRecord } from "../../../redux/appReducer";
 
-const DailyPageContainer = ({ dailyRecords, currentDay, setDaily }: DailyPageMapsType) => {
+const DailyPageContainer: React.FC = () => {
    const [isOpenFab, setIsOpenFab] = useState(false);
+   const dailyRecords = useSelector(getDaily);
    const [isAlredyAdd, setIsAlredyAdd] = useState(() => {
       if (Object.keys(dailyRecords).length > 0) {
 
@@ -25,6 +26,12 @@ const DailyPageContainer = ({ dailyRecords, currentDay, setDaily }: DailyPageMap
          return false;
       }
    })
+   const dispatch: AppDispatch = useDispatch();
+   const currentDay = useSelector(getCurrentDay);
+
+   const setDaily = (day: string, text: string) => {
+      dispatch(setNewDailyRecord(day, text))
+   }
    return (
       <Box>
          <DailyPage
@@ -39,19 +46,5 @@ const DailyPageContainer = ({ dailyRecords, currentDay, setDaily }: DailyPageMap
       </Box>
    )
 }
-const mapStateToProps = (state: AppStateType) => {
-   return {
-      dailyRecords: getDaily(state),
-      currentDay: getCurrentDay(state)
-   }
-}
-const mapDispatchToProps = (dispatch: any) => {
-   return {
-      setDaily: (day: string, text: string) => {
-         dispatch(setNewDailyRecord(day, text))
-      }
-   }
-}
-const connected = connect(mapStateToProps, mapDispatchToProps);
-type DailyPageMapsType = ConnectedProps<typeof connected>;
-export default connected(DailyPageContainer);
+
+export default DailyPageContainer;

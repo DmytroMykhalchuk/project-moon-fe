@@ -226,7 +226,7 @@ export const api = {
         let diffDate = +currentDate - +createdDate;
         currentDay = Math.round((diffDate / (3600 * 24) / 1000));
 
-        if (localStorage.main && localStorage.month && localStorage.week && localStorage.day || stateAchivs.has('1')) {
+        if ((localStorage.main && localStorage.month && localStorage.week && localStorage.day) || (stateAchivs.has('1'))) {
           responce.push(achivmentsObj['1'])
           stateAchivs.add('1')
         }
@@ -267,7 +267,7 @@ export const api = {
     if (isConnected) {
       console.warn('This functon is not writed');
     } else {
-      let localMessages = localStorage.messages ? JSON.parse(localStorage.messages) : {...messagesObj};
+      let localMessages = localStorage.messages ? JSON.parse(localStorage.messages) : { ...messagesObj };
       for (const key in localMessages) {
         if (Object.prototype.hasOwnProperty.call(localMessages, key)) {
           //@ts-ignore
@@ -279,7 +279,6 @@ export const api = {
         }
       }
       const state = { ...messagesObj, ...localMessages };
-      console.log(state)
       localStorage.messages = JSON.stringify(state);
       return new Promise(resolve => {
         resolve(state)

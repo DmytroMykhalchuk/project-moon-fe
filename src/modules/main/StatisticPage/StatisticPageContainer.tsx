@@ -1,6 +1,6 @@
 import StatisticPage from "./StatisticPage"
 
-const StatisticPageContainer=()=>{
+const StatisticPageContainer:React.FC=()=>{
    return(
       <StatisticPage />
    )

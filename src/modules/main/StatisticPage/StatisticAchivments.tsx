@@ -3,12 +3,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SchoolIcon from '@mui/icons-material/School';
-import { connect, ConnectedProps } from 'react-redux';
-import { AppStateType } from '../../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../../redux/store';
 import { initAchivments } from '../../../redux/appReducer';
 import { getAchivments } from '../../../redux/appStateSelector';
 import Grid from '@mui/material/Grid';
@@ -16,9 +15,14 @@ import Grid from '@mui/material/Grid';
 
 
 
-const StatisticAchivments: React.FC<HeaderProps> = ({ initAchivments, achivments }) => {
+const StatisticAchivments: React.FC = () => {
+   const dispatch: AppDispatch = useDispatch();
+   const achivments = useSelector(getAchivments)
+   const getAllAchivments = () => {
+      dispatch(initAchivments())
+   }
    useEffect(() => {
-      initAchivments();
+      getAllAchivments();
    }, [])
    const displayAchivment = () => {
       if (!achivments) return;
@@ -54,21 +58,6 @@ const StatisticAchivments: React.FC<HeaderProps> = ({ initAchivments, achivments
             sx={{ width: '100%' }}
             aria-label="contacts"
          >
-            {/* <ListItem disablePadding
-            >
-               <ListItemButton disabled>
-
-                  <ListItemText primary={
-                     <Box sx={{ display: 'flex' }}>
-
-                        <SchoolIcon />
-                        <Typography variant="body1">Досягнення</Typography>
-
-
-                     </Box>
-                  } />
-               </ListItemButton>
-            </ListItem> */}
 
             <ListItem >
                <ListItemIcon>
@@ -87,19 +76,5 @@ const StatisticAchivments: React.FC<HeaderProps> = ({ initAchivments, achivments
 }
 
 
-const mapStateToProps = (state: AppStateType) => {
-   return {
-      achivments: getAchivments(state)
-   }
-}
-const mapDispatchToProps = (dispatch: any) => {
-   return {
-      initAchivments: () => {
-         dispatch(initAchivments())
-      }
-   }
-}
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type HeaderProps = ConnectedProps<typeof connector>;
-export default connector(StatisticAchivments);
+export default StatisticAchivments;

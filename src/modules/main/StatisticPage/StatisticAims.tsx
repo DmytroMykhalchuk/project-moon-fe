@@ -8,16 +8,14 @@ import ListItemText from '@mui/material/ListItemText';
 import EventIcon from '@mui/icons-material/Event';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useSelector } from 'react-redux';
+import { getCurrentMonth, getStatDayFinished, getStatMonthFinished, getStatWeekFinished } from '../../../redux/appStateSelector';
 
-type StatisticAims = {
-   currentMonth: number,
-   statMonth: number | string
-   statWeek: number | string
-   statDay: number | string
-
-}
-
-const StatisticAims = ({ currentMonth, statMonth, statWeek, statDay }: any) => {
+const StatisticAims:React.FC = () => {
+   const currentMonth = useSelector(getCurrentMonth)
+   const statMonth = useSelector(getStatMonthFinished)
+   const statWeek = useSelector(getStatWeekFinished)
+   const statDay = useSelector(getStatDayFinished)
    return (
       <Box sx={{ width: '100%', pb: 3 }}>
          <List

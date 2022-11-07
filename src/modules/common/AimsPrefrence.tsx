@@ -1,5 +1,5 @@
-import { connect, ConnectedProps } from "react-redux";
-import { AppStateType } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
 import ListItemText from '@mui/material/ListItemText';
 import List from '@mui/material/List';
 import { deleteTaskThunk, restoreTaskThunk, TaskType, } from "../../redux/appReducer";
@@ -12,13 +12,19 @@ type AimPreferenceType = {
    listInTrash?: any
    listName: string
 }
-const AimsPreference = ({
+const AimsPreference: React.FC<AimPreferenceType> = ({
    listInTrash = '',
    listFinished = '',
-   restoreTask,
-   deleteTask,
-   listName }: AimPreferenceType & HeaderProps) => {
+   listName }) => {
+
+   const dispatch: AppDispatch = useDispatch();
    const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
+   const deleteTask = (category: string, id: string, object: TaskType) => {
+      dispatch(deleteTaskThunk(category, id, object))
+   }
+   const restoreTask = (category: string, id: string, object: TaskType) => {
+      dispatch(restoreTaskThunk(category, id, object))
+   }
    const showListFinished = (currentList: any) => {
       const ret = [];
       let counter = 0;
@@ -154,29 +160,5 @@ const AimsPreference = ({
 
       );
    }
-
-
 }
-
-const mapStateToProps = (state: AppStateType) => {
-   return {
-   }
-}
-const mapDispatchToProps = (dispatch: any) => {
-   return {
-      restoreTask: (category: string, id: string, object: TaskType) => {
-         dispatch(restoreTaskThunk(category, id, object))
-      },
-      deleteTask: (category: string, id: string, object: TaskType) => {
-         dispatch(deleteTaskThunk(category, id, object))
-         // console.log(category, id, object);
-      }
-      // toTrash:(category: string, id: string, object: TaskType)=>{
-      //    dispatch(toTrashTask(category,id,task))
-      // }
-   }
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type HeaderProps = ConnectedProps<typeof connector>;
-export default connector(AimsPreference);
+export default AimsPreference;

@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { api } from "../api/api";
 import { monthDiff } from "../utils/functions";
-import { AppStateType } from "./store";
+import { AppStateType, InferActionsTypes } from "./store";
 
 const INIT = "INIT";
 const FETCHING = 'FETCHING';
@@ -35,7 +35,7 @@ const initialState: any = {
    daily: {
    }
 }
-const appReducer = (state = initialState, action: any): any => {
+const appReducer = (state = initialState, action: ActionsTypes): any => {
    switch (action.type) {
       case INIT: {
          return {
@@ -91,7 +91,7 @@ const appReducer = (state = initialState, action: any): any => {
       case COMPLETE_TASK: {
          let changedTaskList = {
             [action.category]: {
-               ...state[action.category], [action.id]: { ...action.object, isFinished: true }
+               ...state[action.category], [action.id]: { ...action.task, isFinished: true }
             }
          }
          return {
@@ -110,7 +110,7 @@ const appReducer = (state = initialState, action: any): any => {
       }
       case CREATE_TASK: {
 
-         let changedTaskList = { [action.category]: { ...state[action.category], [new Date().getTime()]: { aim: action.aim, isFinished: false, isInTrash: false } } };
+         let changedTaskList = { [action.category]: { ...state[action.category], [new Date().getTime()]: { aim: action.text, isFinished: false, isInTrash: false } } };
          return {
 
             ...state,
@@ -192,13 +192,11 @@ const appReducer = (state = initialState, action: any): any => {
       }
       case SET_MESSAGE: {
          let isBadge = false;
-         // console.log(action.messages)
          if (action.messages) {
 
             for (const item in action.messages) {
                if (Object.prototype.hasOwnProperty.call(action.messages, item)) {
                   const element = action.messages[item];
-                  //   console.log(element.isChecked)
                   if (!element.isChecked) {
                      isBadge = true;
                      break;
@@ -214,21 +212,15 @@ const appReducer = (state = initialState, action: any): any => {
             isBadge
          }
       }
-
       case CHECK_MESSAGE: {
-         // let count=0;
          let isBadge = false;
-         // debugger
-         if (action.messages) {
 
+         if (action.messages) {
             for (const item in action.messages) {
                if (Object.prototype.hasOwnProperty.call(action.messages, item)) {
                   const element = action.messages[item];
-                  //   console.log(element.isChecked)
                   if (!element.isChecked) {
                      isBadge = true;
-                     // break;
-                     // count++;
                   }
 
                }
@@ -237,157 +229,153 @@ const appReducer = (state = initialState, action: any): any => {
          return {
             ...state,
             messages: action.messages,
-            // isBadge:count>1
             isBadge
          }
       }
       default: return state;
    }
 }
-export type TaskType = {
-   aim: string
-   isFinished: boolean
-   isInTrash: boolean
-}
 
-
-type Init = { type: typeof INIT, state: object }
-type Fetching = { type: typeof FETCHING }
-type CompleteTask = { type: typeof COMPLETE_TASK, category: string, id: string | number, task: TaskType }
-type DeleteTask = { type: typeof DELETE_TASK, category: string, id: string | number, object: Object }
-type RestoreTask = { type: typeof RESTORE_TASK, category: string, id: string | number, object: Object }
-type RePutType = { type: typeof REPUT_TASK, id: string | number, category: string, object: Object }
-type CreateAimType = { type: typeof CREATE_TASK, text: string, category: string }
-type EditTaskType = { type: typeof EDIT_TASK, category: string, id: string, text: string }
-type SetCurrentDay = { type: typeof SET_CURRENT_DAY }
-type SetDaily = { type: typeof SET_DAILY, record: Object }
-type UpdateTaskType = { type: typeof UPDATE_TASK, category: string, id: string, task: TaskType }
-type completeDayTask = { type: typeof COMPLETE_ALL_DAY_TASK }
-type GetAchivmentType = { type: typeof GET_ACHIVMENTS, achivments: any }
-type SetMessages = { type: typeof SET_MESSAGE, messages: Object }
-type CheckMessageType = { type: typeof CHECK_MESSAGE, messages: Object }
-
-export type ActionsTypes = Init | SetCurrentDay | Fetching | CompleteTask | DeleteTask | UpdateTaskType |
-   RePutType | CreateAimType | EditTaskType | RestoreTask | SetDaily | completeDayTask | GetAchivmentType
-   | SetMessages | CheckMessageType;
-
+export type ActionsTypes = InferActionsTypes<typeof actions>;
 export type DispatchType = Dispatch<ActionsTypes>;
-export type TaskItemModify = { category: string, id: string | number, object: Object }
 
-const init = (payload: object): ActionsTypes => {
-   return {
-      type: INIT,
-      state: payload
-   }
-}
-const setCurrentDay = (): ActionsTypes => {
-   return {
-      type: SET_CURRENT_DAY
-   }
-}
-const toggleFetching = (): ActionsTypes => {
-   return {
-      type: FETCHING
-   }
-}
-const updateTask = (category: string, id: string, task: TaskType): ActionsTypes => {
-   return {
-      type: UPDATE_TASK,
-      category,
-      id,
-      task
-   }
-}
-const deleteTask = (category: string, id: string | number, object: Object): ActionsTypes => {
-   return {
-      type: DELETE_TASK,
-      category,
-      object,
-      id
-   }
-}
-export const restoreTask = (category: string, id: string, object: TaskType): ActionsTypes => {
-   return {
-      type: RESTORE_TASK,
-      category,
-      id,
-      object
-   }
-}
-export const rePutTask = (category: string, id: string | number, object: Object): ActionsTypes => {
-   return {
-      type: REPUT_TASK,
-      category,
-      object,
-      id
-   }
-}
-export const createTask = (category: string, text: string): ActionsTypes => {
-   return {
-      type: CREATE_TASK,
-      text,
-      category
-   }
-}
-export const editTask = (category: string, id: string, text: string): ActionsTypes => {
-   return {
-      type: EDIT_TASK,
-      id,
-      category,
-      text,
-   }
-}
-export const setDaily = (record: Object): ActionsTypes => {
-   return {
-      type: SET_DAILY,
-      record
-   }
-}
-export const completeAllDayTaskAction = (): ActionsTypes => {
-   return {
-      type: COMPLETE_ALL_DAY_TASK
-   }
-}
-const completeTask = (category: string, id: string, task: TaskType): ActionsTypes => {
-   return {
-      type: COMPLETE_TASK,
-      id,
-      category,
-      task
-   }
-}
-const getAchivsAction = (achivments: any): ActionsTypes => {
-   return {
-      type: GET_ACHIVMENTS,
-      achivments
-   }
-}
-const setMessagesAction = (messages: Object): ActionsTypes => {
-   return {
-      type: SET_MESSAGE,
-      messages
-   }
-}
-const checkMessageAction = (messages: Object): ActionsTypes => { return { type: CHECK_MESSAGE, messages } }
 
-//thunks
+export const actions = {
+   init: (payload: any) => {
+      return {
+         type: INIT,
+         state: payload
+      } as const
+
+   },
+   setCurrentDay: () => {
+      return {
+         type: SET_CURRENT_DAY
+      } as const
+
+   },
+   toggleFetching: () => {
+      return {
+         type: FETCHING
+      } as const
+
+   },
+   updateTask: (category: string, id: string, task: TaskType) => {
+      return {
+         type: UPDATE_TASK,
+         category,
+         id,
+         task
+      } as const
+
+   },
+   deleteTask: (category: string, id: string | number, object: TaskType) => {
+      return {
+         type: DELETE_TASK,
+         category,
+         object,
+         id
+      } as const
+
+   },
+   restoreTask: (category: string, id: string, object: TaskType) => {
+      return {
+         type: RESTORE_TASK,
+         category,
+         id,
+         object
+      } as const
+
+   },
+   rePutTask: (category: string, id: string | number, object: TaskType) => {
+      return {
+         type: REPUT_TASK,
+         category,
+         object,
+         id
+      } as const
+
+   },
+   createTask: (category: string, text: string) => {
+      return {
+         type: CREATE_TASK,
+         text,
+         category
+      } as const
+
+   },
+   editTask: (category: string, id: string, text: string) => {
+      return {
+         type: EDIT_TASK,
+         id,
+         category,
+         text,
+      } as const
+
+   },
+   setDaily: (record: any) => {
+      return {
+         type: SET_DAILY,
+         record
+      } as const
+
+   },
+   completeAllDayTaskAction: () => {
+      return {
+         type: COMPLETE_ALL_DAY_TASK
+      } as const
+
+   },
+   completeTask: (category: string, id: string, task: any) => {
+      return {
+         type: COMPLETE_TASK,
+         id,
+         category,
+         task
+      } as const
+
+   },
+   getAchivsAction: (achivments: any) => {
+      return {
+         type: GET_ACHIVMENTS,
+         achivments
+      } as const
+
+   },
+   setMessagesAction: (messages: any) => {
+      return {
+         type: SET_MESSAGE,
+         messages
+      } as const
+
+   },
+   checkMessageAction: (messages: any) => {
+      return {
+         type: CHECK_MESSAGE,
+         messages
+      } as const
+
+   }
+}
+
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+
 export const getInfoUser = (): ThunksTypes => {
    return async (dispatch) => {
-      dispatch(toggleFetching())
+      dispatch(actions.toggleFetching())
       // const result1 = new Promise((resolve) =>
       //    setTimeout(() => { resolve(dispatch(init(testState))) }, 1000)
       // );
       api.me().then((response: any) => {
-         dispatch(init(response))
-         dispatch(setCurrentDay())
-         dispatch(toggleFetching())
+         dispatch(actions.init(response))
+         dispatch(actions.setCurrentDay())
+         dispatch(actions.toggleFetching())
       })
    }
 }
 export const createTaskThunk = (category: string, text: string,): ThunksTypes => {
    return async (dispatch) => {
-      dispatch(toggleFetching());
+      dispatch(actions.toggleFetching());
 
       const taskSend = {
          [category]: text
@@ -395,8 +383,8 @@ export const createTaskThunk = (category: string, text: string,): ThunksTypes =>
       api.createTask(taskSend).then((responce: any) => {
          const aim = JSON.parse(responce)
          const id = Object.keys(aim)[0];
-         dispatch(updateTask(category, id, aim[id]));
-         dispatch(toggleFetching());
+         dispatch(actions.updateTask(category, id, aim[id]));
+         dispatch(actions.toggleFetching());
       });
    }
 }
@@ -414,7 +402,7 @@ export const finishTaskThunk = (category: string, id: string, task: TaskType): T
       // dispatch(updateTask(category, id, newTask));
       api.updateTask(taskSend).then(() => {
       }).then(() => {
-         dispatch(completeTask(category, id, newTask));
+         dispatch(actions.completeTask(category, id, newTask));
       })
    }
 }
@@ -428,12 +416,12 @@ export const deleteTaskThunk = (category: string, id: string, task: TaskType): T
       }
       if (task.isFinished && !task.isInTrash) {
          api.updateTask(taskSend).then(() => {
-            dispatch(updateTask(category, id, { ...task, isInTrash: true }))
+            dispatch(actions.updateTask(category, id, { ...task, isInTrash: true }))
          })
       } else {
 
          api.deleteTask(taskSend)
-         dispatch(deleteTask(category, id, task))
+         dispatch(actions.deleteTask(category, id, task))
       }
    }
 }
@@ -448,7 +436,7 @@ export const rePutTaskThunk = (category: string, id: string, task: TaskType): Th
       let taskSend = {
          [category]: task.aim
       }
-      dispatch(rePutTask(category, id, task))
+      dispatch(actions.rePutTask(category, id, task))
       api.deleteTask(deleteTaskSend).then(() => {
          api.createTask(taskSend).then(() => {
          })
@@ -458,7 +446,7 @@ export const rePutTaskThunk = (category: string, id: string, task: TaskType): Th
 }
 export const editTaskThunk = (oldCategory: string, category: string, id: string, aim: string, task: TaskType): ThunksTypes => {
    return async (dispatch) => {
-      dispatch(toggleFetching());
+      dispatch(actions.toggleFetching());
       const deleteTaskSend = {
          [oldCategory]: {
             [id]: { aim }
@@ -469,16 +457,16 @@ export const editTaskThunk = (oldCategory: string, category: string, id: string,
       }
       api.deleteTask(deleteTaskSend).then(() => {
          api.createTask(taskSend).then(() => {
-            dispatch(editTask(category, id, aim))
+            dispatch(actions.editTask(category, id, aim))
          })
-      }).then(() => { dispatch(toggleFetching()) })
+      }).then(() => { dispatch(actions.toggleFetching()) })
 
    }
 }
 export const toTrashTask = (category: string, id: string, task: TaskType): ThunksTypes => {
    return async (dispatch) => {
       task.isInTrash = true;
-      dispatch(updateTask(category, id, task));
+      dispatch(actions.updateTask(category, id, task));
       api.updateTask(task);
    }
 }
@@ -489,7 +477,7 @@ export const restoreTaskThunk = (category: string, id: string, task: TaskType): 
       } else {
          task.isFinished = false;
       }
-      dispatch(updateTask(category, id, task));
+      dispatch(actions.updateTask(category, id, task));
       api.updateTask({ [category]: { [id]: { ...task } } });
    }
 }
@@ -498,14 +486,14 @@ export const setNewDailyRecord = (day: string, text: string): ThunksTypes => {
 
 
       api.createDailyRecord({ day, text }).then((responce: any) => {
-         dispatch(setDaily(responce[0]));
+         dispatch(actions.setDaily(responce[0]));
       })
    }
 }
 
 export const completeAllDayTaskThunk = (): ThunksTypes => {
    return async (dispatch) => {
-      dispatch(completeAllDayTaskAction())
+      dispatch(actions.completeAllDayTaskAction())
       api.completeAllDayTasks();
 
    }
@@ -514,7 +502,7 @@ export const initAchivments = (): ThunksTypes => {
    return async (dispatch) => {
       //@ts-ignore
       api.getAchivments().then((responce) => {
-         dispatch(getAchivsAction(responce));
+         dispatch(actions.getAchivsAction(responce));
       })
 
    }
@@ -522,17 +510,23 @@ export const initAchivments = (): ThunksTypes => {
 export const setMessages = (): ThunksTypes => {
    return async (dispatch) => {
       api.getMessages()?.then((responce: any) => {
-// console.log('')
-         dispatch(setMessagesAction(responce))
+         // console.log('')
+         dispatch(actions.setMessagesAction(responce))
       })
    }
 }
 export const checkMessage = (): ThunksTypes => {
    return async (dispatch) => {
       api.checkMessage()?.then((responce: any) => {
-         dispatch(checkMessageAction(responce));
+         dispatch(actions.checkMessageAction(responce));
       });
 
    }
 }
 export default appReducer;
+
+export type TaskType = {
+   aim: string
+   isFinished: boolean
+   isInTrash: boolean
+}

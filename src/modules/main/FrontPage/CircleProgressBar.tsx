@@ -1,25 +1,24 @@
+import { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useEffect, useState } from 'react';
 import styles from './styles.module.scss'
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { IconButton } from '@mui/material';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import { AppStateType } from '../../../redux/store';
-import { connect, ConnectedProps } from 'react-redux';
+import { AppDispatch } from '../../../redux/store';
+import { useDispatch } from 'react-redux';
 import { completeAllDayTaskThunk } from '../../../redux/appReducer';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
+
 type CircleProgress = {
    value: number
    currtimeh: number
    currtimem: number
    currtimes: number
-   completeAllDayTask:()=>void
 }
-
-function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes,completeAllDayTask }: CircleProgress) {
+const CircularProgressWithLabel: React.FC<CircleProgress> = ({ value, currtimeh, currtimem, currtimes }) => {
    const isDevider = currtimes % 2 === 0;
+   const dispatch: AppDispatch = useDispatch();
    return (
       <>
          <Box className={styles.circleSection}>
@@ -67,10 +66,10 @@ function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes,comp
                   </Box>
                </Box>
                <Box className={styles.boxSide}>
-                  <IconButton 
-                  onClick={()=>{completeAllDayTask()}}
-                  aria-label='confirm all done' 
-                  size='large'>
+                  <IconButton
+                     onClick={() => { dispatch(completeAllDayTaskThunk()) }}
+                     aria-label='confirm all done'
+                     size='large'>
                      <DoneAllIcon fontSize="inherit" /></IconButton>
                </Box>
 
@@ -80,7 +79,9 @@ function CircularProgressWithLabel({ value, currtimeh, currtimem, currtimes,comp
    );
 }
 
-const CircleProgressBar = ({ completeAllDayTask }: HeaderProps) => {
+
+const CircleProgressBar: React.FC = () => {
+
    const [progress, setProgress] = useState(100 - (getSecondsToTomorrow() / (24 * 3600) * 100));
    const [currTimeH, setCurrentTimeH] = useState(new Date().getHours());
    const [currTimeM, setCurrentTimeM] = useState(new Date().getMinutes());
@@ -104,33 +105,10 @@ const CircleProgressBar = ({ completeAllDayTask }: HeaderProps) => {
       currtimeh={currTimeH}
       currtimem={currTimeM}
       currtimes={currTimeS}
-      completeAllDayTask={completeAllDayTask}
    />;
 }
 
-
-const mapStateToProps = (state: AppStateType) => {
-   return {
-   }
-}
-const mapDispatchToProps = (dispatch: any) => {
-   return {
-      completeAllDayTask: () => {
-         dispatch(completeAllDayTaskThunk())
-      }
-   }
-}
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type HeaderProps = ConnectedProps<typeof connector>;
-export default connector(CircleProgressBar);
-
-
-
-
-
-
-
-
+export default CircleProgressBar;
 
 function getSecondsToTomorrow() {
    let now = new Date();

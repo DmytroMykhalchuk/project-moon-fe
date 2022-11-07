@@ -16,7 +16,7 @@ type ActionButtonsType = {
    isOpenConfirmation?: boolean
 
 }
-export const ActionButtonsFinished = ({ restoreTask, deleteTask, category, id, object }: ActionButtonsType) => {
+export const ActionButtonsFinished: React.FC<ActionButtonsType> = ({ restoreTask, deleteTask, category, id, object }) => {
    return (
       <Box sx={{ display: 'flex', }}>
          <IconButton aria-label="restore"
@@ -30,7 +30,7 @@ export const ActionButtonsFinished = ({ restoreTask, deleteTask, category, id, o
       </Box>
    )
 }
-export const ActionButtonsTrash = ({ restoreTask, deleteTask, category, id, object, setIsOpenConfirmation = () => { }, isOpenConfirmation = false }: ActionButtonsType) => {
+export const ActionButtonsTrash: React.FC<ActionButtonsType> = ({ restoreTask, deleteTask, category, id, object, setIsOpenConfirmation = () => { }, isOpenConfirmation = false }) => {
    const [idd, setId] = useState('')
    return (
       <>

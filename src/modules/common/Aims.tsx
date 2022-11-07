@@ -4,22 +4,22 @@ import { useSwipeable } from "react-swipeable";
 import { useState, useEffect } from "react";
 import AimsListItem from './AimsListItem'
 import { getDay, getMain, getMonth, getWeek } from "../../redux/appStateSelector";
-import { connect, ConnectedProps } from 'react-redux';
-import { AppStateType } from '../../redux/store';
-import { finishTaskThunk, rePutTaskThunk, TaskType, editTaskThunk } from '../../redux/appReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { finishTaskThunk, rePutTaskThunk, editTaskThunk } from '../../redux/appReducer';
 import DialogWindow from './DialogWindow';
 
-const isNumberElementsToShow = (list: any,cat:string) => {
+const isNumberElementsToShow = (list: any, cat: string) => {
    let counter = 0;
    for (const item in list) {
       if (!list[item].isFinished) {
          counter++;
       }
    }
-   if(cat==='day'){
+   if (cat === 'day') {
       return true
    }
-   if(cat==='main'){
+   if (cat === 'main') {
       return true
    }
    return counter !== 0;
@@ -29,16 +29,14 @@ type AimsOwnType = {
    listName?: string
    isHome?: boolean
 }
-const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName = '', isHome }: HeaderProps & AimsOwnType) => {
+const Aims: React.FC<AimsOwnType> = ({ listName = '', isHome }) => {
    const listConfig: any = {
-      main: {
-         main,
-         header: "Мрія"
-      }, month: { month, header: "Цілі на місяць" },
-      week: { week, header: "Цілі на тиждень" },
-      day: { day, header: "Цілі на день" }
+      main: { list: useSelector(getMain), header: "Мрія" },
+      month: { list: useSelector(getMonth), header: "Цілі на місяць" },
+      week: { list: useSelector(getWeek), header: "Цілі на тиждень" },
+      day: { list: useSelector(getDay), header: "Цілі на день" }
    }
-
+   const dispatch: AppDispatch = useDispatch();
    const [currentItem, setCurrentItem] = useState('');
    const [side, setSide] = useState('');
    const [isOpenDialog, setIsOpenDialog] = useState(false)
@@ -53,14 +51,27 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
       setListElements(() => {
          let str = [] as Array<string>
          if (isHome) {
-            isNumberElementsToShow(day,'day') && str.push('day');
-            isNumberElementsToShow(week,'week') && str.push('week')
-            isNumberElementsToShow(month,'month') && str.push('month')
-            isNumberElementsToShow(main,'main') && str.push('main')
+            isNumberElementsToShow(listConfig['day']['list'], 'day') && str.push('day');
+            isNumberElementsToShow(listConfig['week']['list'], 'week') && str.push('week')
+            isNumberElementsToShow(listConfig['month']['list'], 'month') && str.push('month')
+            isNumberElementsToShow(listConfig['main']['list'], 'main') && str.push('main')
          }
          return str;
       });
-   }, [day, week, month, main])
+   }, [listConfig.day.list, listConfig.week.list, listConfig.month.list, listConfig.main.list])
+
+   const switchList = (fn: Function, cat: string, id: string | number) => {
+      dispatch(fn(cat, id, listConfig[cat].list[id]));
+   }
+   const swipeHandlers = useSwipeable({
+      onSwipeStart: (data) => {
+         if (data.dir === "Left") {
+            swipedLeft(data.event.target)
+         } else if (data.dir === "Right") {
+            swipedRight(data.event.target)
+         }
+      },
+   });
    const swipedLeft = (el: any) => {
       const maxDepth = 5;
       let i = 0;
@@ -102,84 +113,53 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
          return;
       }
    }
-   const switchList = (fn: Function, cat: string, id: string | number) => {
-      switch (cat) {
-         case 'day': {
-            fn(cat, id, day[id])
-            break;
-         }
-         case 'week': {
-            fn(cat, id, week[id])
-            break;
-         }
-         case 'month': {
-            fn(cat, id, month[id])
-            break;
-         }
-         case 'main': {
-            fn(cat, id, main[id])
-            break;
-         }
-      }
+
+   const completeHandler = (cat: string, id: string | number) => {
+      switchList(finishTaskThunk, cat, id);
    }
 
-   const swipeHandlers = useSwipeable({
-      onSwipeStart: (data) => {
-         if (data.dir === "Left") {
-            swipedLeft(data.event.target)
-         } else if (data.dir === "Right") {
-            swipedRight(data.event.target)
-         }
-      },
-   });
-   const completeHandler = (cat: string, id: string | number) => {
-      switchList(finishTask, cat, id);
+   const rePutHandler = (cat: string, id: string | number) => {
+      switchList(rePutTaskThunk, cat, id);
+   }
+   const editItem = (cat: string, text: string) => {
+      dispatch(editTaskThunk(oldCategory, cat, idWindow, text, task));
    }
    const toogleWindow = (category: string, text: string) => {
       setCategoryDW(category);
       setTextDW(text)
       setIsOpenDialog(true);
    }
-   const rePutHandler = (cat: string, id: string | number) => {
-      switchList(rePutTask, cat, id);
-   }
-   const editItem = (cat: string, text: string) => {
-      editAim(oldCategory, cat, idWindow, text, task);
-   }
 
-   if (listName) {
-      return (
-         <Box sx={{}}>
-            {isOpenDialog &&
-               <DialogWindow isOpenDialog={isOpenDialog}
-                  setIsOpenDialog={setIsOpenDialog}
-                  aimDialog={textDW}
-                  categoryDialog={categoryDW}
-                  editItemWindow={editItem}
-               />
-
-            }
-            <List {...swipeHandlers}
-               sx={{
-                  width: '100%',
-                  position: 'relative',
-                  overflow: 'auto',
-                  maxHeight: '100%',
-                  '& ul': { padding: 0 },
-               }}
-               subheader={<li />}
-               dense
-               disablePadding
-            >
-               <AimsListItem
+   const listToShow = () => {
+      if (listName) {
+         return (
+            <AimsListItem
+               currentItem={currentItem}
+               side={side}
+               listAims={listConfig
+               [listName].list}
+               category={listName}
+               header=""
+               completeHandler={completeHandler}
+               rePutHandler={rePutHandler}
+               toggleWindow={toogleWindow}
+               setIdWindow={setIdWindow}
+               setTask={setTask}
+               setOldCategory={setOldCategory}
+            />
+         )
+      } else {
+         return (
+            listElements.map(item => {
+               return <AimsListItem
+                  key={item}
                   currentItem={currentItem}
-                  setCurrentItem={setCurrentItem}
                   side={side}
-                  setSide={setSide}
                   listAims={listConfig
-                  [listName][listName]}
-                  category={listName}
-                  header=""
+                  [item].list}
+                  category={`${item}`}
+                  header={listConfig
+                  [item].header}
                   completeHandler={completeHandler}
                   rePutHandler={rePutHandler}
                   toggleWindow={toogleWindow}
@@ -187,6 +167,7 @@ const Aims = ({ main, month, week, day, finishTask, rePutTask, editAim, listName
                   setTask={setTask}
                   setOldCategory={setOldCategory}
                />
+<<<<<<< HEAD
             </List>
          </Box>)
    } else {
@@ -520,10 +501,41 @@ const mapDispatchToProps = (dispatch: any) => {
       },
       editAim: (oldCategory: string, category: string, id: string, text: string, task: TaskType) => {
          dispatch(editTaskThunk(oldCategory, category, id, text, task))
+=======
+            })
+         )
+>>>>>>> ed8e90c (optimized)
       }
    }
+
+   return (
+      <Box sx={{}}>
+         {isOpenDialog &&
+            <DialogWindow isOpenDialog={isOpenDialog}
+               setIsOpenDialog={setIsOpenDialog}
+               aimDialog={textDW}
+               categoryDialog={categoryDW}
+               editItemWindow={editItem}
+            />
+
+         }
+         <List {...swipeHandlers}
+            sx={{
+               width: '100%',
+               position: 'relative',
+               overflow: 'auto',
+               maxHeight: '100%',
+               '& ul': { padding: 0 },
+            }}
+            subheader={<li />}
+            dense
+            disablePadding
+         >
+            {
+               listToShow()
+            }
+         </List>
+      </Box>)
 }
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type HeaderProps = ConnectedProps<typeof connector>;
-export default connector(Aims);
+export default Aims;

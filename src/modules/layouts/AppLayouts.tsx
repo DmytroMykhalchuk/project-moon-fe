@@ -12,6 +12,10 @@ import { connect, ConnectedProps } from 'react-redux';
 import { AppStateType } from '../../redux/store';
 import { setMessages } from '../../redux/appReducer';
 import { getIsBadge, getMessagesState } from '../../redux/appStateSelector';
+// import { Slide } from '@mui/material';
+// import Fade from '@mui/material/Fade';
+import Box from '@mui/material/Box';
+import { Slide } from '@mui/material';
 
 const TabItems =
    [
@@ -22,43 +26,29 @@ const TabItems =
       <DailyPageContainer />,
    ] as Array<JSX.Element>;
 
-const AppLayouts: React.FC<HeaderProps> = ({ messages, init,isBadge }) => {
-   // const [isBadge, setIsBadge] = useState(false)
+const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
    useEffect(() => {
 
       init();
    }, [])
-   // useEffect(() => {
-   //    if (messages) {
-         
-   //       for (const item in messages) {
-   //          if (Object.prototype.hasOwnProperty.call(messages, item)) {
-   //             const element = messages[item];
-   //             if (!element.isChecked) {
-   //                setIsBadge(true);
-   //                break;
-   //             }
-
-   //          }
-   //       }
-   //    }
-   // }, [messages])
-
 
    const [page, setPage] = useState(2);
+   const [oldPage, setOldPage] = useState(2)
+   // console.log(oldPage-page)
    return <article className={styles.appWrapper}>
       <AppTitle />
-      <Container maxWidth={'md'} disableGutters >
+      <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
          {TabItems[page]}
       </Container>
-      <AppBottomBar page={page} setPage={setPage} isBadge={isBadge} />
+
+      <AppBottomBar page={page} setPage={setPage} setOldPage={setOldPage} isBadge={isBadge} />
    </article>;
 }
 
 const mapStateToProps = (state: AppStateType) => {
    return {
       messages: getMessagesState(state),
-      isBadge:getIsBadge(state)
+      isBadge: getIsBadge(state)
    }
 }
 const mapDispatchToProps = (dispatch: any) => {

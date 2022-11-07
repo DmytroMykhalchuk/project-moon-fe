@@ -1,15 +1,20 @@
 import { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getInfoUser } from "../../../redux/appReducer";
-import {  getIsFetchingApp, getiSInitApp} from "../../../redux/appStateSelector";
-import { AppStateType } from "../../../redux/store";
+import { getIsFetchingApp, getiSInitApp } from "../../../redux/appStateSelector";
+import { AppDispatch } from "../../../redux/store";
 import FrontPage from "./FrontPage";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const FrontPageContainer = ({ initApp, isFetching, isInit}: HeaderProps) => {
+const FrontPageContainer: React.FC = () => {
+   const dispatch: AppDispatch = useDispatch();
+
+   const isInit = useSelector(getiSInitApp);
+   const isFetching = useSelector(getIsFetchingApp)
+
    useEffect(() => {
-      isInit || initApp()
+      isInit || dispatch(getInfoUser())
    }, [])
 
 
@@ -26,20 +31,5 @@ const FrontPageContainer = ({ initApp, isFetching, isInit}: HeaderProps) => {
    )
 }
 
-const mapStateToProps = (state: AppStateType) => {
-   return {
-      isFetching: getIsFetchingApp(state),
-      isInit: getiSInitApp(state),
 
-   }
-}
-const mapDispatchToProps = (dispatch: any) => {
-   return {
-      initApp: () => {
-         dispatch(getInfoUser())
-      }
-   }
-}
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type HeaderProps = ConnectedProps<typeof connector>;
-export default connector(FrontPageContainer);
+export default FrontPageContainer;

@@ -10,8 +10,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createTaskThunk } from '../../redux/appReducer';
+import { AppDispatch } from '../../redux/store';
 type DialogWindowType = {
    isOpenDialog: boolean
    setIsOpenDialog: (bool: boolean) => void
@@ -20,16 +21,20 @@ type DialogWindowType = {
    editItemWindow?: (arg1: string, arg2: string) => void
 
 }
-const DialogWindow = ({ 
-isOpenDialog, 
-setIsOpenDialog, 
-createAim, 
-categoryDialog = "", 
-aimDialog = "", 
-...props 
-}: DialogWindowType & HeaderProps) => {
+const DialogWindow: React.FC<DialogWindowType> = ({
+   isOpenDialog,
+   setIsOpenDialog,
+   categoryDialog = "",
+   aimDialog = "",
+   ...props
+}) => {
    const [category, setCategory] = useState(categoryDialog);
    const [aim, setAim] = useState(aimDialog)
+
+   const dispatch: AppDispatch = useDispatch();
+   const createAim = (category: string, text: string) => {
+      dispatch(createTaskThunk(category, text))
+   }
    const handleChangeCategory = (event: any) => {
       setCategory(event.target.value);
    };
@@ -92,14 +97,4 @@ aimDialog = "",
    )
 
 }
-const mapDispatchToProps = (dispatch: any) => {
-   return {
-      createAim: (category: string, text: string) => {
-         dispatch(createTaskThunk(category, text))
-      }
-   }
-}
-
-const connector = connect(null, mapDispatchToProps);
-type HeaderProps = ConnectedProps<typeof connector>;
-export default connector(DialogWindow);
+export default DialogWindow;
