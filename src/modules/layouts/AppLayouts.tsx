@@ -12,7 +12,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { AppStateType } from '../../redux/store';
 import { setMessages } from '../../redux/appReducer';
 import { getIsBadge, getMessagesState } from '../../redux/appStateSelector';
-// import Fade from '@mui/material/Fade';
+import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
 import { Slide } from '@mui/material';
 
@@ -33,7 +33,6 @@ const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
 
    const [page, setPage] = useState(2);
    const [oldPage, setOldPage] = useState(2)
-   // console.log(oldPage-page)
    return <article className={styles.appWrapper}>
       <AppTitle />
       {/* <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
@@ -42,41 +41,40 @@ const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
          </Box>
       </Container> */}
       <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
-         <Box>
-            <Slide in={page === 0} direction={page>oldPage  ? 'right' : 'left'} unmountOnExit mountOnEnter >
-               <Box>
+         <Box sx={{display:page===0?'block':'none'}}>
+            <Fade in={page === 0} appear={false}>
+               <Box >
                   < StatisticPageContainer />
                </Box>
-            </Slide>
+            </Fade>
          </Box>
-         <Box>
-            <Slide in={page === 1} direction={page>oldPage  ? 'right' : 'left'} unmountOnExit mountOnEnter >
-               <Box>
+         <Box sx={{display:page===1?'block':'none'}}>
+            <Fade in={page === 1} appear={false}>
+               <Box >
                   <MessagePageContainer />
                </Box>
-            </Slide>
+            </Fade>
          </Box>
-         <Box>
-            <Slide in={page === 2} direction={page>oldPage  ? 'right' : 'left'} unmountOnExit mountOnEnter >
-               <Box>
+         <Box sx={{display:page===2?'block':'none'}}>
+            <Fade in={page === 2} appear={false}>
+               <Box >
                   <FrontPageContainer />
                </Box>
-            </Slide>
+            </Fade>
          </Box>
-         <Box>
-            <Slide in={page === 3} direction={page>oldPage  ? 'right' : 'left'} unmountOnExit mountOnEnter >
-               <Box>
+         <Box sx={{display:page===3?'block':'none'}}>
+            <Fade in={page === 3} appear={false}>
+               <Box >
                   <PreferencePageContainer />
                </Box>
-            </Slide>
+            </Fade>
          </Box>
-         <Box>
-            <Slide in={page === 4} direction={page>oldPage  ? 'right' : 'left'} unmountOnExit mountOnEnter >
-               <Box>
-                  <DailyPageContainer />,
-
+         <Box sx={{display:page===4?'block':'none'}}>
+            <Fade in={page === 4} appear={false}>
+               <Box >
+                  <DailyPageContainer />
                </Box>
-            </Slide>
+            </Fade>
          </Box>
       </Container>
       <AppBottomBar page={page} setPage={setPage} setOldPage={setOldPage} isBadge={isBadge} />
