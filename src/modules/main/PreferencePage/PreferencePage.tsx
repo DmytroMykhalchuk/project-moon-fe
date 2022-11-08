@@ -90,9 +90,9 @@ const PreferencePage: React.FC = () => {
          </Fab>
 
          {['day', 'week', 'month', 'main'].map(item => {
-            return <Card variant='outlined' sx={{ mb: 3 }} key={item}>
+            return <Card variant='outlined' sx={{ mb: 3, backgroundColor: '#2e2e2ec9' }} key={item} >
                <CardContent>
-                  <Typography variant="h5" color="text.secondary" component="div">
+                  <Typography variant="h5" component="div" sx={{ pb: 2,color:'#fff' }}>
                      {listConfig[item].header}
                   </Typography>
                   <Aims listName={item} />

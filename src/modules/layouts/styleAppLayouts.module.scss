@@ -5,5 +5,12 @@
    // background-color: $app-bg-color;
    padding: 15px 0;
    // color: $back-color-content;
+   background-repeat:no-repeat;
+   background-size:cover;
+   background-attachment: fixed;
    overflow:hidden;
+   // backdrop-filter: blur(1px);
+   &__wrapper{
+      position: relative;
+   }
 }

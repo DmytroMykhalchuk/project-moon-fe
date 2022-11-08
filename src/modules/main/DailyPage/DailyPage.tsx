@@ -47,7 +47,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
             const element = records[recordDate];
             const createDate = new Date(+recordDate);
             elementRecords.push(
-               <Accordion key={recordDate}>
+               <Accordion key={recordDate} sx={{backgroundColor:'#2e2e2ec9'}}>
                   <AccordionSummary
                      expandIcon={<ExpandMoreIcon />}
                      aria-controls={`panel-content-${recordDate}`}
@@ -107,6 +107,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
          <Collapse in={!isAlredyAdd}> {/*isisExtended*/}
             <Accordion
                defaultExpanded
+               sx={{backgroundColor:'#2e2e2ec9'}}
             >
                <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}

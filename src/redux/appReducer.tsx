@@ -19,6 +19,7 @@ const COMPLETE_ALL_DAY_TASK = "COMPLETE_ALL_DAY_TASK";
 const GET_ACHIVMENTS = "GET_ACHIVMENTS";
 const SET_MESSAGE = 'SET_MESSAGE';
 const CHECK_MESSAGE = 'CHECK_MESSAGE';
+const CHECK_ONLINE = 'CHECK_ONLINE';
 
 const initialState: any = {
 
@@ -232,6 +233,12 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
             isBadge
          }
       }
+      case CHECK_ONLINE: {
+         return {
+            ...state,
+            lastOnline: action.online
+         }
+      }
       default: return state;
    }
 }
@@ -355,6 +362,12 @@ export const actions = {
          messages
       } as const
 
+   },
+   checkOnline: (date: any) => {
+      return {
+         type: CHECK_ONLINE,
+         online: date
+      } as const
    }
 }
 
@@ -515,7 +528,7 @@ export const setMessages = (): ThunksTypes => {
       })
    }
 }
-export const checkMessage = (): ThunksTypes => {
+export const checkMessageThunk = (): ThunksTypes => {
    return async (dispatch) => {
       api.checkMessage()?.then((responce: any) => {
          dispatch(actions.checkMessageAction(responce));
@@ -523,6 +536,14 @@ export const checkMessage = (): ThunksTypes => {
 
    }
 }
+export const checkOnline = (): ThunksTypes => {
+   return async (dispatch) => {
+      api.checkOnline()?.then((responce: any) => {
+         dispatch(actions.checkOnline(responce));
+      })
+   }
+}
+
 export default appReducer;
 
 export type TaskType = {

@@ -11,7 +11,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useSelector } from 'react-redux';
 import { getCurrentMonth, getStatDayFinished, getStatMonthFinished, getStatWeekFinished } from '../../../redux/appStateSelector';
 
-const StatisticAims:React.FC = () => {
+const StatisticAims: React.FC = () => {
    const currentMonth = useSelector(getCurrentMonth)
    const statMonth = useSelector(getStatMonthFinished)
    const statWeek = useSelector(getStatWeekFinished)
@@ -19,7 +19,11 @@ const StatisticAims:React.FC = () => {
    return (
       <Box sx={{ width: '100%', pb: 3 }}>
          <List
-            sx={{ width: '100%', backgroundColor: 'background.paper' }}
+            sx={{
+               width: '100%',
+               // backgroundColor: 'background.paper',
+               backgroundColor: "#2e2e2ec9"
+            }}
             aria-label="contacts"
          >
             <ListItem disablePadding >

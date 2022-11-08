@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { finishTaskThunk, rePutTaskThunk, editTaskThunk } from '../../redux/appReducer';
 import DialogWindow from './DialogWindow';
+import styles from './style.module.scss'
 
 const isNumberElementsToShow = (list: any, cat: string) => {
    let counter = 0;
@@ -525,9 +526,10 @@ const mapDispatchToProps = (dispatch: any) => {
                position: 'relative',
                overflow: 'auto',
                maxHeight: '100%',
+               backgroundColor:'#2e2e2ec9',
                '& ul': { padding: 0 },
             }}
-            subheader={<li />}
+            subheader={<li className={styles.subheader} />}
             dense
             disablePadding
          >

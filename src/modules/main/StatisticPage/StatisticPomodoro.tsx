@@ -11,7 +11,12 @@ const StatisticPomodoro: React.FC = () => {
    return (
       <Box sx={{ width: '100%', pb: 3 }}>
          <List
-            sx={{ width: '100%', bgcolor: 'background.paper' }}
+            sx={{
+               width: '100%',
+               // bgcolor: 'background.paper',
+               backgroundColor: "#2e2e2ec9"
+
+            }}
             aria-label="contacts"
          >
             <ListItem disablePadding

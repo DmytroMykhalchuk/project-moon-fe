@@ -10,6 +10,7 @@ import { getIsBadge, getMessagesState } from "../../../redux/appStateSelector";
 import Collapse from '@mui/material/Collapse';
 import DoneIcon from '@mui/icons-material/Done';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { checkMessageThunk } from "../../../redux/appReducer";
 
 
 
@@ -27,7 +28,7 @@ const MessagePage: React.FC = () => {
       setOpen(!open)
    }
    const checkMessage = () => {
-      dispatch(checkMessage())
+      dispatch(checkMessageThunk())
    }
    useEffect(() => {
       // @ts-ignore
@@ -41,7 +42,12 @@ const MessagePage: React.FC = () => {
             const element = messages[item];
             ret.push(
                <Collapse in={element.isChecked} key={item}>
-                  <Box sx={{ backgroundColor: '#3d3', width: '80%', margin: '0 0 30px 20px', p: 2, borderRadius: '20px' }}>
+                  <Box sx={{
+                     //  backgroundColor: '#3d3', 
+                     backgroundColor: '#fff',
+                     color: '#000',
+                     width: '75%', margin: '0 0 30px 20px', p: 2, borderRadius: '20px'
+                  }}>
                      {element.text}
                   </Box>
                </Collapse>
@@ -51,8 +57,8 @@ const MessagePage: React.FC = () => {
       return (ret)
    }
    return (
-      <>
-         <Fab color="secondary"
+      <Box sx={{ position: 'relative' }}>
+         <Fab
             onClick={() => {
                if (isBadge) {
                   checkMessage()
@@ -65,7 +71,8 @@ const MessagePage: React.FC = () => {
             sx={{
                position: 'fixed',
                bottom: '80px',
-               right: '16px'
+               right: '16px',
+               backgroundColor: '#fff'
             }}>
             {isBadge ? <DoneIcon /> : <SettingsIcon />}
          </Fab>
@@ -88,7 +95,7 @@ const MessagePage: React.FC = () => {
             sendMessageHandler={sendMessageHandler}
             switcherHandler={switcherHandler}
          />
-      </>
+      </Box>
    );
 }
 

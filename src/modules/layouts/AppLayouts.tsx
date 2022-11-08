@@ -15,7 +15,7 @@ import { getIsBadge, getMessagesState } from '../../redux/appStateSelector';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
 import { Slide } from '@mui/material';
-
+import bg from './../../img/bg/bg.jpg'
 const TabItems =
    [
       < StatisticPageContainer />,
@@ -33,51 +33,59 @@ const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
 
    const [page, setPage] = useState(2);
    const [oldPage, setOldPage] = useState(2)
-   return <article className={styles.appWrapper}>
-      <AppTitle />
-      {/* <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
+   return <article className={styles.appWrapper}
+      style={{ backgroundImage: `url(${bg})` }}
+   >
+      {/* <Box
+         className={styles.appWrapper__wrapper}
+      > */}
+
+         <AppTitle />
+         {/* <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
          <Box>
             {TabItems[oldPage]}
          </Box>
       </Container> */}
-      <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
-         <Box sx={{display:page===0?'block':'none'}}>
-            <Fade in={page === 0} appear={false}>
-               <Box >
-                  < StatisticPageContainer />
-               </Box>
-            </Fade>
-         </Box>
-         <Box sx={{display:page===1?'block':'none'}}>
-            <Fade in={page === 1} appear={false}>
-               <Box >
-                  <MessagePageContainer />
-               </Box>
-            </Fade>
-         </Box>
-         <Box sx={{display:page===2?'block':'none'}}>
-            <Fade in={page === 2} appear={false}>
-               <Box >
-                  <FrontPageContainer />
-               </Box>
-            </Fade>
-         </Box>
-         <Box sx={{display:page===3?'block':'none'}}>
-            <Fade in={page === 3} appear={false}>
-               <Box >
-                  <PreferencePageContainer />
-               </Box>
-            </Fade>
-         </Box>
-         <Box sx={{display:page===4?'block':'none'}}>
-            <Fade in={page === 4} appear={false}>
-               <Box >
-                  <DailyPageContainer />
-               </Box>
-            </Fade>
-         </Box>
-      </Container>
-      <AppBottomBar page={page} setPage={setPage} setOldPage={setOldPage} isBadge={isBadge} />
+         <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
+            <Box sx={{ display: page === 0 ? 'block' : 'none' }}>
+               <Fade in={page === 0} appear={false}>
+                  <Box >
+                     < StatisticPageContainer />
+                  </Box>
+               </Fade>
+            </Box>
+            <Box sx={{ display: page === 1 ? 'block' : 'none' }}>
+               <Fade in={page === 1} appear={false}>
+                  <Box >
+                     <MessagePageContainer />
+                  </Box>
+               </Fade>
+            </Box>
+            <Box sx={{ display: page === 2 ? 'block' : 'none' }}>
+               <Fade in={page === 2} appear={false}>
+                  <Box >
+                     <FrontPageContainer />
+                  </Box>
+               </Fade>
+            </Box>
+            <Box sx={{ display: page === 3 ? 'block' : 'none' }}>
+               <Fade in={page === 3} appear={false}>
+                  <Box >
+                     <PreferencePageContainer />
+                  </Box>
+               </Fade>
+            </Box>
+            <Box sx={{ display: page === 4 ? 'block' : 'none' }}>
+               <Fade in={page === 4} appear={false}>
+                  <Box >
+                     <DailyPageContainer />
+                  </Box>
+               </Fade>
+            </Box>
+         </Container>
+      {/* </Box> */}
+         <AppBottomBar page={page} setPage={setPage} setOldPage={setOldPage} isBadge={isBadge} />
+
    </article >;
 }
 

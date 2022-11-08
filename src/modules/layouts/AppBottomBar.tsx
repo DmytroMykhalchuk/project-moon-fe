@@ -8,12 +8,22 @@ import TodayIcon from '@mui/icons-material/Today';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import CommentBankIcon from '@mui/icons-material/CommentBank';
 import Badge from '@mui/material/Badge';
+import BookIcon from '@mui/icons-material/Book';
+import HubIcon from '@mui/icons-material/Hub';
 
 type AppBottomBarType = {
    setPage: (page: number) => void
    page: number,
    isBadge: boolean, setOldPage: (arg1: number) => void
 }
+const styles = {
+   "&.MuiBottomNavigationAction-root": {
+      color: "#898989"
+    },
+   "&.Mui-selected": {
+      color: "#fff ",
+   }
+};
 const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) => {
    return (
       <Box sx={{ pb: 5, }}>
@@ -31,15 +41,15 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
                   });
                }}
             >
-               <BottomNavigationAction label="Statistci" icon={<BubbleChartIcon />} />
-               <BottomNavigationAction label="Recents" icon={
+               <BottomNavigationAction sx={styles} label="Статистика" icon={<BubbleChartIcon />} />
+               <BottomNavigationAction sx={styles} label="Інформація" icon={
                   <Badge color="error" variant="dot" invisible={!isBadge}>
                      <CommentBankIcon />
                   </Badge>
                } />
-               <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-               <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
-               <BottomNavigationAction label="Daily" icon={<TodayIcon />} />
+               <BottomNavigationAction sx={styles} label="Головна" icon={<HubIcon />} />
+               <BottomNavigationAction sx={styles} label="Керування" icon={<BookIcon />} />
+               <BottomNavigationAction sx={styles} label="Щоденник" icon={<TodayIcon />} />
             </BottomNavigation>
          </Paper>
       </Box>

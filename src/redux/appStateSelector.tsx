@@ -49,3 +49,6 @@ export const getMessagesState=(state:AppStateType)=>{
 export const getIsBadge=(state:AppStateType)=>{
    return state.app.isBadge;
 }
+export const getLastOnline=(state:AppStateType)=>{
+   return state.app.lastOnline;
+}

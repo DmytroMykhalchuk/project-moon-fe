@@ -143,7 +143,7 @@ const AimsPreference: React.FC<AimPreferenceType> = ({
    if (listFinished) {
       return (
          <>
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ width: '100%', backgroundColor: '#2e2e2ec9' }}>
                {showListFinished(listFinished)}
             </List>
          </>
@@ -153,7 +153,7 @@ const AimsPreference: React.FC<AimPreferenceType> = ({
       return (
          <>
 
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            <List sx={{ width: '100%', backgroundColor: '#2e2e2ec9' }}>
                {showListInTrash(listInTrash)}
             </List>
          </>

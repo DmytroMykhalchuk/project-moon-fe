@@ -70,6 +70,8 @@ export const api = {
         return responce.data;
       });
     } else {
+      const currTime = new Date();
+      const onlineDay = new Date(currTime.getFullYear(), currTime.getMonth(), currTime.getDate())
       let state = {
         main: localStorage.main ? JSON.parse(localStorage.main) : {},
         month: localStorage.month ? JSON.parse(localStorage.month) : {},
@@ -88,7 +90,7 @@ export const api = {
 =======
         daily: localStorage.daily ? localStorage.daily : "{}",
         createdAt: localStorage.createdAt ? localStorage.createdAt : 0,
-        lastOnline: localStorage.lastOnline ? localStorage.lastOnline : 0,
+        lastOnline: localStorage.lastOnline ? localStorage.lastOnline : onlineDay,
         created_at: localStorage.created_at ? localStorage.created_at : localStorage.created_at = new Date(),
         statisticday: localStorage.statisticday ? localStorage.statisticday : 0,
         statisticweek: localStorage.statisticweek ? localStorage.statisticweek : 0,
@@ -284,8 +286,18 @@ export const api = {
         resolve(state)
       })
     }
+  },
+  checkOnline: function () {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      const currTime = new Date();
+      const onlineDay = new Date(currTime.getFullYear(), currTime.getMonth(), currTime.getDate())
+      localStorage.lastOnline = onlineDay;
+      return new Promise(resolve => {
+        resolve(onlineDay)
+      })
+    }
   }
 
 };
-
-
