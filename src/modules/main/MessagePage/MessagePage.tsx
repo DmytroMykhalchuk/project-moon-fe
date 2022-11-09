@@ -18,6 +18,8 @@ const MessagePage: React.FC = () => {
    const dummy = useRef();
    const dispatch: AppDispatch = useDispatch();
    const [open, setOpen] = useState(false);
+
+
    const messages = useSelector(getMessagesState)
    const isBadge = useSelector(getIsBadge)
    const sendMessageHandler = () => {
@@ -30,9 +32,12 @@ const MessagePage: React.FC = () => {
    const checkMessage = () => {
       dispatch(checkMessageThunk())
    }
-   useEffect(() => {
+   const onScrollDummy = () => {
       // @ts-ignore
-      dummy.current.scrollIntoView();
+      dummy.current.scrollIntoView({ behavior: 'smooth'});
+   }
+   useEffect(() => {
+      onScrollDummy();
    }, []);
 
    const showMessages = () => {
@@ -56,11 +61,16 @@ const MessagePage: React.FC = () => {
       }
       return (ret)
    }
+
    return (
       <Box sx={{ position: 'relative' }}>
          <Fab
             onClick={() => {
                if (isBadge) {
+                  setTimeout(() => {
+                     onScrollDummy();
+                  }, 900)
+
                   checkMessage()
                } else {
                   setOpen(true);
@@ -76,6 +86,7 @@ const MessagePage: React.FC = () => {
             }}>
             {isBadge ? <DoneIcon /> : <SettingsIcon />}
          </Fab>
+
          <Global
             styles={{
                '.MuiDrawer-root > .MuiPaper-root': {
@@ -94,6 +105,7 @@ const MessagePage: React.FC = () => {
             open={open}
             sendMessageHandler={sendMessageHandler}
             switcherHandler={switcherHandler}
+            onScrollDummy={onScrollDummy}
          />
       </Box>
    );

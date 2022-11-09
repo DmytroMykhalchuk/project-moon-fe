@@ -14,38 +14,23 @@ import { setMessages } from '../../redux/appReducer';
 import { getIsBadge, getMessagesState } from '../../redux/appStateSelector';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
-import { Slide } from '@mui/material';
 import bg from './../../img/bg/bg.jpg'
-const TabItems =
-   [
-      < StatisticPageContainer />,
-      <MessagePageContainer />,
-      <FrontPageContainer />,
-      <PreferencePageContainer />,
-      <DailyPageContainer />,
-   ] as Array<JSX.Element>;
 
 const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
    useEffect(() => {
 
       init();
    }, [])
-
    const [page, setPage] = useState(2);
    const [oldPage, setOldPage] = useState(2)
+   if (oldPage !== page) {
+      window.scrollTo(0, 0)
+   }
+
    return <article className={styles.appWrapper}
       style={{ backgroundImage: `url(${bg})` }}
    >
-      {/* <Box
-         className={styles.appWrapper__wrapper}
-      > */}
-
       <AppTitle />
-      {/* <Container maxWidth={'md'} disableGutters sx={{ position: 'relative', minHeight: '100vh' }}>
-         <Box>
-            {TabItems[oldPage]}
-         </Box>
-      </Container> */}
       <Container maxWidth={'md'} disableGutters sx={{ position: 'relative' }}>
          <Box sx={{ display: page === 0 ? 'block' : 'none' }}>
             <Fade in={page === 0} appear={false}>

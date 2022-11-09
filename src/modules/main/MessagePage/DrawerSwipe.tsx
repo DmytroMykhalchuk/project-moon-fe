@@ -1,12 +1,18 @@
-import Button from '@mui/material/Button';
+import { useState } from 'react'
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import SendIcon from '@mui/icons-material/Send';
-import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import { Global } from '@emotion/react';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import { DialogConfirmation } from "./DialogConfirmation";
+import { AppDispatch } from '../../../redux/store';
+import { useDispatch } from 'react-redux';
+import { changeLangCites, deleteMessageHistory, setCurrentDay, setNewMessage } from '../../../redux/appReducer';
+
+
 const StyledBox = styled(Box)(({ theme }) => ({
    backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
 }));
@@ -27,11 +33,52 @@ type DrawerSwipeType = {
    sendMessageHandler: () => void,
    switcherHandler: () => void
    window?: any
+   onScrollDummy: () => void
 }
 
-const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, window }: DrawerSwipeType) => {
+const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, window, onScrollDummy }: DrawerSwipeType) => {
+   const dispatch: AppDispatch = useDispatch();
+   const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
+   const [fnToConfirmation, setfnToConfirmation] = useState('')
+   const [dialogHeader, setDialogHeader] = useState('')
+   const actions = {
+      deleteMessageHistory: () => {
+         dispatch(deleteMessageHistory())
+      },
+      setNewDay: (number: number) => {
+         if (number !== undefined)
+            dispatch(setCurrentDay(number))
+         setTimeout(() => { onScrollDummy() }, 800);
+      },
+      changeLanguageCites: (lang: string) => {
+         dispatch(changeLangCites(lang))
+         setTimeout(() => { onScrollDummy() }, 800);
+
+      },
+      contactWithDev: () => {
+         const text = `Пишіть мені: \n
+         Instagram: @night__tramway 
+         Twitter: @kaiderivor`;
+         dispatch(setNewMessage(text));
+         setTimeout(() => { onScrollDummy() }, 800);
+
+      },
+      supportProject: () => {
+         const text = "https://t.me/projectmoon21";
+         dispatch(setNewMessage(text));
+         setTimeout(() => { onScrollDummy() }, 800);
+      }
+   }
    return (
       <>
+
+         <DialogConfirmation
+            isOpenConfirmation={isOpenConfirmation}
+            setIsOpenConfirmation={setIsOpenConfirmation}
+            fnToConfirmation={fnToConfirmation}
+            actions={actions}
+            header={dialogHeader}
+         />
          <Global
             styles={{
                '.MuiDrawer-root > .MuiPaper-root': {
@@ -63,7 +110,7 @@ const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, windo
                   visibility: 'visible',
                   right: 0,
                   left: 0,
-                  zIndex:'-1'
+                  zIndex: '-1'
                }}
             >
                <Puller />
@@ -75,30 +122,57 @@ const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, windo
                   pb: 2,
                   height: '100%',
                   overflow: 'auto',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  // alignItems:'center',
+                  flexDirection: 'column'
                }}
             >
-              У розробці
-               {/* <Box className='row'>
+               <Stack direction="row" spacing={1}>
 
-                  <TextField
-                     // onChange={onChangeMessageHandler}
-                     id="outlined-multiline-static"
-                     // rows={1}
-                     size="small"
-                     defaultValue="Day 32"
-                     fullWidth
-                     autoFocus
-                     style={{
-                        padding: '0',
-                        backgroundColor: 'green',
-                        outline: 'none'
-                     }}
-                     sx={{ padding: '0' }}
+                  <Chip
+                     label="Видалити історію повідомлень"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { setfnToConfirmation('deleteMessageHistory'); setDialogHeader('Дійсно хочете очистити історію повідомлень?'); setIsOpenConfirmation(true) }}
                   />
-                  <Button onClick={() => sendMessageHandler()}>
-                     <SendIcon />
-                  </Button>
-               </Box> */}
+                  <Chip
+                     label="Встановити день"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { setfnToConfirmation('setNewDay'); setDialogHeader('Введіть номер дня'); setIsOpenConfirmation(true) }}
+                  />
+                  <Chip
+                     label="Змінити мову цитат"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { setfnToConfirmation('changeLanguageCites'); setDialogHeader("Оберіть мову"); setIsOpenConfirmation(true) }}
+                  />
+                  <Chip
+                     label="Підтримати проєкт"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { actions.supportProject() }}
+                  />
+                  <Chip
+                     label="Зв'язок із автором"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { actions.contactWithDev() }}
+                  />
+                  <Chip
+                     label="Повідомити про помилку"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { actions.contactWithDev() }}
+                  />
+               </Stack>
             </StyledBox>
          </SwipeableDrawer>
       </>

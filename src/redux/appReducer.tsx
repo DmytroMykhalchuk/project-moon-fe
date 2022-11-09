@@ -17,10 +17,12 @@ const SET_DAILY = 'SET_DAILY'
 const UPDATE_TASK = 'UPDATE_TASK'
 const COMPLETE_ALL_DAY_TASK = "COMPLETE_ALL_DAY_TASK";
 const GET_ACHIVMENTS = "GET_ACHIVMENTS";
-const SET_MESSAGE = 'SET_MESSAGE';
+const SET_MESSAGES = 'SET_MESSAGES';
 const CHECK_MESSAGE = 'CHECK_MESSAGE';
 const CHECK_ONLINE = 'CHECK_ONLINE';
-
+const DELETE_MESAGE_HISTORY = "DELETE_MESAGE_HISTORY"
+const SET_DAY = 'SET_DAY'
+const SET_DATE_CREATE = 'SET_DATE_CREATE'
 const initialState: any = {
 
    isFetching: false,
@@ -191,7 +193,7 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
             achivments: { ...action.achivments }
          }
       }
-      case SET_MESSAGE: {
+      case SET_MESSAGES: {
          let isBadge = false;
          if (action.messages) {
 
@@ -237,6 +239,24 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
          return {
             ...state,
             lastOnline: action.online
+         }
+      }
+      case DELETE_MESAGE_HISTORY: {
+         return {
+            ...state,
+            message: { ...action.message }
+         }
+      }
+      case SET_DAY: {
+         return {
+            ...state,
+            currentDay: action.day
+         }
+      }
+      case SET_DATE_CREATE: {
+         return {
+            ...state,
+            createdAt: action.date
          }
       }
       default: return state;
@@ -351,7 +371,7 @@ export const actions = {
    },
    setMessagesAction: (messages: any) => {
       return {
-         type: SET_MESSAGE,
+         type: SET_MESSAGES,
          messages
       } as const
 
@@ -367,6 +387,24 @@ export const actions = {
       return {
          type: CHECK_ONLINE,
          online: date
+      } as const
+   },
+   deleteMessageHistory: (message: any) => {
+      return {
+         type: DELETE_MESAGE_HISTORY,
+         message
+      } as const
+   },
+   setDay: (day: number) => {
+      return {
+         type: SET_DAY,
+         day
+      } as const
+   },
+   setCreateDate: (date: any) => {
+      return {
+         type: SET_DATE_CREATE,
+         date
       } as const
    }
 }
@@ -544,8 +582,41 @@ export const checkOnline = (): ThunksTypes => {
    }
 }
 
-export default appReducer;
+export const deleteMessageHistory = (): ThunksTypes => {
+   return async (dispatch) => {
+      api.deleteMessageHistory()?.then(responce => {
+         dispatch(actions.setMessagesAction(responce))
+      })
+   }
+}
+export const setCurrentDay = (day: number): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(actions.setDay(day));
+      api.setCurrentDay(day)?.then(responce => {
+         dispatch(actions.setCreateDate(responce));
+      })
+      api.setNewMessage("Встановлено день: " + day)?.then(responce => {
+         dispatch(actions.setMessagesAction(responce))
+      })
+   }
+}
+export const changeLangCites = (lang: string): ThunksTypes => {
+   return async (dispatch) => {
+      localStorage.langCites = lang
+      api.setNewMessage("Мова цитат: " + lang)?.then(responce => {
+         dispatch(actions.setMessagesAction(responce))
+      })
+   }
 
+}
+export const setNewMessage=(text:string):ThunksTypes=>{
+   return async (dispatch)=>{
+      api.setNewMessage(text)?.then(responce => {
+         dispatch(actions.setMessagesAction(responce))
+      })
+   }
+}
+export default appReducer;
 export type TaskType = {
    aim: string
    isFinished: boolean

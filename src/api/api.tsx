@@ -298,6 +298,46 @@ export const api = {
         resolve(onlineDay)
       })
     }
+  },
+  deleteMessageHistory: function () {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      const newMessages = messagesObj;
+      localStorage.removeItem('messages')
+      localStorage.messages = JSON.stringify(newMessages);
+      return new Promise(resolve => {
+        resolve(newMessages)
+      })
+
+    }
+  },
+  setCurrentDay: function (day: number) {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      let currTime = new Date().getTime();
+      let pastDate = new Date(currTime - 24 * 3600 * 1000 * day)
+      localStorage.created_at = pastDate
+      return new Promise(resolve => {
+        resolve(pastDate)
+      })
+    }
+  },
+  setNewMessage: function (text: string) {
+    if (isConnected) {
+      console.warn('This functon is not writed');
+    } else {
+      const prevMsg=JSON.parse(localStorage.messages)
+      let lastIdMsg = Object.keys(prevMsg).pop();
+      let IdMsg = lastIdMsg === undefined ? 1000 : +lastIdMsg + 1000;
+      let newMsg = { [IdMsg]: { text, isChecked: true } }
+      let state = { ...prevMsg, ...newMsg }
+      localStorage.messages=JSON.stringify(state)
+      return new Promise(resolve => {
+        resolve(state)
+      })
+    }
   }
 
 };

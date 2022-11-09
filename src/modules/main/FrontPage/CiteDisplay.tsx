@@ -17,7 +17,7 @@ export const CiteDisplay: React.FC = () => {
       >
          <Box sx={{border:'2px solid #fff',p:2}}>
             <Typography variant="subtitle1" color="info">
-               {citesObj[randomId].textEng}
+               {citesObj[randomId][`text${localStorage.langCites}`]}
             </Typography>
          </Box>
       </Box>
