@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 
 export const CiteDisplay: React.FC = () => {
    const randomId = getRandomElementFromArray(Object.keys(citesObj));
+   const languageCite=localStorage.langCites?localStorage.langCites:'Ua';
    return (
       <Box
          sx={{
@@ -17,7 +18,7 @@ export const CiteDisplay: React.FC = () => {
       >
          <Box sx={{border:'2px solid #fff',p:2}}>
             <Typography variant="subtitle1" color="info">
-               {citesObj[randomId][`text${localStorage.langCites}`]}
+               {citesObj[randomId][`text${languageCite}`]}
             </Typography>
          </Box>
       </Box>
