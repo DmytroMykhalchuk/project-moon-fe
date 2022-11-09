@@ -38,7 +38,7 @@ const StatisticAchivments: React.FC = () => {
                      {element.icon}
                   </Box>
                   <Box>
-                     <Typography variant="subtitle1" color="error">{element.text}</Typography>
+                     <Typography variant="subtitle1" color="error" sx={{ textAlign: 'center' }}>{element.text}</Typography>
                      <Typography variant="body2" sx={{ color: 'grey', textAlign: 'center' }}>{element.description}</Typography>
                   </Box>
                </Box>
@@ -53,9 +53,10 @@ const StatisticAchivments: React.FC = () => {
       );
    }
    return (
-      <Box sx={{ width: '100%', pb: 3, 
-      bgcolor: 'background.paper',
-      backgroundColor:"#2e2e2ec9"
+      <Box sx={{
+         width: '100%', pb: 3,
+         bgcolor: 'background.paper',
+         backgroundColor: "#2e2e2ec9"
       }}>
          <List
             sx={{ width: '100%' }}
@@ -68,7 +69,7 @@ const StatisticAchivments: React.FC = () => {
                </ListItemIcon>
                <ListItemText primary={
                   <Box sx={{ display: 'flex' }}>
-                     <Typography variant="body1"  sx={{ flexGrow: 1 }}>Досягнення</Typography>
+                     <Typography variant="body1" sx={{ flexGrow: 1 }}>Досягнення</Typography>
                   </Box>
                } />
             </ListItem>

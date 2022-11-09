@@ -24,7 +24,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
    const [isExtended, setIsExtended] = useState(() => {
       if (Object.keys(records).length > 0) {
          // @ts-ignore
-         let lastRecordDate = new Date(+(Object.keys(records).pop()) * 1000);
+         let lastRecordDate = new Date(+(Object.keys(records).pop()));
          let lastRecordTime = new Date(lastRecordDate.getFullYear(), lastRecordDate.getMonth(), lastRecordDate.getDate()).getTime();
 
          let currentDate = new Date();
@@ -47,7 +47,7 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
             const element = records[recordDate];
             const createDate = new Date(+recordDate);
             elementRecords.push(
-               <Accordion key={recordDate} sx={{backgroundColor:'#2e2e2ec9'}}>
+               <Accordion key={recordDate} sx={{ backgroundColor: '#2e2e2ec9' }}>
                   <AccordionSummary
                      expandIcon={<ExpandMoreIcon />}
                      aria-controls={`panel-content-${recordDate}`}
@@ -74,13 +74,15 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
    return (
       <>
          <Zoom in={isOpenFab}>
-            <Fab color="secondary"
+            <Fab
                onClick={() => { saveDaily() }}
                aria-label="edit"
                sx={{
                   position: 'fixed',
                   bottom: '80px',
-                  right: '16px'
+                  right: '16px',
+                  backgroundColor: '#fff',
+                  color: "#000"
                }}>
                <CheckIcon />
             </Fab>
@@ -104,10 +106,10 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
                </Accordion>
             </Zoom>
          </Collapse>
-         <Collapse in={!isAlredyAdd}> {/*isisExtended*/}
+         <Collapse in={!isAlredyAdd}>
             <Accordion
                defaultExpanded
-               sx={{backgroundColor:'#2e2e2ec9'}}
+               sx={{ backgroundColor: '#2e2e2ec9' }}
             >
                <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -119,8 +121,6 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
                <AccordionDetails>
                   <TextField
                      id="outlined-multiline-static"
-                     // label="Multiline"
-
                      multiline
                      rows={3}
                      placeholder={`День ${currentDay}`}

@@ -131,7 +131,8 @@ const AimsListItem: React.FC<AimsListItemType> = ({
          let ret = [];
 
          ret.push(
-            <ul key={i} >
+               
+            <ul key={i} style={{marginBottom:header?'20px':'0px',backgroundColor:'rgb(46 46 46 / 48%)',}}>
                <ListSubheader sx={{backgroundColor:'#fff',color:'#000'}}>{`${header}`}</ListSubheader>
                {/* <TransitionGroup> */}
                {listItems}

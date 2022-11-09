@@ -9,6 +9,8 @@
    background-size:cover;
    background-attachment: fixed;
    overflow:hidden;
+
+   min-height:100vh;
    // backdrop-filter: blur(1px);
    &__wrapper{
       position: relative;

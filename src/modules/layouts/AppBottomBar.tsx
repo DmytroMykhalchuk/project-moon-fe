@@ -10,6 +10,7 @@ import CommentBankIcon from '@mui/icons-material/CommentBank';
 import Badge from '@mui/material/Badge';
 import BookIcon from '@mui/icons-material/Book';
 import HubIcon from '@mui/icons-material/Hub';
+import { Typography } from '@mui/material';
 
 type AppBottomBarType = {
    setPage: (page: number) => void
@@ -19,7 +20,7 @@ type AppBottomBarType = {
 const styles = {
    "&.MuiBottomNavigationAction-root": {
       color: "#898989"
-    },
+   },
    "&.Mui-selected": {
       color: "#fff ",
    }
@@ -29,7 +30,6 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
       <Box sx={{ pb: 5, }}>
          <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }} elevation={3} square={false} >
             <BottomNavigation
-               showLabels
                value={page}
                sx={{ color: '#fff', }}
 
@@ -41,15 +41,20 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
                   });
                }}
             >
-               <BottomNavigationAction sx={styles} label="Статистика" icon={<BubbleChartIcon />} />
-               <BottomNavigationAction sx={styles} label="Інформація" icon={
-                  <Badge color="error" variant="dot" invisible={!isBadge}>
-                     <CommentBankIcon />
-                  </Badge>
-               } />
-               <BottomNavigationAction sx={styles} label="Головна" icon={<HubIcon />} />
-               <BottomNavigationAction sx={styles} label="Керування" icon={<BookIcon />} />
-               <BottomNavigationAction sx={styles} label="Щоденник" icon={<TodayIcon />} />
+               <BottomNavigationAction sx={styles}
+                  icon={<BubbleChartIcon />} />
+               <BottomNavigationAction sx={styles}
+                  icon={
+                     <Badge color="error" variant="dot" invisible={!isBadge}>
+                        <CommentBankIcon />
+                     </Badge>
+                  } />
+               <BottomNavigationAction sx={styles}
+                  icon={<HubIcon />} />
+               <BottomNavigationAction sx={styles}
+                  icon={<BookIcon />} />
+               <BottomNavigationAction sx={styles}
+                  icon={<TodayIcon />} />
             </BottomNavigation>
          </Paper>
       </Box>

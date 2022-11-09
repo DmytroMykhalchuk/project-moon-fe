@@ -18,19 +18,22 @@ type CircleProgress = {
 }
 const CircularProgressWithLabel: React.FC<CircleProgress> = ({ value, currtimeh, currtimem, currtimes }) => {
    const isDevider = currtimes % 2 === 0;
+   const restTime = 24 - currtimeh
+   const labelRestTime = restTime === 1 || restTime === 21 ? 'година' : restTime > 1 && restTime < 21 || restTime === 0 ? 'годин' : 'години';
    const dispatch: AppDispatch = useDispatch();
    return (
       <>
          <Box className={styles.circleSection}>
 
-            <Typography align='center' className={styles.decorElement}>{24 - currtimeh} <sub>
-               годин </sub></Typography>
+            <Typography align='center' className={styles.decorElement}>{restTime} <sub>
+               {labelRestTime}
+            </sub></Typography>
             <Box className={styles.circleWrapper}>
                <Box className={styles.boxSide}>
                   <IconButton color='default' aria-label='show all' size='large'><AvTimerIcon fontSize="inherit" color='disabled' /></IconButton>
                </Box>
                <Box sx={{ position: 'relative', display: 'inline-flex', }}>
-                  <CircularProgress variant="determinate" size={200} sx={{ margin: '0 auto', width: '100%' }} value={value} color='primary' />
+                  <CircularProgress variant="determinate" size={200} sx={{ margin: '0 auto', width: '100%' }} value={value} color='warning' />
                   <CircularProgress
                      variant="determinate"
                      className={styles.circle}
