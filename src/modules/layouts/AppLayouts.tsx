@@ -8,18 +8,19 @@ import MessagePageContainer from '../main/MessagePage/MessagePageContainer';
 import StatisticPageContainer from '../main/StatisticPage/StatisticPageContainer';
 import AppTitle from './AppTitle';
 import AppBottomBar from './AppBottomBar';
-import { connect, ConnectedProps } from 'react-redux';
-import { AppStateType } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
 import { setMessages } from '../../redux/appReducer';
 import { getIsBadge, getMessagesState } from '../../redux/appStateSelector';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
-import bg from './../../img/bg/bg.jpg'
 
-const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
+export const AppLayouts: React.FC = () => {
+   const dispatch: AppDispatch = useDispatch()
+   const isBadge = useSelector(getIsBadge)
+
    useEffect(() => {
-
-      init();
+      dispatch(setMessages())
    }, [])
    const [page, setPage] = useState(2);
    const [oldPage, setOldPage] = useState(2)
@@ -28,7 +29,6 @@ const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
    }
 
    return <article className={styles.appWrapper}
-      style={{ backgroundImage: `url(${bg})` }}
    >
       <AppTitle />
       <Container maxWidth={'md'} disableGutters sx={{ position: 'relative' }}>
@@ -68,29 +68,12 @@ const AppLayouts: React.FC<HeaderProps> = ({ init, isBadge }) => {
             </Fade>
          </Box>
       </Container>
-      {/* </Box> */}
       <AppBottomBar page={page} setPage={setPage} setOldPage={setOldPage} isBadge={isBadge} />
-
    </article >;
 }
 
-const mapStateToProps = (state: AppStateType) => {
-   return {
-      messages: getMessagesState(state),
-      isBadge: getIsBadge(state)
-   }
-}
-const mapDispatchToProps = (dispatch: any) => {
-   return {
-      init: () => {
-         dispatch(setMessages())
-      }
-   }
-}
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type HeaderProps = ConnectedProps<typeof connector>;
-export default connector(AppLayouts);
+
 
 
 

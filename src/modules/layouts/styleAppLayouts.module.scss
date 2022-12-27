@@ -1,18 +1,18 @@
 @import './../global.module.scss';
 
 
-.appWrapper{
+.appWrapper {
    // background-color: $app-bg-color;
    padding: 15px 0;
-   // color: $back-color-content;
-   background-repeat:no-repeat;
-   background-size:cover;
+   position: relative;
+   background-repeat: no-repeat;
+   background-size: cover;
    background-attachment: fixed;
-   overflow:hidden;
+   overflow: hidden;
+   z-index: 2;
+   min-height: 100vh;
 
-   min-height:100vh;
-   // backdrop-filter: blur(1px);
-   &__wrapper{
+   &__wrapper {
       position: relative;
    }
 }

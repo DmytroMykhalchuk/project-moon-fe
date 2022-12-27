@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+import {App} from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store.ts";
@@ -13,8 +13,16 @@ const theme = createTheme({
   palette: {
     mode: "dark",
     background: {
+<<<<<<< HEAD
       default: "#3F2046",
       paper: "#46505A",
+=======
+      // default: "#333",
+      paper: "#333",
+    },
+    primary:{
+      main:'#fff'
+>>>>>>> 451bce3 (fixed bug with starting page, added animation with stars to background)
     },
     //@ts-ignore
     fpage: {
