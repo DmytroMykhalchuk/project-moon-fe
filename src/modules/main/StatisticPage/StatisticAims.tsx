@@ -1,3 +1,4 @@
+import React from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List';
@@ -11,7 +12,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useSelector } from 'react-redux';
 import { getCurrentMonth, getStatDayFinished, getStatMonthFinished, getStatWeekFinished } from '../../../redux/appStateSelector';
 
-const StatisticAims: React.FC = () => {
+export const StatisticAims: React.FC = React.memo(() => {
    const currentMonth = useSelector(getCurrentMonth)
    const statMonth = useSelector(getStatMonthFinished)
    const statWeek = useSelector(getStatWeekFinished)
@@ -70,6 +71,6 @@ const StatisticAims: React.FC = () => {
          </List>
       </Box>
    )
-}
+})
 
-export default StatisticAims;
+ 

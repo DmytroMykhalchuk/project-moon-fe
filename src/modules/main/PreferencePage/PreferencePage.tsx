@@ -1,3 +1,4 @@
+import React, { useState } from "react"
 import { Card, CardContent, Fab, Typography } from "@mui/material";
 import { Box } from "@mui/system"
 import Aims from "../../common/Aims";
@@ -14,10 +15,9 @@ import DialogWindow from "../../common/DialogWindow";
 import { getDay, getMain, getMonth, getWeek } from "../../../redux/appStateSelector";
 import { useSelector } from "react-redux";
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
 
 
-const PreferencePage: React.FC = () => {
+export const PreferencePage: React.FC = React.memo(() => {
 
    const listConfig: any = {
       main: { list: useSelector(getMain), header: "Мрія" },
@@ -92,7 +92,7 @@ const PreferencePage: React.FC = () => {
          {['day', 'week', 'month', 'main'].map(item => {
             return <Card variant='outlined' sx={{ mb: 3, backgroundColor: '#2e2e2ec9' }} key={item} >
                <CardContent>
-                  <Typography variant="h5" component="div" sx={{ pb: 2,color:'#fff' }}>
+                  <Typography variant="h5" component="div" sx={{ pb: 2, color: '#fff' }}>
                      {listConfig[item].header}
                   </Typography>
                   <Aims listName={item} />
@@ -121,7 +121,6 @@ const PreferencePage: React.FC = () => {
          })}
       </Box>
    )
-}
+})
 
 
-export default PreferencePage;

@@ -1,10 +1,9 @@
+import React from 'react'
 import Box from '@mui/material/Box';
-import CircleProgressBar from './CircleProgressBar';
+import { CircleProgressBar } from './CircleProgressBar';
 import Aims from './../../common/Aims';
 
-
-
-const FrontPage = () => {
+export const FrontPage = React.memo(() => {
   return (
     <>
       <Box>
@@ -15,6 +14,5 @@ const FrontPage = () => {
       </Box>
     </>
   )
-}
+})
 
-export default FrontPage;

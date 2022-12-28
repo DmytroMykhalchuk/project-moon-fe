@@ -13,17 +13,14 @@ import { getAchivments } from '../../../redux/appStateSelector';
 import Grid from '@mui/material/Grid';
 
 
-
-
-const StatisticAchivments: React.FC = () => {
+export const StatisticAchivments: React.FC = React.memo(() => {
    const dispatch: AppDispatch = useDispatch();
    const achivments = useSelector(getAchivments)
-   const getAllAchivments = () => {
-      dispatch(initAchivments())
-   }
+
    useEffect(() => {
-      getAllAchivments();
+      dispatch(initAchivments())
    }, [])
+
    const displayAchivment = () => {
       if (!achivments) return;
       let listAchiv = [];
@@ -77,8 +74,4 @@ const StatisticAchivments: React.FC = () => {
          {displayAchivment()}
       </Box>
    )
-}
-
-
-
-export default StatisticAchivments;
+})

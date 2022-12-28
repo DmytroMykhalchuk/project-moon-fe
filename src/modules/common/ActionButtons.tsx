@@ -1,3 +1,4 @@
+import React from 'react'
 import { IconButton, Box } from "@mui/material";
 import RestoreIcon from '@mui/icons-material/Restore';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
@@ -14,9 +15,8 @@ type ActionButtonsType = {
    object: TaskType
    setIsOpenConfirmation?: (arg1: boolean) => void
    isOpenConfirmation?: boolean
-
 }
-export const ActionButtonsFinished: React.FC<ActionButtonsType> = ({ restoreTask, deleteTask, category, id, object }) => {
+export const ActionButtonsFinished: React.FC<ActionButtonsType> = React.memo(({ restoreTask, deleteTask, category, id, object }) => {
    return (
       <Box sx={{ display: 'flex', }}>
          <IconButton aria-label="restore"
@@ -29,8 +29,8 @@ export const ActionButtonsFinished: React.FC<ActionButtonsType> = ({ restoreTask
          </IconButton>
       </Box>
    )
-}
-export const ActionButtonsTrash: React.FC<ActionButtonsType> = ({ restoreTask, deleteTask, category, id, object, setIsOpenConfirmation = () => { }, isOpenConfirmation = false }) => {
+})
+export const ActionButtonsTrash: React.FC<ActionButtonsType> = React.memo(({ restoreTask, deleteTask, category, id, object, setIsOpenConfirmation = () => { }, isOpenConfirmation = false }) => {
    const [idd, setId] = useState('')
    return (
       <>
@@ -61,4 +61,4 @@ export const ActionButtonsTrash: React.FC<ActionButtonsType> = ({ restoreTask, d
          }
       </>
    )
-}
+})

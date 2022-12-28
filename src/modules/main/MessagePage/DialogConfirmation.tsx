@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -24,7 +24,7 @@ const languages = [
       label: 'Українська',
    },
 ];
-export const DialogConfirmation: React.FC<ConfirmWindowType> = ({
+export const DialogConfirmation: React.FC<ConfirmWindowType> = React.memo(({
    isOpenConfirmation,
    setIsOpenConfirmation,
    header,
@@ -45,12 +45,12 @@ export const DialogConfirmation: React.FC<ConfirmWindowType> = ({
          fullWidth
       >
          <DialogContent sx={{ backgroundColor: "#323232" }}>
-            <DialogContentText id="alert-dialog-description" sx={{  }}>
+            <DialogContentText id="alert-dialog-description" sx={{}}>
                {header}
                {fnToConfirmation === 'setNewDay' &&
                   <div>
                      <TextField
-                        sx={{ mt: 3}}
+                        sx={{ mt: 3 }}
                         color="warning"
                         autoFocus
                         margin="dense"
@@ -65,7 +65,7 @@ export const DialogConfirmation: React.FC<ConfirmWindowType> = ({
                }
                {fnToConfirmation === 'changeLanguageCites' &&
                   <TextField
-                     sx={{ mt: 3}}
+                     sx={{ mt: 3 }}
                      color="warning"
                      autoFocus
                      margin="dense"
@@ -88,27 +88,27 @@ export const DialogConfirmation: React.FC<ConfirmWindowType> = ({
             </DialogContentText>
          </DialogContent>
          <DialogActions sx={{ backgroundColor: "#323232" }}>
-            <Button 
-            sx={{color:'#FFF'}}
-            onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
-            <Button 
-            sx={{color:'#FFF'}}
-            onClick={() => {
-               setIsOpenConfirmation(false);
-               if (fnToConfirmation === 'setNewDay') {
-                  actions[fnToConfirmation](onChangeField)
-                  setOnChangeField('')
+            <Button
+               sx={{ color: '#FFF' }}
+               onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
+            <Button
+               sx={{ color: '#FFF' }}
+               onClick={() => {
+                  setIsOpenConfirmation(false);
+                  if (fnToConfirmation === 'setNewDay') {
+                     actions[fnToConfirmation](onChangeField)
+                     setOnChangeField('')
 
-               } else if (fnToConfirmation === 'changeLanguageCites') {
-                  actions[fnToConfirmation](language)
-               } else {
-                  actions[fnToConfirmation]()
-               }
+                  } else if (fnToConfirmation === 'changeLanguageCites') {
+                     actions[fnToConfirmation](language)
+                  } else {
+                     actions[fnToConfirmation]()
+                  }
 
-            }} autoFocus>
+               }} autoFocus>
                Підтвердити
             </Button>
          </DialogActions>
       </Dialog>
    )
-}
+})

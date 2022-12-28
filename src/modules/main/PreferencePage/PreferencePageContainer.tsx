@@ -1,10 +1,8 @@
-import PreferencePage from "./PreferencePage";
+import React from 'react'
+import { PreferencePage } from "./PreferencePage";
 
-const PreferencePageContainer = () => {
-
-
+export const PreferencePageContainer = React.memo(() => {
    return (
       <PreferencePage
       />)
-}
-export default PreferencePageContainer;
+})

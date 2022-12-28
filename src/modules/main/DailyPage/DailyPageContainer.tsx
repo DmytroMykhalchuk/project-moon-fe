@@ -1,4 +1,5 @@
-import DailyPage from "./DailyPage";
+import React from 'react'
+import { DailyPage } from "./DailyPage";
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,7 @@ import { AppDispatch } from "../../../redux/store";
 import { getCurrentDay, getDaily } from "../../../redux/appStateSelector";
 import { setNewDailyRecord } from "../../../redux/appReducer";
 
-const DailyPageContainer: React.FC = () => {
+export const DailyPageContainer: React.FC = React.memo(() => {
    const [isOpenFab, setIsOpenFab] = useState(false);
    const dailyRecords = useSelector(getDaily);
    const [isAlredyAdd, setIsAlredyAdd] = useState(() => {
@@ -45,6 +46,4 @@ const DailyPageContainer: React.FC = () => {
          />
       </Box>
    )
-}
-
-export default DailyPageContainer;
+})

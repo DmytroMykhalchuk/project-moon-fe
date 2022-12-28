@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import styles from './styleAppLayouts.module.scss';
-import FrontPageContainer from '../main/FrontPage/FrontPageContainer'
-import PreferencePageContainer from '../main/PreferencePage/PreferencePageContainer';
-import DailyPageContainer from '../main/DailyPage/DailyPageContainer';
+import { FrontPageContainer } from '../main/FrontPage/FrontPageContainer'
+import { PreferencePageContainer } from '../main/PreferencePage/PreferencePageContainer';
+import { DailyPageContainer } from '../main/DailyPage/DailyPageContainer';
 import MessagePageContainer from '../main/MessagePage/MessagePageContainer';
-import StatisticPageContainer from '../main/StatisticPage/StatisticPageContainer';
+import { StatisticPageContainer } from '../main/StatisticPage/StatisticPageContainer';
 import AppTitle from './AppTitle';
 import AppBottomBar from './AppBottomBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { setMessages } from '../../redux/appReducer';
-import { getIsBadge, getMessagesState } from '../../redux/appStateSelector';
+import { getIsBadge } from '../../redux/appStateSelector';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
 
-export const AppLayouts: React.FC = () => {
+export const AppLayouts: React.FC = React.memo(() => {
    const dispatch: AppDispatch = useDispatch()
    const isBadge = useSelector(getIsBadge)
 
@@ -70,7 +70,7 @@ export const AppLayouts: React.FC = () => {
       </Container>
       <AppBottomBar page={page} setPage={setPage} setOldPage={setOldPage} isBadge={isBadge} />
    </article >;
-}
+})
 
 
 

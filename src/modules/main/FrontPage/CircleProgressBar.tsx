@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -10,16 +10,20 @@ import { useDispatch } from 'react-redux';
 import { completeAllDayTaskThunk } from '../../../redux/appReducer';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
 
-type CircleProgress = {
+type CircleProgressType = {
    value: number
    currtimeh: number
    currtimem: number
    currtimes: number
 }
-const CircularProgressWithLabel: React.FC<CircleProgress> = ({ value, currtimeh, currtimem, currtimes }) => {
+const CircularProgressWithLabel: React.FC<CircleProgressType> = React.memo(({ value, currtimeh, currtimem, currtimes }) => {
    const isDevider = currtimes % 2 === 0;
    const restTime = 24 - currtimeh
-   const labelRestTime = restTime === 1 || restTime === 21 ? 'година' : restTime > 1 && restTime < 21 || restTime === 0 ? 'годин' : 'години';
+   const labelRestTime =
+      (restTime === 1 || restTime === 21)
+         ? 'година'
+         : restTime > 1 && (restTime < 21 || restTime === 0)
+            ? 'годин' : 'години';
    const dispatch: AppDispatch = useDispatch();
    return (
       <>
@@ -80,10 +84,9 @@ const CircularProgressWithLabel: React.FC<CircleProgress> = ({ value, currtimeh,
          </Box>
       </>
    );
-}
+})
 
-
-const CircleProgressBar: React.FC = () => {
+export const CircleProgressBar: React.FC = React.memo(() => {
 
    const [progress, setProgress] = useState(100 - (getSecondsToTomorrow() / (24 * 3600) * 100));
    const [currTimeH, setCurrentTimeH] = useState(new Date().getHours());
@@ -109,9 +112,8 @@ const CircleProgressBar: React.FC = () => {
       currtimem={currTimeM}
       currtimes={currTimeS}
    />;
-}
+})
 
-export default CircleProgressBar;
 
 function getSecondsToTomorrow() {
    let now = new Date();

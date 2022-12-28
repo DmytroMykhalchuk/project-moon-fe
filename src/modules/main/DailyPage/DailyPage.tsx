@@ -1,12 +1,11 @@
-
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Collapse, Fab, TextField, Zoom } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
-// import Box from '@mui/material/Box';
+import React from 'react'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { Collapse, Fab, TextField, Zoom } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check'
 import { useState } from 'react';
 
 type DailyPageType = {
@@ -18,7 +17,7 @@ type DailyPageType = {
    currentDay: string
    setDaily: (arg1: string, arg2: string) => void
 }
-const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyAdd, currentDay, setDaily }: DailyPageType) => {
+export const DailyPage: React.FC<DailyPageType> = React.memo(({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyAdd, currentDay, setDaily }) => {
 
    const [newDaily, setNewDaily] = useState('')
    const [isExtended, setIsExtended] = useState(() => {
@@ -135,6 +134,4 @@ const DailyPage = ({ records, isOpenFab, setIsOpenFab, isAlredyAdd, setIsAlredyA
          {showAllRecords()}
       </>
    );
-}
-
-export default DailyPage;
+})

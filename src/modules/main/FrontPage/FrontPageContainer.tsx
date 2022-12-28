@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkOnline, getInfoUser } from "../../../redux/appReducer";
 import { getIsFetchingApp, getiSInitApp, getLastOnline } from "../../../redux/appStateSelector";
 import { AppDispatch } from "../../../redux/store";
-import FrontPage from "./FrontPage";
+import { FrontPage } from "./FrontPage";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from "@mui/system"
 import { CiteDisplay } from "./CiteDisplay";
 import Fade from '@mui/material/Fade';
-import Collapse from '@mui/material/Collapse';
 
-const FrontPageContainer: React.FC = () => {
+export const FrontPageContainer: React.FC = React.memo(() => {
    const dispatch: AppDispatch = useDispatch();
 
    const isInit = useSelector(getiSInitApp);
@@ -20,7 +19,6 @@ const FrontPageContainer: React.FC = () => {
    const [isShowCite, setisShowCite] = useState(true)
 
    useEffect(() => {
-      isInit || dispatch(getInfoUser())
       if (isInit) {
          const currTime = new Date();
          const onlineDay = new Date(currTime.getFullYear(), currTime.getMonth(), currTime.getDate())
@@ -31,23 +29,11 @@ const FrontPageContainer: React.FC = () => {
          } else {
             setisShowCite(false)
          }
+      } else {
+         dispatch(getInfoUser())
       }
       setTimeout(() => { setisShowCite(false); dispatch(checkOnline()); }, 4000)
    }, [])
-
-
-   // if (isInit) {
-   //    const currTime = new Date();
-   //    const onlineDay = new Date(currTime.getFullYear(), currTime.getMonth(), currTime.getDate())
-   //    let last = new Date(lastOnline);
-   //    if (last.getTime() !== onlineDay.getTime()) {
-
-   //       // return (
-   //       //    <CiteDisplay />
-   //       // )
-   //    }
-   // }
-   // // console.log(last,currTime)
 
    return (<>
       <Backdrop
@@ -71,8 +57,7 @@ const FrontPageContainer: React.FC = () => {
 
    </>
    )
-}
+})
 
 
-export default FrontPageContainer;
 

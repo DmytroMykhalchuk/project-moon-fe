@@ -1,3 +1,4 @@
+import React from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List';
@@ -7,7 +8,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AvTimerOutlinedIcon from '@mui/icons-material/AvTimerOutlined';
 
-const StatisticPomodoro: React.FC = () => {
+export const StatisticPomodoro: React.FC = React.memo(() => {
    return (
       <Box sx={{ width: '100%', pb: 3 }}>
          <List
@@ -42,6 +43,5 @@ const StatisticPomodoro: React.FC = () => {
          </List>
       </Box>
    )
-}
+})
 
-export default StatisticPomodoro;

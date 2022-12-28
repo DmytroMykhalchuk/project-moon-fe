@@ -1,8 +1,8 @@
-import StatisticPage from "./StatisticPage"
+import {StatisticPage} from "./StatisticPage"
+import React from 'react'
 
-const StatisticPageContainer:React.FC=()=>{
+export const StatisticPageContainer:React.FC=React.memo(()=>{
    return(
       <StatisticPage />
    )
-}
-export default StatisticPageContainer;
+})

@@ -526,7 +526,6 @@ const mapDispatchToProps = (dispatch: any) => {
                position: 'relative',
                overflow: 'auto',
                maxHeight: '100%',
-               // backgroundColor:'#2e2e2ec9',
                '& ul': { padding: 0 },
             }}
             subheader={<li className={styles.subheader} />}

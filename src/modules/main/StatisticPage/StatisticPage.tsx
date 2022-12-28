@@ -1,14 +1,14 @@
+import React from 'react'
 import Box from '@mui/material/Box';
 // import graph from './../../../img/graph.png'
 import Typography from '@mui/material/Typography'
-import StatisticAims from './StatisticAims';
-import StatisticPomodoro from './StatisticPomodoro';
-import StatisticAchivments from './StatisticAchivments';
+import { StatisticAims } from './StatisticAims';
+import {StatisticPomodoro} from './StatisticPomodoro';
+import { StatisticAchivments } from './StatisticAchivments';
 import { useSelector } from 'react-redux';
-import React from 'react';
 import { getCurrentDay, getMaxDays } from '../../../redux/appStateSelector';
 
-const StatisticPage: React.FC = () => {
+export const StatisticPage: React.FC = React.memo(() => {
    const maxDays = useSelector(getMaxDays)
    const currentDay = useSelector(getCurrentDay)
    return (<Box>
@@ -24,7 +24,4 @@ const StatisticPage: React.FC = () => {
       <StatisticPomodoro />
       <StatisticAchivments />
    </Box>)
-}
-
-
-export default StatisticPage;
+})

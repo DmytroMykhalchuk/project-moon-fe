@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { styled } from '@mui/material/styles';
@@ -36,7 +36,7 @@ type DrawerSwipeType = {
    onScrollDummy: () => void
 }
 
-const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, window, onScrollDummy }: DrawerSwipeType) => {
+const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, open, setOpen, sendMessageHandler, window, onScrollDummy }: DrawerSwipeType) => {
    const dispatch: AppDispatch = useDispatch();
    const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
    const [fnToConfirmation, setfnToConfirmation] = useState('')
@@ -177,5 +177,5 @@ const DrawerSwipe = ({ switcherHandler, open, setOpen, sendMessageHandler, windo
          </SwipeableDrawer>
       </>
    )
-}
+})
 export default DrawerSwipe;

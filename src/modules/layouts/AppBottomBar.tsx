@@ -27,8 +27,8 @@ const styles = {
 };
 const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) => {
    return (
-      <Box sx={{ pb: 5, }}>
-         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }} elevation={3} square={false} >
+      <Box sx={{ pb: 5, opacity: '0.8', zIndex: 2, position: 'relative' }}>
+         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20 }} elevation={3} square={false} >
             <BottomNavigation
                value={page}
                sx={{ color: '#fff', }}

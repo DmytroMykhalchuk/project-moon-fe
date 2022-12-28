@@ -14,7 +14,7 @@ import { checkMessageThunk } from "../../../redux/appReducer";
 
 
 
-const MessagePage: React.FC = () => {
+export const MessagePage: React.FC = React.memo(() => {
    const dummy = useRef();
    const dispatch: AppDispatch = useDispatch();
    const [open, setOpen] = useState(false);
@@ -34,7 +34,7 @@ const MessagePage: React.FC = () => {
    }
    const onScrollDummy = () => {
       // @ts-ignore
-      dummy.current.scrollIntoView({ behavior: 'smooth'});
+      dummy.current.scrollIntoView({ behavior: 'smooth' });
    }
    useEffect(() => {
       onScrollDummy();
@@ -109,7 +109,7 @@ const MessagePage: React.FC = () => {
          />
       </Box>
    );
-}
+})
 
-export default MessagePage;
+
 
