@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Card, CardContent, Fab, Typography } from "@mui/material";
 import { Box } from "@mui/system"
-import Aims from "../../common/Aims";
+import { Aims } from "../../common/Aims";
 import AimsPreference from "../../common/AimsPrefrence";
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -12,9 +12,10 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DialogWindow from "../../common/DialogWindow";
-import { getDay, getMain, getMonth, getWeek } from "../../../redux/appStateSelector";
+import { getDay, getListDay, getListMain, getListMonth, getListWeek, getMain, getMonth, getWeek } from "../../../redux/appStateSelector";
 import { useSelector } from "react-redux";
 import AddIcon from '@mui/icons-material/Add';
+import { CardPreferenceItem } from "../../common/CardPreferenceItem";
 
 
 export const PreferencePage: React.FC = React.memo(() => {
@@ -31,48 +32,49 @@ export const PreferencePage: React.FC = React.memo(() => {
    const [openTrash, setOpenTrash] = useState('')
    const [isOpenDialog, setIsOpenDialog] = useState(false);
 
-   const onOpenFinishedList = (el: any) => {
-      el = el.target;
-      const maxDepth = 5;
-      let i = 0;
-      let currentEl = null;
-      while (true) {
-         currentEl = el.parentNode;
-         el = currentEl;
-         i++;
-         if (maxDepth < i || el.hasAttribute('data-list-name')) {
-            break;
-         }
-      }
-      setOpenFinished(prev => {
-         if (prev === el.getAttribute('data-list-name')) {
-            return false;
-         } else {
-            return el.getAttribute('data-list-name');
-         }
-      });
-   }
-   const onOpenTrashList = (el: any) => {
-      el = el.target;
-      const maxDepth = 5;
-      let i = 0;
-      let currentEl = null;
-      while (true) {
-         currentEl = el.parentNode;
-         el = currentEl;
-         i++;
-         if (maxDepth < i || el.hasAttribute('data-list-name')) {
-            break;
-         }
-      }
-      setOpenTrash(prev => {
-         if (prev === el.getAttribute('data-list-name')) {
-            return false;
-         } else {
-            return el.getAttribute('data-list-name');
-         }
-      });
-   }
+   // const onOpenFinishedList = (el: any) => {
+   //    el = el.target;
+   //    const maxDepth = 5;
+   //    let i = 0;
+   //    let currentEl = null;
+   //    while (true) {
+   //       currentEl = el.parentNode;
+   //       el = currentEl;
+   //       i++;
+   //       if (maxDepth < i || el.hasAttribute('data-list-name')) {
+   //          break;
+   //       }
+   //    }
+   //    setOpenFinished(prev => {
+   //       if (prev === el.getAttribute('data-list-name')) {
+   //          return false;
+   //       } else {
+   //          return el.getAttribute('data-list-name');
+   //       }
+   //    });
+   // }
+   // const onOpenTrashList = (el: any) => {
+   //    el = el.target;
+   //    const maxDepth = 5;
+   //    let i = 0;
+   //    let currentEl = null;
+   //    while (true) {
+   //       currentEl = el.parentNode;
+   //       el = currentEl;
+   //       i++;
+   //       if (maxDepth < i || el.hasAttribute('data-list-name')) {
+   //          break;
+   //       }
+   //    }
+   //    setOpenTrash(prev => {
+   //       if (prev === el.getAttribute('data-list-name')) {
+   //          return false;
+   //       } else {
+   //          return el.getAttribute('data-list-name');
+   //       }
+   //    });
+   // }
+   // console.log(listConfig.week.list)
    return (
       <Box>
 
@@ -88,7 +90,7 @@ export const PreferencePage: React.FC = React.memo(() => {
             }}>
             <AddIcon />
          </Fab>
-
+         {/* 
          {['day', 'week', 'month', 'main'].map(item => {
             return <Card variant='outlined' sx={{ mb: 3, backgroundColor: '#2e2e2ec9' }} key={item} >
                <CardContent>
@@ -118,9 +120,29 @@ export const PreferencePage: React.FC = React.memo(() => {
                   </Collapse>
                </CardContent>
             </Card>
-         })}
+         })} */}
+         <PreferenceItemDay />
+         <PreferenceItemWeek />
+         <PreferenceItemMonth />
+         <PreferenceItemMain />
       </Box>
    )
 })
 
 
+const PreferenceItemDay = () => {
+   const list = useSelector(getListDay)
+   return <CardPreferenceItem list={list} nameList='day' header="Цілі на день" />
+}
+const PreferenceItemWeek = () => {
+   const list = useSelector(getListWeek)
+   return <CardPreferenceItem list={list} nameList='week' header="Цілі на тиждень" />
+}
+const PreferenceItemMonth = () => {
+   const list = useSelector(getListMonth)
+   return <CardPreferenceItem list={list} nameList='month' header="Цілі на місяць" />
+}
+const PreferenceItemMain = () => {
+   const list = useSelector(getListMain)
+   return <CardPreferenceItem list={list} nameList='main' header='Мрія' />
+}

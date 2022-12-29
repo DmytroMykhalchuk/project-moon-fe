@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import {App} from "./App";
+import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store.ts";
 import { BrowserRouter } from "react-router-dom";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-
 //@ts-ignore
+<<<<<<< HEAD
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -31,17 +30,17 @@ const theme = createTheme({
     },
   },
 });
+=======
+
+>>>>>>> 08d4752 (fixed smooth on PreferencePage)
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-  <Provider store={store}>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <Provider store={store}>
+      <BrowserRouter>
         <App />
-      </ThemeProvider>
-    </BrowserRouter>
-  </Provider>
+      </BrowserRouter>
+    </Provider>
   // </React.StrictMode>
 );
 

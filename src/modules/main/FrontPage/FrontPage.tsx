@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import { CircleProgressBar } from './CircleProgressBar';
-import Aims from './../../common/Aims';
+import { AimsHome } from '../../common/AimsHome';
 
 export const FrontPage = React.memo(() => {
   return (
@@ -9,7 +9,7 @@ export const FrontPage = React.memo(() => {
       <Box>
         <CircleProgressBar />
         <Box>
-          <Aims isHome />
+          <AimsHome isHome />
         </Box>
       </Box>
     </>

@@ -6,14 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import { getThemeColor } from '../../../redux/appStateSelector';
+import { useSelector } from 'react-redux';
+import { themeValues } from '../../../redux/appReducer';
 
-type ConfirmWindowType = {
-   isOpenConfirmation: boolean,
-   setIsOpenConfirmation: (arg: boolean) => void
-   fnToConfirmation: any
-   actions: any
-   header: string
-}
 const languages = [
    {
       value: 'Eng',
@@ -24,16 +21,50 @@ const languages = [
       label: 'Українська',
    },
 ];
+
+const textCansel = 'Скасувати'
+const textConfirm = 'Підтвердити'
+
+type ConfirmWindowType = {
+   isOpenConfirmation: boolean,
+   setIsOpenConfirmation: (arg: boolean) => void
+   fnToConfirmation: string
+   actions: any
+   header: string
+}
+
 export const DialogConfirmation: React.FC<ConfirmWindowType> = React.memo(({
    isOpenConfirmation,
    setIsOpenConfirmation,
    header,
    fnToConfirmation, actions
 }) => {
-   const [language, setLanguage] = useState(localStorage.langCites);
+   const themeColor = useSelector(getThemeColor)
+   const [selectedItem, setSelectedItem] = useState(localStorage.langCites);
    const [onChangeField, setOnChangeField] = useState('')
-   const onChangeHandle = (number: number | string) => {
+   const onChangeHandle = (number: string) => {
       setOnChangeField(+number > 500 ? '500' : `${number}`)
+   }
+   const switchDialogContent = {
+      changeLanguageCites: <FieldLanguageCites selectedItem={selectedItem} setSelectedItem={setSelectedItem} setIsOpenConfirmation={setIsOpenConfirmation} actions={actions} fnToConfirmation={fnToConfirmation} />,
+      setNewDay: <FieldSetDay onChangeHandle={onChangeHandle} onChangeField={onChangeField} setIsOpenConfirmation={setIsOpenConfirmation} actions={actions} fnToConfirmation={fnToConfirmation} />,
+      changeTheme: <FieldThemeColor selectedItem={selectedItem} setSelectedItem={setSelectedItem} setIsOpenConfirmation={setIsOpenConfirmation} actions={actions} fnToConfirmation={fnToConfirmation} />,
+   }
+   const renderDialogContent = () => {
+      //@ts-ignore
+      if (switchDialogContent[fnToConfirmation]) {//@ts-ignore
+         return switchDialogContent[fnToConfirmation]
+      } else {
+         return <div />
+      }
+   }
+   const renderDialogFooter = () => {
+      //@ts-ignore
+      if (!switchDialogContent[fnToConfirmation]) {
+         return <ConfirmationSecondary actions={actions} fnToConfirmation={fnToConfirmation} setIsOpenConfirmation={setIsOpenConfirmation} />
+      } else {
+         return <div />
+      }
    }
    return (
       <Dialog
@@ -47,68 +78,160 @@ export const DialogConfirmation: React.FC<ConfirmWindowType> = React.memo(({
          <DialogContent sx={{ backgroundColor: "#323232" }}>
             <DialogContentText id="alert-dialog-description" sx={{}}>
                {header}
-               {fnToConfirmation === 'setNewDay' &&
-                  <div>
-                     <TextField
-                        sx={{ mt: 3 }}
-                        color="warning"
-                        autoFocus
-                        margin="dense"
-                        value={onChangeField}
-                        type={fnToConfirmation === 'setNewDay' ? 'number' : 'text'}
-                        id="outlined-size-small"
-                        size="small"
-                        onChange={(el) => { onChangeHandle(el.target.value) }}
-                        fullWidth
-                     />
-                  </div>
-               }
-               {fnToConfirmation === 'changeLanguageCites' &&
-                  <TextField
-                     sx={{ mt: 3 }}
-                     color="warning"
-                     autoFocus
-                     margin="dense"
-                     fullWidth
-                     id="outlined-select-currency"
-                     select
-                     label="Мова"
-                     value={language}
-                     onChange={(el) => setLanguage(el.target.value)}
-
-                  >
-                     {languages.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                           {option.label}
-                        </MenuItem>
-                     ))}
-                  </TextField>
-               }
-
             </DialogContentText>
+
+            {renderDialogContent()}
          </DialogContent>
-         <DialogActions sx={{ backgroundColor: "#323232" }}>
-            <Button
-               sx={{ color: '#FFF' }}
-               onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
-            <Button
-               sx={{ color: '#FFF' }}
-               onClick={() => {
-                  setIsOpenConfirmation(false);
-                  if (fnToConfirmation === 'setNewDay') {
-                     actions[fnToConfirmation](onChangeField)
-                     setOnChangeField('')
-
-                  } else if (fnToConfirmation === 'changeLanguageCites') {
-                     actions[fnToConfirmation](language)
-                  } else {
-                     actions[fnToConfirmation]()
-                  }
-
-               }} autoFocus>
-               Підтвердити
-            </Button>
-         </DialogActions>
+         {renderDialogFooter()}
       </Dialog>
    )
 })
+
+type FieldLanguageCitesType = {
+   selectedItem: string
+   setSelectedItem: (arg1: string) => void
+   setIsOpenConfirmation: (arg1: boolean) => void
+   actions: any
+   fnToConfirmation: string
+}
+const FieldLanguageCites: React.FC<FieldLanguageCitesType> = ({ selectedItem, setSelectedItem, setIsOpenConfirmation, actions, fnToConfirmation }) => {
+   return (<>
+      <Box>
+         <TextField
+            sx={{ mt: 3 }}
+            color="warning"
+            autoFocus
+            margin="dense"
+            fullWidth
+            id="outlined-select-currency"
+            select
+            label="Мова"
+            value={selectedItem}
+            onChange={(el) => setSelectedItem(el.target.value)}
+         >
+            {languages.map((option) => (
+               <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+               </MenuItem>
+            ))}
+         </TextField>
+      </Box>
+      <DialogActions sx={{ backgroundColor: "#323232" }}>
+         <Button
+            sx={{ color: '#FFF' }}
+            onClick={() => { setIsOpenConfirmation(false) }}>{textCansel}</Button>
+         <Button
+            sx={{ color: '#FFF' }}
+            onClick={() => {
+               setIsOpenConfirmation(false);
+               actions[fnToConfirmation](selectedItem)
+            }} autoFocus>
+            {textConfirm}
+         </Button>
+      </DialogActions>
+   </>
+   )
+}
+type FieldSetDayType = {
+   onChangeHandle: (arg1: string) => void
+   onChangeField: string
+   setIsOpenConfirmation: (arg1: boolean) => void
+   actions: any
+   fnToConfirmation: string
+}
+const FieldSetDay: React.FC<FieldSetDayType> = ({ onChangeHandle, onChangeField, setIsOpenConfirmation, actions, fnToConfirmation }) => {
+   return <>
+      <div>
+         <TextField
+            sx={{ mt: 3 }}
+            color="warning"
+            autoFocus
+            margin="dense"
+            value={onChangeField}
+            type='number'
+            id="outlined-size-small"
+            size="small"
+            onChange={(el) => { onChangeHandle(el.target.value) }}
+            fullWidth
+         />
+      </div>
+      <DialogActions sx={{ backgroundColor: "#323232" }}>
+         <Button
+            sx={{ color: '#FFF' }}
+            onClick={() => { setIsOpenConfirmation(false) }}>{textCansel}</Button>
+         <Button
+            sx={{ color: '#FFF' }}
+            onClick={() => {
+               setIsOpenConfirmation(false);
+               actions[fnToConfirmation](onChangeField)
+            }} autoFocus>
+            {textConfirm}
+         </Button>
+      </DialogActions>
+   </>
+}
+type FieldThemeColorType = {
+   selectedItem: string
+   setSelectedItem: (arg1: string) => void
+   setIsOpenConfirmation: (arg1: boolean) => void
+   actions: any
+   fnToConfirmation: string
+}
+const FieldThemeColor: React.FC<FieldThemeColorType> = ({ selectedItem, setSelectedItem, setIsOpenConfirmation, actions, fnToConfirmation }) => {
+   const themeColor = useSelector(getThemeColor)
+   return <>
+      <Box>
+         <TextField
+            sx={{ mt: 3 }}
+            color="warning"
+            autoFocus
+            margin="dense"
+            fullWidth
+            id="outlined-select-currency"
+            select
+            label="Колір"
+            value={selectedItem}
+            onChange={(el) => setSelectedItem(el.target.value)}
+         >
+            {themeValues.map((option) => {
+               return <MenuItem key={option.value} value={option.value} defaultChecked={option.value === themeColor}>
+                  {`${option.labelUa.charAt(0).toLocaleUpperCase()}${option.labelUa.slice(1)}`}
+               </MenuItem>
+            })}
+         </TextField>
+      </Box>
+      <DialogActions sx={{ backgroundColor: "#323232" }}>
+         <Button
+            sx={{ color: '#FFF' }}
+            onClick={() => { setIsOpenConfirmation(false) }}>{textCansel}</Button>
+         <Button
+            sx={{ color: '#FFF' }}
+            onClick={() => {
+               setIsOpenConfirmation(false);
+               actions[fnToConfirmation](selectedItem)
+            }} autoFocus>
+            {textConfirm}
+         </Button>
+      </DialogActions>
+   </>
+}
+type ConfirmationSecondaryType = {
+   fnToConfirmation: string,
+   setIsOpenConfirmation: (arg1: boolean) => void
+   actions: any
+}
+const ConfirmationSecondary: React.FC<ConfirmationSecondaryType> = ({ fnToConfirmation, actions, setIsOpenConfirmation }) => {
+   return <DialogActions sx={{ backgroundColor: "#323232" }}>
+      <Button
+         sx={{ color: '#FFF' }}
+         onClick={() => { setIsOpenConfirmation(false) }}>{textCansel}</Button>
+      <Button
+         sx={{ color: '#FFF' }}
+         onClick={() => {
+            setIsOpenConfirmation(false);
+            actions[fnToConfirmation]()
+         }} autoFocus>
+         {textConfirm}
+      </Button>
+   </DialogActions>
+}

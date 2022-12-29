@@ -1,12 +1,62 @@
 @import './../global.module.scss';
-.inputError{
+
+.inputError {
    border: 2px solid wheat;
 }
-.inputErrorMessage{
+
+.inputErrorMessage {
    color: $color-error;
    padding: 1px 5px;
 }
-.subheader{
+
+.subheader {
    background-color: #000 !important;
    color: #fff;
+}
+
+.listItem {
+   padding: 0;
+
+   &__leftBox {
+      margin-right: 20px;
+   }
+
+   &__mainBox {
+      flex-grow: 1;
+   }
+
+   &__rightIcon {
+      margin-right: 20px;
+   }
+
+   &__rightBox,
+   &__leftBox {
+      height: 50px;
+   }
+
+   .boxCollapse {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      .wrapperBox{
+         width: 60px;
+         display: flex;
+         justify-self: center;
+         align-items: center;
+         margin-top: 13px;
+      }
+      .wrapperBox:first-child{
+         border-right: 2px solid #000;
+      }
+      .wrapperBox:last-child{
+         border-left: 2px solid #000;
+      }
+      .slide{
+         display: flex;
+         justify-self: center;
+         align-items: center;
+         height: 100%;
+      }
+   }
 }

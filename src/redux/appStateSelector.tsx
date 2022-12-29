@@ -40,15 +40,33 @@ export const getStatWeekFinished = (state: AppStateType) => {
 export const getStatMonthFinished = (state: AppStateType) => {
    return state.app.statisticmonth;
 }
-export const getAchivments=(state:AppStateType)=>{
+export const getAchivments = (state: AppStateType) => {
    return state.app.achivments;
 }
-export const getMessagesState=(state:AppStateType)=>{
+export const getMessagesState = (state: AppStateType) => {
    return state.app.messages;
 }
-export const getIsBadge=(state:AppStateType)=>{
+export const getIsBadge = (state: AppStateType) => {
    return state.app.isBadge;
 }
-export const getLastOnline=(state:AppStateType)=>{
+export const getLastOnline = (state: AppStateType) => {
    return state.app.lastOnline;
+}
+export const getThemeColor = (state: AppStateType) => {
+   return state.app.themeColor
+}
+export const getListDay = (state: AppStateType) => {
+   return state.app.day
+}
+
+export const getListWeek = (state: AppStateType) => {
+   return state.app.week
+}
+
+export const getListMonth = (state: AppStateType) => {
+   return state.app.month
+}
+
+export const getListMain = (state: AppStateType) => {
+   return state.app.main
 }

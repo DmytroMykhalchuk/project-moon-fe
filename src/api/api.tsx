@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ThemeColorType } from "../redux/appReducer";
 import { achivmentsObj } from "./achivments";
 import { messagesObj } from "./messages";
 const isConnected = false;
@@ -338,6 +339,9 @@ export const api = {
         resolve(state)
       })
     }
+  },
+  setThemeColor:function(color:ThemeColorType){
+    localStorage.themeColor=color;
   }
 
 };

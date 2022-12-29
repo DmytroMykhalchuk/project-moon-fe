@@ -1,8 +1,9 @@
+import React from 'react'
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import { useSwipeable } from "react-swipeable";
 import { useState, useEffect } from "react";
-import AimsListItem from './AimsListItem'
+import { AimsListItem } from './AimsListItem'
 import { getDay, getMain, getMonth, getWeek } from "../../redux/appStateSelector";
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
@@ -29,14 +30,17 @@ const isNumberElementsToShow = (list: any, cat: string) => {
 type AimsOwnType = {
    listName?: string
    isHome?: boolean
+   list: any
 }
-const Aims: React.FC<AimsOwnType> = ({ listName = '', isHome }) => {
-   const listConfig: any = {
-      main: { list: useSelector(getMain), header: "Мрія" },
-      month: { list: useSelector(getMonth), header: "Цілі на місяць" },
-      week: { list: useSelector(getWeek), header: "Цілі на тиждень" },
-      day: { list: useSelector(getDay), header: "Цілі на день" }
-   }
+
+export const Aims: React.FC<AimsOwnType> = React.memo(({ listName = '', isHome = false, list }) => {
+   console.log('ff')
+   // const listConfig: any = {
+   //    main: { list: useSelector(getMain), header: "Мрія" },
+   //    month: { list: useSelector(getMonth), header: "Цілі на місяць" },
+   //    week: { list: useSelector(getWeek), header: "Цілі на тиждень" },
+   //    day: { list: useSelector(getDay), header: "Цілі на день" }
+   // }
    const dispatch: AppDispatch = useDispatch();
    const [currentItem, setCurrentItem] = useState('');
    const [side, setSide] = useState('');
@@ -48,21 +52,22 @@ const Aims: React.FC<AimsOwnType> = ({ listName = '', isHome }) => {
    const [oldCategory, setOldCategory] = useState('')
    const [listElements, setListElements] = useState(['day', 'week', 'month', 'main'])
 
-   useEffect(() => {
-      setListElements(() => {
-         let str = [] as Array<string>
-         if (isHome) {
-            isNumberElementsToShow(listConfig['day']['list'], 'day') && str.push('day');
-            isNumberElementsToShow(listConfig['week']['list'], 'week') && str.push('week')
-            isNumberElementsToShow(listConfig['month']['list'], 'month') && str.push('month')
-            isNumberElementsToShow(listConfig['main']['list'], 'main') && str.push('main')
-         }
-         return str;
-      });
-   }, [listConfig.day.list, listConfig.week.list, listConfig.month.list, listConfig.main.list])
+   // useEffect(() => {
+   //    console.log('config')
+   //    setListElements(() => {
+   //       let str = [] as Array<string>
+   //       if (isHome) {
+   //          isNumberElementsToShow(listConfig['day']['list'], 'day') && str.push('day');
+   //          isNumberElementsToShow(listConfig['week']['list'], 'week') && str.push('week')
+   //          isNumberElementsToShow(listConfig['month']['list'], 'month') && str.push('month')
+   //          isNumberElementsToShow(listConfig['main']['list'], 'main') && str.push('main')
+   //       }
+   //       return str;
+   //    });
+   // }, [])
 
    const switchList = (fn: Function, cat: string, id: string | number) => {
-      dispatch(fn(cat, id, listConfig[cat].list[id]));
+      dispatch(fn(cat, id, list[id]));
    }
    const swipeHandlers = useSwipeable({
       onSwipeStart: (data) => {
@@ -137,8 +142,7 @@ const Aims: React.FC<AimsOwnType> = ({ listName = '', isHome }) => {
             <AimsListItem
                currentItem={currentItem}
                side={side}
-               listAims={listConfig
-               [listName].list}
+               listAims={list}
                category={listName}
                header=""
                completeHandler={completeHandler}
@@ -156,11 +160,9 @@ const Aims: React.FC<AimsOwnType> = ({ listName = '', isHome }) => {
                   key={item}
                   currentItem={currentItem}
                   side={side}
-                  listAims={listConfig
-                  [item].list}
+                  listAims={list}
                   category={`${item}`}
-                  header={listConfig
-                  [item].header}
+                  header={'header'}
                   completeHandler={completeHandler}
                   rePutHandler={rePutHandler}
                   toggleWindow={toogleWindow}
@@ -537,6 +539,5 @@ const mapDispatchToProps = (dispatch: any) => {
             }
          </List>
       </Box>)
-}
+})
 
-export default Aims;

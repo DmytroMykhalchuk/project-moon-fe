@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 import { DialogConfirmation } from "./DialogConfirmation";
 import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
-import { changeLangCites, deleteMessageHistory, setCurrentDay, setNewMessage } from '../../../redux/appReducer';
+import { changeLangCites, changeThemeColor, deleteMessageHistory, setCurrentDay, setNewMessage, ThemeColorType, themeValues } from '../../../redux/appReducer';
 
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -66,6 +66,13 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
       supportProject: () => {
          const text = "https://t.me/projectmoon21";
          dispatch(setNewMessage(text));
+         setTimeout(() => { onScrollDummy() }, 800);
+      },
+      changeTheme: (color: ThemeColorType) => {
+         const theme=themeValues.filter(item=>item.value===color)
+         const text = 'Колір теми змінено на ' + theme[0].labelUa.toLowerCase();
+         dispatch(setNewMessage(text));
+         dispatch(changeThemeColor(color))
          setTimeout(() => { onScrollDummy() }, 800);
       }
    }
@@ -171,6 +178,13 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                      variant="outlined"
                      clickable
                      onClick={() => { actions.contactWithDev() }}
+                  />
+                  <Chip
+                     label="Змінити колір теми"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { setfnToConfirmation('changeTheme'); setDialogHeader('Виберіть колір теми'); setIsOpenConfirmation(true) }}
                   />
                </Stack>
             </StyledBox>

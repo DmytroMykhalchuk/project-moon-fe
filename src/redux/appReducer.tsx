@@ -23,10 +23,49 @@ const CHECK_ONLINE = 'CHECK_ONLINE';
 const DELETE_MESAGE_HISTORY = "DELETE_MESAGE_HISTORY"
 const SET_DAY = 'SET_DAY'
 const SET_DATE_CREATE = 'SET_DATE_CREATE'
-const initialState: any = {
+const CHANGE_THEME_COLOR = 'CHANGE_THEME_COLOR'
 
+export const RED = 'RED'
+export const BLACK = 'BLACK'
+export const WHITE = 'WHITE'
+export const BLUE = 'BLUE'
+export const YELLOW = 'YELLOW'
+export const PURPLE = 'PURPLE'
+export const GREEN = 'GREEN'
+export const themeValues = [
+   {
+      value: RED,
+      labelUa: 'червоний',
+      labelEng:'red'
+   },
+   {
+      value: GREEN,
+      labelUa: 'зелений',
+      labelEng:'green'
+   },
+   {
+      value: YELLOW,
+      labelUa: 'жовтий',
+      labelEng:'yellow'
+   },
+   {
+      value: BLUE,
+      labelUa: 'синій',
+      labelEng:'blue'
+   },
+   {
+      value: PURPLE,
+      labelUa: 'фіолетовий',
+      labelEng:'purple'
+   },
+]
+
+export type ThemeColorType = typeof RED | typeof BLACK | typeof WHITE | typeof BLUE | typeof YELLOW | typeof PURPLE;
+
+const initialState: any = {
    isFetching: false,
    isInitialize: false,
+   themeColor: localStorage.getItem('themeColor') ? localStorage.getItem('themeColor') : "RED",
    main: {
    },
    month: {
@@ -259,6 +298,12 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
             createdAt: action.date
          }
       }
+      case CHANGE_THEME_COLOR: {
+         return {
+            ...state,
+            themeColor: action.color
+         }
+      }
       default: return state;
    }
 }
@@ -406,7 +451,8 @@ export const actions = {
          type: SET_DATE_CREATE,
          date
       } as const
-   }
+   },
+   changeThemeColor: (color: ThemeColorType) => { return { type: CHANGE_THEME_COLOR, color } as const }
 }
 
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
@@ -609,11 +655,17 @@ export const changeLangCites = (lang: string): ThunksTypes => {
    }
 
 }
-export const setNewMessage=(text:string):ThunksTypes=>{
-   return async (dispatch)=>{
+export const setNewMessage = (text: string): ThunksTypes => {
+   return async (dispatch) => {
       api.setNewMessage(text)?.then(responce => {
          dispatch(actions.setMessagesAction(responce))
       })
+   }
+}
+export const changeThemeColor = (color: ThemeColorType): ThunksTypes => {
+   return async (dispatch) => {
+      api.setThemeColor(color)
+      dispatch(actions.changeThemeColor(color))
    }
 }
 export default appReducer;

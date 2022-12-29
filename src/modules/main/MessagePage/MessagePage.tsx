@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Global } from '@emotion/react';
 import Box from '@mui/material/Box';
-import { Fab } from '@mui/material';
+import Fab from '@mui/material/Fab';
 import { useEffect, useRef } from 'react';
 import DrawerSwipe from './DrawerSwipe';
 import { useDispatch, useSelector } from "react-redux";
@@ -11,11 +11,12 @@ import Collapse from '@mui/material/Collapse';
 import DoneIcon from '@mui/icons-material/Done';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { checkMessageThunk } from "../../../redux/appReducer";
-
+import Grow from '@mui/material/Grow'
 
 
 export const MessagePage: React.FC = React.memo(() => {
-   const dummy = useRef();
+   const dummy = useRef<HTMLDivElement>(null);
+   const wrapperMessagesRef = useRef();
    const dispatch: AppDispatch = useDispatch();
    const [open, setOpen] = useState(false);
 
@@ -33,20 +34,22 @@ export const MessagePage: React.FC = React.memo(() => {
       dispatch(checkMessageThunk())
    }
    const onScrollDummy = () => {
-      // @ts-ignore
-      dummy.current.scrollIntoView({ behavior: 'smooth' });
+      dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
    }
    useEffect(() => {
-      onScrollDummy();
+      onScrollDummy()
    }, []);
-
+   useEffect(() => {
+      dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
+      //@ts-ignore
+   }, [wrapperMessagesRef.current?.getBoundingClientRect().height])
    const showMessages = () => {
       let ret = [];
       for (const item in messages) {
          if (Object.prototype.hasOwnProperty.call(messages, item)) {
             const element = messages[item];
             ret.push(
-               <Collapse in={element.isChecked} key={item}>
+               <Grow in={element.isChecked} key={item} mountOnEnter unmountOnExit>
                   <Box sx={{
                      //  backgroundColor: '#3d3', 
                      backgroundColor: '#fff',
@@ -55,7 +58,7 @@ export const MessagePage: React.FC = React.memo(() => {
                   }}>
                      {element.text}
                   </Box>
-               </Collapse>
+               </Grow>
             )
          }
       }
@@ -67,10 +70,6 @@ export const MessagePage: React.FC = React.memo(() => {
          <Fab
             onClick={() => {
                if (isBadge) {
-                  setTimeout(() => {
-                     onScrollDummy();
-                  }, 900)
-
                   checkMessage()
                } else {
                   setOpen(true);
@@ -87,16 +86,15 @@ export const MessagePage: React.FC = React.memo(() => {
             {isBadge ? <DoneIcon /> : <SettingsIcon />}
          </Fab>
 
-         <Global
-            styles={{
-               '.MuiDrawer-root > .MuiPaper-root': {
-                  height: `70px`,
-                  overflow: 'visible',
-               },
-            }}
+         <Global styles={{
+            '.MuiDrawer-root > .MuiPaper-root': {
+               height: `70px`,
+               overflow: 'visible',
+            },
+         }}
          />
 
-         <Box>
+         <Box ref={wrapperMessagesRef}>
             {showMessages()}
             <Box ref={dummy} />
          </Box>

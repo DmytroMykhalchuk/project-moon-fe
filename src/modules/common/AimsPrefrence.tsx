@@ -1,3 +1,4 @@
+import React from 'react'
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
 import ListItemText from '@mui/material/ListItemText';
@@ -12,7 +13,7 @@ type AimPreferenceType = {
    listInTrash?: any
    listName: string
 }
-const AimsPreference: React.FC<AimPreferenceType> = ({
+const AimsPreference: React.FC<AimPreferenceType> = React.memo(({
    listInTrash = '',
    listFinished = '',
    listName }) => {
@@ -160,5 +161,5 @@ const AimsPreference: React.FC<AimPreferenceType> = ({
 
       );
    }
-}
+})
 export default AimsPreference;
