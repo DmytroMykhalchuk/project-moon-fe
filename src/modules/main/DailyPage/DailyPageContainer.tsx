@@ -8,8 +8,12 @@ import { getCurrentDay, getDaily } from "../../../redux/appStateSelector";
 import { setNewDailyRecord } from "../../../redux/appReducer";
 
 export const DailyPageContainer: React.FC = React.memo(() => {
+
+   const dispatch: AppDispatch = useDispatch()
+   const dailyRecords = useSelector(getDaily)
+   const currentDay = useSelector(getCurrentDay)
+
    const [isOpenFab, setIsOpenFab] = useState(false);
-   const dailyRecords = useSelector(getDaily);
    const [isAlredyAdd, setIsAlredyAdd] = useState(() => {
       if (Object.keys(dailyRecords).length > 0) {
 
@@ -27,8 +31,7 @@ export const DailyPageContainer: React.FC = React.memo(() => {
          return false;
       }
    })
-   const dispatch: AppDispatch = useDispatch();
-   const currentDay = useSelector(getCurrentDay);
+
 
    const setDaily = (day: string, text: string) => {
       dispatch(setNewDailyRecord(day, text))

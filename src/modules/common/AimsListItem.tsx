@@ -71,14 +71,14 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
                               orientation="horizontal"
                               sx={{ backgroundColor: '#EF8B6B' }}
                            >
-                              <Box onClick={() => { rePutHandler(category, id) }} className={styles.wrapperBox}
+                              <Box onClick={() => { rePutHandler(category, id) }} className={styles.wrapperBox + " " + styles.borderRight}
                               >
                                  <RestoreIcon />
                               </Box>
                            </Collapse>
                         </Box>
                         <ListItemText id={`${i}`} primary={`${element.aim}`} className={styles.listItem__mainBox} />
-                        <Box className={styles.listItem__rightBox} >
+                        <Box className={styles.listItem__rightIcon} >
                            <IconButton edge="end" aria-label="completed" data-cat='cat'
                               onClick={() => { completeHandler(category, id) }}>
                               <EventAvailableIcon />
@@ -88,14 +88,9 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
                            <Collapse in={currentItem === `${category}-${id}` && side === 'left'} className={styles.boxCollapse}
                               sx={{ backgroundColor: '#EF8B6B' }}
                               orientation="horizontal">
-                              <Box className={styles.wrapperBox} onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(id); setTask(element); setOldCategory(category) }}
+                              <Box className={styles.wrapperBox + " " + styles.borderLeft} onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(id); setTask(element); setOldCategory(category) }}
                               >
-                                 <Slide direction="left"
-                                    in={currentItem === `${category}-${id}` && side === 'left'}
-                                    className={styles.slide}
-                                    mountOnEnter unmountOnExit>
-                                    <ModeEditIcon />
-                                 </Slide>
+                                 <ModeEditIcon />
                               </Box>
                            </Collapse>
                         </Box>

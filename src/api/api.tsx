@@ -96,7 +96,8 @@ export const api = {
         statisticday: localStorage.statisticday ? localStorage.statisticday : 0,
         statisticweek: localStorage.statisticweek ? localStorage.statisticweek : 0,
         statisticmonth: localStorage.statisticmonth ? localStorage.statisticmonth : 0,
-      };
+        records: localStorage.records ? JSON.parse(localStorage.records) : {}
+      }
 
       return new Promise((resolve) => { resolve(state) })
 >>>>>>> d5b297a (minimal functioanal completed)
@@ -329,19 +330,46 @@ export const api = {
     if (isConnected) {
       console.warn('This functon is not writed');
     } else {
-      const prevMsg=JSON.parse(localStorage.messages)
+      const prevMsg = JSON.parse(localStorage.messages)
       let lastIdMsg = Object.keys(prevMsg).pop();
       let IdMsg = lastIdMsg === undefined ? 1000 : +lastIdMsg + 1000;
       let newMsg = { [IdMsg]: { text, isChecked: true } }
       let state = { ...prevMsg, ...newMsg }
-      localStorage.messages=JSON.stringify(state)
+      localStorage.messages = JSON.stringify(state)
       return new Promise(resolve => {
         resolve(state)
       })
     }
   },
-  setThemeColor:function(color:ThemeColorType){
-    localStorage.themeColor=color;
-  }
+  setThemeColor: function (color: ThemeColorType) {
+    localStorage.themeColor = color;
+  },
+  createNewTag: (tag: string) => {
+    const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : {}
+    const rec = { ...storageRecords, [tag]: {} };
+    localStorage.records = JSON.stringify(rec)
+    return rec
+  },
+  deleteTag: (tag: string) => {
+    const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : {}
+    delete storageRecords[tag]
+    localStorage.records = JSON.stringify(storageRecords)
+    return storageRecords
+  },
+  renameTag: (oldTag: string, newTag: string) => {
+    // const daily=JSON.parse(localStorage.daily)
+    // for (const tag in daily) {
+    //   if (Object.prototype.hasOwnProperty.call(daily, tag)) {
+    //     const element = daily[tag];
+        
+    //   }
+    // }
+
+
+    // const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : {}
+    // delete storageRecords[tag]
+    // localStorage.records = JSON.stringify(storageRecords)
+    // return storageRecords
+  },
 
 };

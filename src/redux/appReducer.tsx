@@ -24,6 +24,7 @@ const DELETE_MESAGE_HISTORY = "DELETE_MESAGE_HISTORY"
 const SET_DAY = 'SET_DAY'
 const SET_DATE_CREATE = 'SET_DATE_CREATE'
 const CHANGE_THEME_COLOR = 'CHANGE_THEME_COLOR'
+const CREATE_TAG = 'CREATE_TAG'
 
 export const RED = 'RED'
 export const BLACK = 'BLACK'
@@ -36,27 +37,27 @@ export const themeValues = [
    {
       value: RED,
       labelUa: 'червоний',
-      labelEng:'red'
+      labelEng: 'red'
    },
    {
       value: GREEN,
       labelUa: 'зелений',
-      labelEng:'green'
+      labelEng: 'green'
    },
    {
       value: YELLOW,
       labelUa: 'жовтий',
-      labelEng:'yellow'
+      labelEng: 'yellow'
    },
    {
       value: BLUE,
       labelUa: 'синій',
-      labelEng:'blue'
+      labelEng: 'blue'
    },
    {
       value: PURPLE,
       labelUa: 'фіолетовий',
-      labelEng:'purple'
+      labelEng: 'purple'
    },
 ]
 
@@ -304,6 +305,12 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
             themeColor: action.color
          }
       }
+      case CREATE_TAG: {
+         return {
+            ...state,
+            records: action.records
+         }
+      }
       default: return state;
    }
 }
@@ -452,7 +459,8 @@ export const actions = {
          date
       } as const
    },
-   changeThemeColor: (color: ThemeColorType) => { return { type: CHANGE_THEME_COLOR, color } as const }
+   changeThemeColor: (color: ThemeColorType) => { return { type: CHANGE_THEME_COLOR, color } as const },
+   updateRecords: (records: any) => { return { type: CREATE_TAG, records } as const }
 }
 
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
@@ -666,6 +674,11 @@ export const changeThemeColor = (color: ThemeColorType): ThunksTypes => {
    return async (dispatch) => {
       api.setThemeColor(color)
       dispatch(actions.changeThemeColor(color))
+   }
+}
+export const createTag = (tag: string): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(actions.updateRecords(api.createNewTag(tag)))
    }
 }
 export default appReducer;

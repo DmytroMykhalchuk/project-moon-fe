@@ -15,11 +15,8 @@
 }
 
 .listItem {
-   padding: 0;
+   padding: 0 !important;
 
-   &__leftBox {
-      margin-right: 20px;
-   }
 
    &__mainBox {
       flex-grow: 1;
@@ -28,6 +25,12 @@
    &__rightIcon {
       margin-right: 20px;
    }
+
+   &__leftBox {
+      margin-right: 20px;
+   }
+
+
 
    &__rightBox,
    &__leftBox {
@@ -39,24 +42,41 @@
       justify-content: center;
       align-items: center;
       height: 50px;
-      .wrapperBox{
+
+      .wrapperBox {
          width: 60px;
          display: flex;
          justify-self: center;
          align-items: center;
          margin-top: 13px;
+         svg{
+            width: 100%;
+         }
       }
-      .wrapperBox:first-child{
-         border-right: 2px solid #000;
-      }
-      .wrapperBox:last-child{
-         border-left: 2px solid #000;
-      }
-      .slide{
+
+      // .wrapperBox:first-child {
+      //    border-right: 2px solid #000;
+      // }
+
+      // .wrapperBox:last-child {
+      //    border-left: 2px solid #000;
+      // }
+
+
+      .slide {
          display: flex;
          justify-self: center;
          align-items: center;
          height: 100%;
       }
    }
+
+   .borderRight {
+      border-right: 2px solid #000;
+   }
+
+   .borderLeft {
+      border-left: 2px solid #000;
+   }
+
 }

@@ -70,3 +70,6 @@ export const getListMonth = (state: AppStateType) => {
 export const getListMain = (state: AppStateType) => {
    return state.app.main
 }
+export const getRecords = (state: AppStateType) => {
+   return state.app.records
+}

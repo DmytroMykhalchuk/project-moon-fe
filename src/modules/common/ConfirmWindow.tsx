@@ -35,7 +35,7 @@ export const ConfirmWindow = ({
          </DialogTitle>
          <DialogContent>
             <DialogContentText id="alert-dialog-description">
-               Відновити запис буде неможливо, ви дійсно хочете видалити запис назавжди?
+               Відновити запис буде неможливо, ви впевнені?
             </DialogContentText>
          </DialogContent>
          <DialogActions>

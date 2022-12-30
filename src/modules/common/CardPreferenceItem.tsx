@@ -26,8 +26,6 @@ export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo((
    const [openFinished, setOpenFinished] = useState(false)
    const [openTrash, setOpenTrash] = useState(false)
 
-   console.log(list)
-   // return <div></div>
    return (
       <Card variant='outlined' sx={{ mb: 3, backgroundColor: '#2e2e2ec9' }}  >
          <CardContent>

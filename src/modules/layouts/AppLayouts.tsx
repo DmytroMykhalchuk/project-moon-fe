@@ -14,6 +14,7 @@ import { setMessages } from '../../redux/appReducer';
 import { getIsBadge } from '../../redux/appStateSelector';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
+import { Records } from '../main/DailyPage/Records';
 
 export const AppLayouts: React.FC = React.memo(() => {
    const dispatch: AppDispatch = useDispatch()
@@ -22,8 +23,8 @@ export const AppLayouts: React.FC = React.memo(() => {
    useEffect(() => {
       dispatch(setMessages())
    }, [])
-   const [page, setPage] = useState(2);
-   const [oldPage, setOldPage] = useState(2)
+   const [page, setPage] = useState(4)
+   const [oldPage, setOldPage] = useState(4)
    if (oldPage !== page) {
       window.scrollTo(0, 0)
    }
@@ -63,7 +64,7 @@ export const AppLayouts: React.FC = React.memo(() => {
          <Box sx={{ display: page === 4 ? 'block' : 'none' }}>
             <Fade in={page === 4} appear={false}>
                <Box >
-                  {page === 4 && <DailyPageContainer />}
+                  {page === 4 && <Records />}
                </Box>
             </Fade>
          </Box>

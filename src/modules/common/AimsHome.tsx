@@ -28,11 +28,9 @@ const isNumberElementsToShow = (list: any, cat: string) => {
 }
 
 type AimsOwnType = {
-   listName?: string
-   isHome?: boolean
 }
 
-export const AimsHome: React.FC<AimsOwnType> = React.memo(({ listName = '', isHome = false }) => {
+export const AimsHome: React.FC<AimsOwnType> = React.memo(({ }) => {
    const listConfig: any = {
       main: { list: useSelector(getMain), header: "Мрія" },
       month: { list: useSelector(getMonth), header: "Цілі на місяць" },
@@ -51,15 +49,13 @@ export const AimsHome: React.FC<AimsOwnType> = React.memo(({ listName = '', isHo
    const [listElements, setListElements] = useState(['day', 'week', 'month', 'main'])
 
    useEffect(() => {
-      console.log('config')
+
       setListElements(() => {
          let str = [] as Array<string>
-         if (isHome) {
-            isNumberElementsToShow(listConfig['day']['list'], 'day') && str.push('day');
-            isNumberElementsToShow(listConfig['week']['list'], 'week') && str.push('week')
-            isNumberElementsToShow(listConfig['month']['list'], 'month') && str.push('month')
-            isNumberElementsToShow(listConfig['main']['list'], 'main') && str.push('main')
-         }
+         isNumberElementsToShow(listConfig['day']['list'], 'day') && str.push('day');
+         isNumberElementsToShow(listConfig['week']['list'], 'week') && str.push('week')
+         isNumberElementsToShow(listConfig['month']['list'], 'month') && str.push('month')
+         isNumberElementsToShow(listConfig['main']['list'], 'main') && str.push('main')
          return str;
       });
    }, [])
@@ -134,47 +130,7 @@ export const AimsHome: React.FC<AimsOwnType> = React.memo(({ listName = '', isHo
       setIsOpenDialog(true);
    }
 
-   const listToShow = () => {
-      if (listName) {
-         return (
-            <AimsListItem
-               currentItem={currentItem}
-               side={side}
-               listAims={listConfig
-               [listName].list}
-               category={listName}
-               header=""
-               completeHandler={completeHandler}
-               rePutHandler={rePutHandler}
-               toggleWindow={toogleWindow}
-               setIdWindow={setIdWindow}
-               setTask={setTask}
-               setOldCategory={setOldCategory}
-            />
-         )
-      } else {
-         return (
-            listElements.map(item => {
-               return <AimsListItem
-                  key={item}
-                  currentItem={currentItem}
-                  side={side}
-                  listAims={listConfig
-                  [item].list}
-                  category={`${item}`}
-                  header={listConfig
-                  [item].header}
-                  completeHandler={completeHandler}
-                  rePutHandler={rePutHandler}
-                  toggleWindow={toogleWindow}
-                  setIdWindow={setIdWindow}
-                  setTask={setTask}
-                  setOldCategory={setOldCategory}
-               />
-            })
-         )
-      }
-   }
+
 
    return (
       <Box sx={{}}>
@@ -200,7 +156,24 @@ export const AimsHome: React.FC<AimsOwnType> = React.memo(({ listName = '', isHo
             disablePadding
          >
             {
-               listToShow()
+               listElements.map(item => {
+                  return <AimsListItem
+                     key={item}
+                     currentItem={currentItem}
+                     side={side}
+                     listAims={listConfig
+                     [item].list}
+                     category={`${item}`}
+                     header={listConfig
+                     [item].header}
+                     completeHandler={completeHandler}
+                     rePutHandler={rePutHandler}
+                     toggleWindow={toogleWindow}
+                     setIdWindow={setIdWindow}
+                     setTask={setTask}
+                     setOldCategory={setOldCategory}
+                  />
+               })
             }
          </List>
       </Box>)

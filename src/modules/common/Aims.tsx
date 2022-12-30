@@ -29,18 +29,11 @@ const isNumberElementsToShow = (list: any, cat: string) => {
 
 type AimsOwnType = {
    listName?: string
-   isHome?: boolean
    list: any
 }
 
-export const Aims: React.FC<AimsOwnType> = React.memo(({ listName = '', isHome = false, list }) => {
-   console.log('ff')
-   // const listConfig: any = {
-   //    main: { list: useSelector(getMain), header: "Мрія" },
-   //    month: { list: useSelector(getMonth), header: "Цілі на місяць" },
-   //    week: { list: useSelector(getWeek), header: "Цілі на тиждень" },
-   //    day: { list: useSelector(getDay), header: "Цілі на день" }
-   // }
+export const Aims: React.FC<AimsOwnType> = React.memo(({ listName = '', list }) => {
+
    const dispatch: AppDispatch = useDispatch();
    const [currentItem, setCurrentItem] = useState('');
    const [side, setSide] = useState('');
@@ -51,20 +44,6 @@ export const Aims: React.FC<AimsOwnType> = React.memo(({ listName = '', isHome =
    const [task, setTask] = useState({} as any);
    const [oldCategory, setOldCategory] = useState('')
    const [listElements, setListElements] = useState(['day', 'week', 'month', 'main'])
-
-   // useEffect(() => {
-   //    console.log('config')
-   //    setListElements(() => {
-   //       let str = [] as Array<string>
-   //       if (isHome) {
-   //          isNumberElementsToShow(listConfig['day']['list'], 'day') && str.push('day');
-   //          isNumberElementsToShow(listConfig['week']['list'], 'week') && str.push('week')
-   //          isNumberElementsToShow(listConfig['month']['list'], 'month') && str.push('month')
-   //          isNumberElementsToShow(listConfig['main']['list'], 'main') && str.push('main')
-   //       }
-   //       return str;
-   //    });
-   // }, [])
 
    const switchList = (fn: Function, cat: string, id: string | number) => {
       dispatch(fn(cat, id, list[id]));
@@ -136,6 +115,7 @@ export const Aims: React.FC<AimsOwnType> = React.memo(({ listName = '', isHome =
       setIsOpenDialog(true);
    }
 
+<<<<<<< HEAD
    const listToShow = () => {
       if (listName) {
          return (
@@ -511,6 +491,8 @@ const mapDispatchToProps = (dispatch: any) => {
       }
    }
 
+=======
+>>>>>>> 2cfb68e (started records page)
    return (
       <Box sx={{}}>
          {isOpenDialog &&
@@ -534,9 +516,19 @@ const mapDispatchToProps = (dispatch: any) => {
             dense
             disablePadding
          >
-            {
-               listToShow()
-            }
+            <AimsListItem
+               currentItem={currentItem}
+               side={side}
+               listAims={list}
+               category={listName}
+               header=""
+               completeHandler={completeHandler}
+               rePutHandler={rePutHandler}
+               toggleWindow={toogleWindow}
+               setIdWindow={setIdWindow}
+               setTask={setTask}
+               setOldCategory={setOldCategory}
+            />
          </List>
       </Box>)
 })

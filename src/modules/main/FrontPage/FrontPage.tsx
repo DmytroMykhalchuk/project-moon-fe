@@ -9,7 +9,7 @@ export const FrontPage = React.memo(() => {
       <Box>
         <CircleProgressBar />
         <Box>
-          <AimsHome isHome />
+          <AimsHome />
         </Box>
       </Box>
     </>
