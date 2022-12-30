@@ -34,7 +34,7 @@ export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo((
             </Typography>
             <Aims listName={nameList} list={list} />
             <ListItemButton data-list-name={`finished-${nameList}`} onClick={() => setOpenFinished((prev: boolean) => !prev)}>
-               <ListItemIcon>
+               <ListItemIcon sx={{color:'bgmode.light'}}>
                   <DoneAllIcon />
                </ListItemIcon>
                <ListItemText primary={finishedName} />
@@ -44,7 +44,7 @@ export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo((
                <AimsPreference listName={nameList} listFinished={list} />
             </Collapse>
             <ListItemButton data-list-name={`trash-${nameList}`} onClick={() => setOpenTrash((prev: boolean) => !prev)}>
-               <ListItemIcon>
+               <ListItemIcon sx={{color:'bgmode.light'}}>
                   <DeleteOutlineIcon />
                </ListItemIcon>
                <ListItemText primary={trashName} />

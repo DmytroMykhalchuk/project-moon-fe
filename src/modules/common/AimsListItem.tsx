@@ -69,7 +69,7 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
                         <Box className={styles.listItem__leftBox}>
                            <Collapse in={currentItem === `${category}-${id}` && side === 'right'} className={styles.boxCollapse}
                               orientation="horizontal"
-                              sx={{ backgroundColor: '#EF8B6B' }}
+                              sx={{ backgroundColor: 'bgmode.main' }}
                            >
                               <Box onClick={() => { rePutHandler(category, id) }} className={styles.wrapperBox + " " + styles.borderRight}
                               >
@@ -84,9 +84,9 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
                               <EventAvailableIcon />
                            </IconButton>
                         </Box>
-                        <Box sx={{ backgroundColor: '#EF8B6B' }} className={styles.listItem__rightBox}>
+                        <Box sx={{ backgroundColor: 'bgmode.main' }} className={styles.listItem__rightBox}>
                            <Collapse in={currentItem === `${category}-${id}` && side === 'left'} className={styles.boxCollapse}
-                              sx={{ backgroundColor: '#EF8B6B' }}
+                              sx={{ backgroundColor: 'bgmode.main' }}
                               orientation="horizontal">
                               <Box className={styles.wrapperBox + " " + styles.borderLeft} onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(id); setTask(element); setOldCategory(category) }}
                               >
@@ -102,7 +102,7 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
          }
       }
       return <ul key={i} style={{ marginBottom: header ? '20px' : '0px', backgroundColor: 'rgb(46 46 46 / 48%)', }}>
-         <ListSubheader sx={{ backgroundColor: '#fff', color: '#000' }}>{`${header}`}</ListSubheader>
+         <ListSubheader sx={{ backgroundColor: 'bgmode.dark', color: '#fff' }}>{`${header}`}</ListSubheader>
          {/* <TransitionGroup> */}
          {listItems}
          {/* </TransitionGroup> */}

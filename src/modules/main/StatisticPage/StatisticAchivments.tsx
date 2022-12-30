@@ -35,7 +35,7 @@ export const StatisticAchivments: React.FC = React.memo(() => {
                      {element.icon}
                   </Box>
                   <Box>
-                     <Typography variant="subtitle1" color="error" sx={{ textAlign: 'center' }}>{element.text}</Typography>
+                     <Typography variant="subtitle1" sx={{ textAlign: 'center',color:'bgmode.light' }}>{element.text}</Typography>
                      <Typography variant="body2" sx={{ color: 'grey', textAlign: 'center' }}>{element.description}</Typography>
                   </Box>
                </Box>
@@ -62,7 +62,7 @@ export const StatisticAchivments: React.FC = React.memo(() => {
 
             <ListItem >
                <ListItemIcon>
-                  <SchoolIcon />
+                  <SchoolIcon sx={{color:'bgmode.light'}} />
                </ListItemIcon>
                <ListItemText primary={
                   <Box sx={{ display: 'flex' }}>

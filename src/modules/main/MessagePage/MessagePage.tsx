@@ -81,7 +81,12 @@ export const MessagePage: React.FC = React.memo(() => {
                position: 'fixed',
                bottom: '80px',
                right: '16px',
-               backgroundColor: '#fff'
+               backgroundColor: 'bgmode.light',
+               color:'bgmode.circle',
+
+               '&:hover': {
+                  backgroundColor: 'bgmode.dark'
+               }
             }}>
             {isBadge ? <DoneIcon /> : <SettingsIcon />}
          </Fab>

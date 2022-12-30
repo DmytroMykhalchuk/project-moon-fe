@@ -1,34 +1,17 @@
 import "./App.css";
 import { connect, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import AuthRouter from "./modules/auth/AuthRouter";
 import AppRouter from "./modules/main/AppRouter";
-import Preloader from "./modules/common/Preloader";
 import Box from '@mui/material/Box'
 import './modules/common/bg.css'
 import { createTheme, ThemeProvider } from "@mui/material"
 import { getThemeColor } from "./redux/appStateSelector";
+import { THEME, themes } from "./themes";
 
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    background: {
-      // default: "#333",
-      paper: "#333",
-    },
-    primary: {
-      main: '#fff'
-    },
-    //@ts-ignore
-    fpage: {
-      main: "#EF8B6B",
-      light: "#262335",
-    },
-  },
-});
 export const App = () => {
-
-  return <ThemeProvider theme={theme}>
+  const themeColor = useSelector(getThemeColor)
+  console.log(themeColor)
+  return <ThemeProvider theme={themes[THEME + themeColor]}>
     <Box>
       <Routes>
         <Route path="/*" element={<AppRouter />} />

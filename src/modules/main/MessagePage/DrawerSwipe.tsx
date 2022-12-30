@@ -14,7 +14,7 @@ import { changeLangCites, changeThemeColor, deleteMessageHistory, setCurrentDay,
 
 
 const StyledBox = styled(Box)(({ theme }) => ({
-   backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
+   backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[900],
 }));
 
 const Puller = styled(Box)(({ theme }) => ({
@@ -117,11 +117,11 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                   visibility: 'visible',
                   right: 0,
                   left: 0,
-                  zIndex: '-1'
+                  zIndex: '-1',
+                  backgroundColor:'bgmode.light'
                }}
             >
                <Puller />
-               <Typography sx={{ p: 2, color: 'text.secondary', opacity: 0 }}>fh</Typography>
             </StyledBox>
             <StyledBox
                sx={{
@@ -131,7 +131,6 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                   overflow: 'auto',
                   display: 'flex',
                   justifyContent: 'center',
-                  // alignItems:'center',
                   flexDirection: 'column'
                }}
             >

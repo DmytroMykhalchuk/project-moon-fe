@@ -35,7 +35,7 @@ export const StatisticAims: React.FC = React.memo(() => {
             </ListItem>
 
             <ListItem >
-               <ListItemIcon>
+               <ListItemIcon sx={{ color: 'bgmode.light' }}>
                   <CalendarMonthIcon />
                </ListItemIcon>
                <ListItemText primary={
@@ -46,7 +46,7 @@ export const StatisticAims: React.FC = React.memo(() => {
                } />
             </ListItem>
             <ListItem >
-               <ListItemIcon>
+               <ListItemIcon sx={{ color: 'bgmode.light' }}>
                   <DateRangeIcon />
                </ListItemIcon>
                <ListItemText primary={
@@ -57,7 +57,7 @@ export const StatisticAims: React.FC = React.memo(() => {
                } />
             </ListItem>
             <ListItem >
-               <ListItemIcon>
+               <ListItemIcon sx={{ color: 'bgmode.light' }}>
                   <EventIcon />
                </ListItemIcon>
                {/* {@ts-ignore} */}
@@ -73,4 +73,3 @@ export const StatisticAims: React.FC = React.memo(() => {
    )
 })
 
- 

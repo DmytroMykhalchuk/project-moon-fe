@@ -1,6 +1,5 @@
 @import './../global.module.scss';
 
-
 .appWrapper {
    // background-color: $app-bg-color;
    padding: 15px 0;
@@ -15,4 +14,7 @@
    &__wrapper {
       position: relative;
    }
+}
+.title{
+   font-family: cursive;
 }

@@ -29,7 +29,7 @@ export const StatisticPomodoro: React.FC = React.memo(() => {
             </ListItem>
 
             <ListItem >
-               <ListItemIcon>
+               <ListItemIcon sx={{color:'bgmode.light'}}>
                   <AvTimerOutlinedIcon />
                </ListItemIcon>
                <ListItemText primary={

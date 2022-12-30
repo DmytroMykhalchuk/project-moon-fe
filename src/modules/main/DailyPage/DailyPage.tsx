@@ -80,8 +80,11 @@ export const DailyPage: React.FC<DailyPageType> = React.memo(({ records, isOpenF
                   position: 'fixed',
                   bottom: '80px',
                   right: '16px',
-                  backgroundColor: '#fff',
-                  color: "#000"
+                  backgroundColor: 'bgmode.light',
+                  color:'bgmode.circle',
+                  '&:hover': {
+                     backgroundColor: 'bgmode.dark'
+                  }
                }}>
                <CheckIcon />
             </Fab>

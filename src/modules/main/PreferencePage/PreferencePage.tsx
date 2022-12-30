@@ -86,9 +86,13 @@ export const PreferencePage: React.FC = React.memo(() => {
                position: 'fixed',
                bottom: '80px',
                right: '16px',
-               backgroundColor: '#fff'
-            }}>
-            <AddIcon />
+               backgroundColor: 'bgmode.light',
+               color:'bgmode.circle',
+               '&:hover': {
+                  backgroundColor: 'bgmode.dark'
+               }}
+            } >
+               <AddIcon />
          </Fab>
          {/* 
          {['day', 'week', 'month', 'main'].map(item => {
@@ -125,7 +129,7 @@ export const PreferencePage: React.FC = React.memo(() => {
          <PreferenceItemWeek />
          <PreferenceItemMonth />
          <PreferenceItemMain />
-      </Box>
+      </Box >
    )
 })
 

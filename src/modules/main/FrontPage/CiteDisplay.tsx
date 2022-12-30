@@ -17,7 +17,7 @@ export const CiteDisplay: React.FC = React.memo(() => {
             p: 5
          }}
       >
-         <Box sx={{ border: '2px solid #fff', p: 2 }}>
+         <Box sx={{ border: '2px solid',borderColor:'bgmode.light', p: 2 }}>
             <Typography variant="subtitle1" color="info">
                {citesObj[randomId][`text${languageCite}`]}
             </Typography>

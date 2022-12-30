@@ -35,6 +35,11 @@ export const PURPLE = 'PURPLE'
 export const GREEN = 'GREEN'
 export const themeValues = [
    {
+      value: WHITE,
+      labelUa: 'чорно-білий',
+      labelEng: 'black-white'
+   },
+   {
       value: RED,
       labelUa: 'червоний',
       labelEng: 'red'

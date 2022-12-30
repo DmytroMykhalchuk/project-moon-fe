@@ -37,7 +37,7 @@ const CircularProgressWithLabel: React.FC<CircleProgressType> = React.memo(({ va
                   <IconButton color='default' aria-label='show all' size='large'><AvTimerIcon fontSize="inherit" color='disabled' /></IconButton>
                </Box>
                <Box sx={{ position: 'relative', display: 'inline-flex', }}>
-                  <CircularProgress variant="determinate" size={200} sx={{ margin: '0 auto', width: '100%' }} value={value} color='warning' />
+                  <CircularProgress variant="determinate" size={200} sx={{ margin: '0 auto', width: '100%',color:'bgmode.circle'}} value={value}  />
                   <CircularProgress
                      variant="determinate"
                      className={styles.circle}
@@ -47,7 +47,7 @@ const CircularProgressWithLabel: React.FC<CircleProgressType> = React.memo(({ va
                         width: '100%',
                         position: 'absolute',
                         zIndex: '-1',
-                        color: 'fpage.light'
+                        color: 'bgmode.light'
                      }}
                      value={100}
                   />

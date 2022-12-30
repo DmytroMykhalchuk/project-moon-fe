@@ -13,6 +13,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createTaskThunk } from '../../redux/appReducer';
 import { AppDispatch } from '../../redux/store';
+import { grey } from '@mui/material/colors'
+import Box from '@mui/material/Box'
+
 type DialogWindowType = {
    isOpenDialog: boolean
    setIsOpenDialog: (bool: boolean) => void
@@ -53,46 +56,51 @@ const DialogWindow: React.FC<DialogWindowType> = ({
          onClose={() => { setIsOpenDialog(false) }}
          fullWidth
          maxWidth="md"
+
+
       >
-         <DialogTitle>Нова мета</DialogTitle>
-         <DialogContent>
-            <DialogContentText>
-            </DialogContentText>
-            <TextField
-               autoFocus
-               margin="normal"
-               id="name"
-               label="Ціль"
-               type="text"
-               fullWidth
-               variant="standard"
-               sx={{ mb: 2 }}
-               value={aim}
-               onChange={(el) => setAim(el.target.value)}
-            />
-            <FormControl fullWidth variant="standard">
-               <InputLabel id="demo-simple-select-label">Категорія</InputLabel>
-               <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={category}
-                  label="Age"
-                  onChange={handleChangeCategory}
-               >
-                  <MenuItem value={'day'}>На День</MenuItem>
-                  <MenuItem value={'week'}>На тиждень</MenuItem>
-                  <MenuItem value={'month'}>На місяць</MenuItem>
-                  <MenuItem value={'main'}>Мрія</MenuItem>
-               </Select>
-            </FormControl>
-         </DialogContent>
-         <DialogActions>
-            <Button onClick={() => { setIsOpenDialog(false) }}>Скасувати</Button>
-            <Button onClick={() => {
-               setIsOpenDialog(false);
-               sendForm();
-            }}>Підтвердити</Button>
-         </DialogActions>
+         <Box sx={{ backgroundColor: grey[900] }}>
+
+            <DialogTitle>Нова мета</DialogTitle>
+            <DialogContent>
+               <DialogContentText>
+               </DialogContentText>
+               <TextField
+                  autoFocus
+                  margin="normal"
+                  id="name"
+                  label="Ціль"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  sx={{ mb: 2 }}
+                  value={aim}
+                  onChange={(el) => setAim(el.target.value)}
+               />
+               <FormControl fullWidth variant="standard">
+                  <InputLabel id="demo-simple-select-label">Категорія</InputLabel>
+                  <Select
+                     labelId="demo-simple-select-label"
+                     id="demo-simple-select"
+                     value={category}
+                     label="Age"
+                     onChange={handleChangeCategory}
+                  >
+                     <MenuItem value={'day'}>На День</MenuItem>
+                     <MenuItem value={'week'}>На тиждень</MenuItem>
+                     <MenuItem value={'month'}>На місяць</MenuItem>
+                     <MenuItem value={'main'}>Мрія</MenuItem>
+                  </Select>
+               </FormControl>
+            </DialogContent>
+            <DialogActions>
+               <Button onClick={() => { setIsOpenDialog(false) }}>Скасувати</Button>
+               <Button onClick={() => {
+                  setIsOpenDialog(false);
+                  sendForm();
+               }}>Підтвердити</Button>
+            </DialogActions>
+         </Box>
       </Dialog>
    )
 

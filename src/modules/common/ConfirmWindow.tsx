@@ -4,8 +4,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {TaskType} from './../../redux/appReducer';
-
+import { TaskType } from './../../redux/appReducer';
+import { grey } from '@mui/material/colors'
+import Box from '@mui/material/Box'
 
 type ConfirmWindowType = {
    isOpenConfirmation: boolean,
@@ -14,14 +15,14 @@ type ConfirmWindowType = {
    id: string
    object: TaskType
    deleteTask: (arg1: string, arg2: string, arg3: TaskType) => void,
-   setId:(arg1:string)=>void
+   setId: (arg1: string) => void
 }
 
 export const ConfirmWindow = ({
    isOpenConfirmation,
    setIsOpenConfirmation,
    category, id, object,
-   deleteTask,setId
+   deleteTask, setId
 }: ConfirmWindowType) => {
    return (
       <Dialog
@@ -30,24 +31,26 @@ export const ConfirmWindow = ({
          aria-labelledby="alert-dialog-title"
          aria-describedby="alert-dialog-description"
       >
-         <DialogTitle id="alert-dialog-title">
-            Видалити запис?
-         </DialogTitle>
-         <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-               Відновити запис буде неможливо, ви впевнені?
-            </DialogContentText>
-         </DialogContent>
-         <DialogActions>
-            <Button onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
-            <Button onClick={() => {
-               setId('')
-               deleteTask(category, id, object);
-               setIsOpenConfirmation(false);
-            }} autoFocus>
-               Підтвердити
-            </Button>
-         </DialogActions>
+         <Box sx={{ backgroundColor: grey[900] }}>
+
+            <DialogTitle id="alert-dialog-title">
+               Видалити запис?
+            </DialogTitle>
+            <DialogContent>
+               <DialogContentText id="alert-dialog-description">
+                  Відновити запис буде неможливо, ви впевнені?
+               </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+               <Button onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
+               <Button onClick={() => {
+                  setId('')
+                  deleteTask(category, id, object);
+                  setIsOpenConfirmation(false);
+               }} autoFocus>
+                  Підтвердити
+               </Button>
+            </DialogActions></Box>
       </Dialog>
    )
 }
