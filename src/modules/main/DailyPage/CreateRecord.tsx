@@ -185,16 +185,15 @@ type DailogDatePickerType = {
 }
 const DailogDatePicker: React.FC<DailogDatePickerType> = ({ isEditDate, setSelectedDate, setIsEditDate, selectedDate }) => {
    return <Dialog open={isEditDate} aria-labelledby={'data-picker'}>
-      <DialogTitle>
-         Datr
-      </DialogTitle>
-      <DialogContent>
-         <DayPickerComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-      </DialogContent>
-      <DialogActions>
-         <Button onClick={() => setIsEditDate(false)}>
-            Ok
-         </Button>
-      </DialogActions>
+      <Box sx={{ backgroundColor: grey[800] }}>
+         <DialogContent>
+            <DayPickerComponent selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+         </DialogContent>
+         <DialogActions>
+            <Button onClick={() => setIsEditDate(false)}>
+               Ok
+            </Button>
+         </DialogActions>
+      </Box>
    </Dialog>
 }

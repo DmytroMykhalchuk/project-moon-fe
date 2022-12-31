@@ -18,9 +18,7 @@ const isNumberElementsToShow = (list: any, cat: string) => {
          counter++;
       }
    }
-   if (cat === 'day') {
-      return true
-   }
+   
    if (cat === 'main') {
       return true
    }
