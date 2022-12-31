@@ -166,21 +166,28 @@ export const api = {
       })
     }
   },
-  createDailyRecord: function (record: any) {
+  createDailyRecord: function (day: string, title: string, text: string, tags: Array<string>, date: Date) {
     if (isConnected) {
-
       return instance
-        .post("auth/daily", { daily: JSON.stringify(record) })
+        .post("auth/daily", { day, title, text, tags, date })
         .then((responce) => {
           return responce.data;
         });
     } else {
       let daily = localStorage.daily ? JSON.parse(localStorage.daily) : {};
+<<<<<<< HEAD
       const id = new Date().getTime();
       daily[id]={text:record.text,day:record.day}
       localStorage.daily=JSON.stringify(daily);
       return new Promise(resolve => {
         resolve([{[id]:{text:record.text,day:record.day}}])
+=======
+      const id = date.getTime();
+      daily[id] = { text, day, title, tags }
+      localStorage.daily = JSON.stringify(daily);
+      return new Promise(resolve => {
+        resolve([{ [id]: { text, day, title, tags } }])
+>>>>>>> 434780e (updated Daily page)
       })
     }
   },
@@ -361,7 +368,7 @@ export const api = {
     // for (const tag in daily) {
     //   if (Object.prototype.hasOwnProperty.call(daily, tag)) {
     //     const element = daily[tag];
-        
+
     //   }
     // }
 
@@ -371,5 +378,10 @@ export const api = {
     // localStorage.records = JSON.stringify(storageRecords)
     // return storageRecords
   },
-
+  deleteDailyRecord: (id: string) => {
+    const daily = JSON.parse(localStorage.daily)
+    delete daily[id]
+    localStorage.daily = JSON.stringify(daily)
+    return daily
+  }
 };

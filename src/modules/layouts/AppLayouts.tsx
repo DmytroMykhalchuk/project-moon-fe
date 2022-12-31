@@ -23,8 +23,8 @@ export const AppLayouts: React.FC = React.memo(() => {
    useEffect(() => {
       dispatch(setMessages())
    }, [])
-   const [page, setPage] = useState(2)
-   const [oldPage, setOldPage] = useState(2)
+   const [page, setPage] = useState(4)
+   const [oldPage, setOldPage] = useState(4)
    if (oldPage !== page) {
       window.scrollTo(0, 0)
    }

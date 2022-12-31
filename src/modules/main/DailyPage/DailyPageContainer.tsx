@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
 import { getCurrentDay, getDaily } from "../../../redux/appStateSelector";
-import { setNewDailyRecord } from "../../../redux/appReducer";
 
 export const DailyPageContainer: React.FC = React.memo(() => {
 
@@ -34,7 +33,7 @@ export const DailyPageContainer: React.FC = React.memo(() => {
 
 
    const setDaily = (day: string, text: string) => {
-      dispatch(setNewDailyRecord(day, text))
+      // dispatch(setNewDailyRecord(day, text))
    }
    return (
       <Box>

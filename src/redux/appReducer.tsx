@@ -25,6 +25,7 @@ const SET_DAY = 'SET_DAY'
 const SET_DATE_CREATE = 'SET_DATE_CREATE'
 const CHANGE_THEME_COLOR = 'CHANGE_THEME_COLOR'
 const CREATE_TAG = 'CREATE_TAG'
+const INIT_SET_DAILY = 'INIT_SET_DAILY'
 
 export const RED = 'RED'
 export const BLACK = 'BLACK'
@@ -67,7 +68,13 @@ export const themeValues = [
 ]
 
 export type ThemeColorType = typeof RED | typeof BLACK | typeof WHITE | typeof BLUE | typeof YELLOW | typeof PURPLE;
-
+export type DailyRecordType = {
+   [id: string]: {
+      title: string
+      text: string
+      tags: Array<string>
+   }
+}
 const initialState: any = {
    isFetching: false,
    isInitialize: false,
@@ -316,6 +323,12 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
             records: action.records
          }
       }
+      case INIT_SET_DAILY: {
+         return {
+            ...state,
+            daily: action.daily
+         }
+      }
       default: return state;
    }
 }
@@ -465,7 +478,8 @@ export const actions = {
       } as const
    },
    changeThemeColor: (color: ThemeColorType) => { return { type: CHANGE_THEME_COLOR, color } as const },
-   updateRecords: (records: any) => { return { type: CREATE_TAG, records } as const }
+   updateRecords: (records: any) => { return { type: CREATE_TAG, records } as const },
+   initDaily: (daily: any) => { return { type: INIT_SET_DAILY, daily } as const }
 }
 
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
@@ -591,11 +605,10 @@ export const restoreTaskThunk = (category: string, id: string, task: TaskType): 
       api.updateTask({ [category]: { [id]: { ...task } } });
    }
 }
-export const setNewDailyRecord = (day: string, text: string): ThunksTypes => {
+export const setNewDailyRecord = (day: string, title = '', text = '', tags: Array<string>, date: Date): ThunksTypes => {
    return async (dispatch) => {
-
-
-      api.createDailyRecord({ day, text }).then((responce: any) => {
+      if (!title && !text) return
+      api.createDailyRecord(day, title, text, tags, date).then((responce: any) => {
          dispatch(actions.setDaily(responce[0]));
       })
    }
@@ -684,6 +697,11 @@ export const changeThemeColor = (color: ThemeColorType): ThunksTypes => {
 export const createTag = (tag: string): ThunksTypes => {
    return async (dispatch) => {
       dispatch(actions.updateRecords(api.createNewTag(tag)))
+   }
+}
+export const deleteDailyRecord = (id: string): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(actions.initDaily(api.deleteDailyRecord(id)))
    }
 }
 export default appReducer;

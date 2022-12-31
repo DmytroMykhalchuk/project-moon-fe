@@ -10,7 +10,6 @@ import { THEME, themes } from "./themes";
 
 export const App = () => {
   const themeColor = useSelector(getThemeColor)
-  console.log(themeColor)
   return <ThemeProvider theme={themes[THEME + themeColor]}>
     <Box>
       <Routes>
