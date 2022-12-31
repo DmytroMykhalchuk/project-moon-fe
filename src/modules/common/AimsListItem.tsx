@@ -59,7 +59,7 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
          if (Object.prototype.hasOwnProperty.call(listAims, id)) {
             const element = listAims[id];
             listItems.push(
-               <Collapse key={`${category}-${id}`} in={!(element.isFinished || element.isInTrash)} >
+               <Collapse timeout={800} key={`${category}-${id}`} in={!(element.isFinished || element.isInTrash)} >
                   <ListItem key={`${category}-${id}`}
                      data-item={`${category}-${id}`}
                      disablePadding
@@ -67,7 +67,7 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
                   >
                      <ListItemButton role={undefined} className={styles.listItem}>
                         <Box className={styles.listItem__leftBox}>
-                           <Collapse in={currentItem === `${category}-${id}` && side === 'right'} className={styles.boxCollapse}
+                           <Collapse timeout={800} in={currentItem === `${category}-${id}` && side === 'right'} className={styles.boxCollapse}
                               orientation="horizontal"
                               sx={{ backgroundColor: 'bgmode.main' }}
                            >
@@ -85,7 +85,7 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
                            </IconButton>
                         </Box>
                         <Box sx={{ backgroundColor: 'bgmode.main' }} className={styles.listItem__rightBox}>
-                           <Collapse in={currentItem === `${category}-${id}` && side === 'left'} className={styles.boxCollapse}
+                           <Collapse timeout={800} in={currentItem === `${category}-${id}` && side === 'left'} className={styles.boxCollapse}
                               sx={{ backgroundColor: 'bgmode.main' }}
                               orientation="horizontal">
                               <Box className={styles.wrapperBox + " " + styles.borderLeft} onClick={() => { toggleWindow(category, `${element.aim}`); setIdWindow(id); setTask(element); setOldCategory(category) }}

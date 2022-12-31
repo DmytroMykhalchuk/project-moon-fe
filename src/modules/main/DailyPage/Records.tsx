@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { getDaily, getRecords } from '../../../redux/appStateSelector'
+import { getDaily } from '../../../redux/appStateSelector'
 import styles from './styles.module.scss'
-import { RecordsByTag } from './RecordsByTag'
-import { DailyPageContainer } from './DailyPageContainer'
 import Typography from '@mui/material/Typography'
 import Zoom from '@mui/material/Zoom'
-import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Fab from '@mui/material/Fab';
-import SettingsIcon from '@mui/icons-material/Settings'
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import AddIcon from '@mui/icons-material/Add';
 import { CreateRecord } from './CreateRecord'
 import { DailyRecordType } from '../../../redux/appReducer'
@@ -122,26 +113,4 @@ export const Records = React.memo(() => {
          <CreateRecord isEditMode={isEditMode} setIsEditMode={setIsEditMode} selctedItem={selctedItem} setSelctedItem={setSelctedItem} />
       </Box>
    )
-
-   // return (
-   //    <Box>
-   //       <RecordsByTag tag={renderTag} setRenderTag={setRenderTag} records={records} />
-   //       <Box sx={{ mb: 2 }}>
-   //          {renderTags()}
-   //       </Box>
-
-   //       <Box sx={{ mb: 2 }}>
-   //          <Paper elevation={isEditMode ? 22 : 7} className={styles.editRecords} onClick={() => { setIsEditMode((prev) => !prev) }}>
-   //             <Typography variant="h6" component='div' color="inherit">
-   //                <SettingsIcon /> Редагувати
-   //             </Typography>
-   //          </Paper>
-   //       </Box>
-
-   //       <Collapse in={isEditMode}>
-   //          <CreateTag />
-   //       </Collapse>
-   //    </Box >
-   // )
-   // return <DailyPageContainer />
 })

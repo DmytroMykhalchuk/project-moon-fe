@@ -3,7 +3,6 @@ import Container from '@mui/material/Container';
 import styles from './styleAppLayouts.module.scss';
 import { FrontPageContainer } from '../main/FrontPage/FrontPageContainer'
 import { PreferencePageContainer } from '../main/PreferencePage/PreferencePageContainer';
-import { DailyPageContainer } from '../main/DailyPage/DailyPageContainer';
 import MessagePageContainer from '../main/MessagePage/MessagePageContainer';
 import { StatisticPageContainer } from '../main/StatisticPage/StatisticPageContainer';
 import AppTitle from './AppTitle';
@@ -23,8 +22,8 @@ export const AppLayouts: React.FC = React.memo(() => {
    useEffect(() => {
       dispatch(setMessages())
    }, [])
-   const [page, setPage] = useState(4)
-   const [oldPage, setOldPage] = useState(4)
+   const [page, setPage] = useState(2)
+   const [oldPage, setOldPage] = useState(2)
    if (oldPage !== page) {
       window.scrollTo(0, 0)
    }

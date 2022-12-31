@@ -32,7 +32,7 @@ export const FrontPageContainer: React.FC = React.memo(() => {
       } else {
          dispatch(getInfoUser())
       }
-      setTimeout(() => { setisShowCite(false); dispatch(checkOnline()); }, 4000)
+      setTimeout(() => { setisShowCite(false); dispatch(checkOnline()); }, 5000)
    }, [])
 
    return (<>
