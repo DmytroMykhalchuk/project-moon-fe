@@ -164,7 +164,7 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
          }
       }
       case CREATE_TASK: {
-
+         debugger
          let changedTaskList = { [action.category]: { ...state[action.category], [new Date().getTime()]: { aim: action.text, isFinished: false, isInTrash: false } } };
          return {
 
@@ -326,7 +326,7 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
       case INIT_SET_DAILY: {
          return {
             ...state,
-            daily: action.daily
+            daily: { ...action.daily }
          }
       }
       default: return state;
@@ -505,9 +505,8 @@ export const createTaskThunk = (category: string, text: string,): ThunksTypes =>
          [category]: text
       }
       api.createTask(taskSend).then((responce: any) => {
-         const aim = JSON.parse(responce)
-         const id = Object.keys(aim)[0];
-         dispatch(actions.updateTask(category, id, aim[id]));
+         const id = Object.keys(responce)[0];
+         dispatch(actions.updateTask(category, id, responce[id]));
          dispatch(actions.toggleFetching());
       });
    }

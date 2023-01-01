@@ -31,50 +31,6 @@ export const PreferencePage: React.FC = React.memo(() => {
    const [openFinished, setOpenFinished] = useState('')
    const [openTrash, setOpenTrash] = useState('')
    const [isOpenDialog, setIsOpenDialog] = useState(false);
-
-   // const onOpenFinishedList = (el: any) => {
-   //    el = el.target;
-   //    const maxDepth = 5;
-   //    let i = 0;
-   //    let currentEl = null;
-   //    while (true) {
-   //       currentEl = el.parentNode;
-   //       el = currentEl;
-   //       i++;
-   //       if (maxDepth < i || el.hasAttribute('data-list-name')) {
-   //          break;
-   //       }
-   //    }
-   //    setOpenFinished(prev => {
-   //       if (prev === el.getAttribute('data-list-name')) {
-   //          return false;
-   //       } else {
-   //          return el.getAttribute('data-list-name');
-   //       }
-   //    });
-   // }
-   // const onOpenTrashList = (el: any) => {
-   //    el = el.target;
-   //    const maxDepth = 5;
-   //    let i = 0;
-   //    let currentEl = null;
-   //    while (true) {
-   //       currentEl = el.parentNode;
-   //       el = currentEl;
-   //       i++;
-   //       if (maxDepth < i || el.hasAttribute('data-list-name')) {
-   //          break;
-   //       }
-   //    }
-   //    setOpenTrash(prev => {
-   //       if (prev === el.getAttribute('data-list-name')) {
-   //          return false;
-   //       } else {
-   //          return el.getAttribute('data-list-name');
-   //       }
-   //    });
-   // }
-   // console.log(listConfig.week.list)
    return (
       <Box>
 
@@ -94,37 +50,7 @@ export const PreferencePage: React.FC = React.memo(() => {
             } >
                <AddIcon />
          </Fab>
-         {/* 
-         {['day', 'week', 'month', 'main'].map(item => {
-            return <Card variant='outlined' sx={{ mb: 3, backgroundColor: '#2e2e2ec9' }} key={item} >
-               <CardContent>
-                  <Typography variant="h5" component="div" sx={{ pb: 2, color: '#fff' }}>
-                     {listConfig[item].header}
-                  </Typography>
-                  <Aims listName={item} />
-                  <ListItemButton data-list-name={`finished-${item}`} onClick={onOpenFinishedList}>
-                     <ListItemIcon>
-                        <DoneAllIcon />
-                     </ListItemIcon>
-                     <ListItemText primary={listConfig.finishedName} />
-                     {openFinished === `finished-${item}` ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={openFinished === `finished-${item}`}>
-                     <AimsPreference listName={item} listFinished={listConfig[item].list} />
-                  </Collapse>
-                  <ListItemButton data-list-name={`trash-${item}`} onClick={onOpenTrashList}>
-                     <ListItemIcon>
-                        <DeleteOutlineIcon />
-                     </ListItemIcon>
-                     <ListItemText primary={listConfig.trashName} />
-                     {openTrash === 'trash-main' ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={openTrash === `trash-${item}`}>
-                     <AimsPreference listName={item} listInTrash={listConfig[item].list} />
-                  </Collapse>
-               </CardContent>
-            </Card>
-         })} */}
+         
          <PreferenceItemDay />
          <PreferenceItemWeek />
          <PreferenceItemMonth />

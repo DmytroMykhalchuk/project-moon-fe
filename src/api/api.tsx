@@ -122,7 +122,8 @@ export const api = {
         };
         state = { ...state, ...newTask };
         localStorage[key] = JSON.stringify(state);
-        resolve(JSON.stringify(newTask));
+        // resolve(JSON.stringify(newTask));
+        resolve(newTask)
       })
     }
   },
