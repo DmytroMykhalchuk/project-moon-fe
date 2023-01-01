@@ -9,10 +9,11 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { CreateRecord } from './CreateRecord'
 import { DailyRecordType } from '../../../redux/appReducer'
+import { PlaceHolder } from './PlaceHolder'
 
 
 
-const triggerLetter = ['a', 'у', 'е', 'о', 'и', 'і', 'e', 'u', 'o', 'i', 'a']
+export const triggerLetter = ['a', 'у', 'е', 'о', 'и', 'і', 'e', 'u', 'o', 'i', 'a']
 
 export const Records = React.memo(() => {
    const [isEditMode, setIsEditMode] = useState(false)
@@ -84,6 +85,9 @@ export const Records = React.memo(() => {
                </Box>
             </Box>
          )
+      }
+      if (elementRecords.length === 0) {
+         return <PlaceHolder />
       }
       elementRecords.reverse()
       return elementRecords;

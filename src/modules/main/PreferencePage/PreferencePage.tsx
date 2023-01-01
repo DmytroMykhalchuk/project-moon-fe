@@ -32,7 +32,7 @@ export const PreferencePage: React.FC = React.memo(() => {
    const [openTrash, setOpenTrash] = useState('')
    const [isOpenDialog, setIsOpenDialog] = useState(false);
    return (
-      <Box>
+      <Box sx={{pb:3}}>
 
          <DialogWindow isOpenDialog={isOpenDialog} setIsOpenDialog={setIsOpenDialog} />
          <Fab color="secondary"
