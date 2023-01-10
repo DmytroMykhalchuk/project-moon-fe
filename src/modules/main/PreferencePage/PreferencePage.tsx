@@ -1,21 +1,12 @@
 import React, { useState } from "react"
-import { Card, CardContent, Fab, Typography } from "@mui/material";
+import { Fab } from "@mui/material";
 import { Box } from "@mui/system"
-import { Aims } from "../../common/Aims";
-import AimsPreference from "../../common/AimsPrefrence";
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DialogWindow from "../../common/DialogWindow";
 import { getDay, getListDay, getListMain, getListMonth, getListWeek, getMain, getMonth, getWeek } from "../../../redux/appStateSelector";
 import { useSelector } from "react-redux";
 import AddIcon from '@mui/icons-material/Add';
 import { CardPreferenceItem } from "../../common/CardPreferenceItem";
+import { CreateTag } from "./CreateTag";
 
 
 export const PreferencePage: React.FC = React.memo(() => {
@@ -31,8 +22,11 @@ export const PreferencePage: React.FC = React.memo(() => {
    const [openFinished, setOpenFinished] = useState('')
    const [openTrash, setOpenTrash] = useState('')
    const [isOpenDialog, setIsOpenDialog] = useState(false);
+
+  
+
    return (
-      <Box sx={{pb:3}}>
+      <Box sx={{ pb: 3 }}>
 
          <DialogWindow isOpenDialog={isOpenDialog} setIsOpenDialog={setIsOpenDialog} />
          <Fab color="secondary"
@@ -43,18 +37,20 @@ export const PreferencePage: React.FC = React.memo(() => {
                bottom: '80px',
                right: '16px',
                backgroundColor: 'bgmode.light',
-               color:'bgmode.circle',
+               color: 'bgmode.circle',
                '&:hover': {
                   backgroundColor: 'bgmode.dark'
-               }}
+               }
+            }
             } >
-               <AddIcon />
+            <AddIcon />
          </Fab>
-         
+
          <PreferenceItemDay />
          <PreferenceItemWeek />
          <PreferenceItemMonth />
          <PreferenceItemMain />
+         <CreateTag />
       </Box >
    )
 })

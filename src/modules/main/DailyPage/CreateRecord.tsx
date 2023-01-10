@@ -9,16 +9,13 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Zoom from '@mui/material/Zoom'
 import InputBase from '@mui/material/InputBase';
 import { grey } from '@mui/material/colors'
-import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogActions from '@mui/material/DialogActions'
 import CheckIcon from '@mui/icons-material/Check';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -28,8 +25,10 @@ import { getCurrentDay } from '../../../redux/appStateSelector';
 import { DailyRecordType, setNewDailyRecord } from '../../../redux/appReducer';
 import TagIcon from '@mui/icons-material/Tag';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { DialogConfirmation } from '../MessagePage/DialogConfirmation';
 import { ConfirmWindowDeleteRecord } from '../../common/ConfirmWindowDeleteRecord';
+import { TagsSelect } from './TagsSelect';
+
+
 
 const Transition = React.forwardRef(function Transition(
    props: TransitionProps & {
@@ -61,6 +60,9 @@ export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEdit
    const [title, setTitle] = useState('')
    const [text, setText] = useState('')
    const [isOpenConfirmWindow, setisOpenConfirmWindow] = useState(false)
+   const [isTagsMenuOpen, setisTagsMenuOpen] = useState(false)
+   const [selectedTags, setSelectedTags] = useState([] as Array<string>)
+
    useEffect(() => {
       const dataMark = Object.keys(selctedItem)
       if (dataMark.length > 0) {
@@ -73,6 +75,10 @@ export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEdit
          setSelectedDate(new Date())
       }
    }, [selctedItem])
+
+   const toggleTagsMenu = () => {
+      setisTagsMenuOpen((prev: boolean) => !prev)
+   }
 
    const handleClose = () => {
       setIsEditMode(false);
@@ -91,7 +97,7 @@ export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEdit
    }
    return (
       <div>
-
+         <TagsSelect isTagsMenuOpen={isTagsMenuOpen} toggleTagsMenu={toggleTagsMenu} setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
          <Dialog
             fullScreen
             open={isEditMode}
@@ -130,8 +136,8 @@ export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEdit
                      </IconButton>
                   </Box>
                   <Box sx={{ display: 'flex', gap: '2em' }}>
-                     <DeleteOutlineIcon onClick={() => setisOpenConfirmWindow(true)} />
-                     <TagIcon color='disabled' />
+                     <DeleteOutlineIcon onClick={() => setisOpenConfirmWindow(true)} sx={{ cursor: 'pointer' }} />
+                     <TagIcon onClick={() => { setisTagsMenuOpen(true) }} sx={{ cursor: 'pointer' }} />
                   </Box>
                </Toolbar>
             </AppBar>
@@ -157,6 +163,9 @@ export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEdit
                         onChange={(el) => setText(el.target.value)}
                         minRows={8}
                      />
+                  </Box>
+                  <Box>
+                     <Typography variant="body2" color="inherit">Теги: {selectedTags.map((tag: string) => `#${tag}`).join(', ')}</Typography>
                   </Box>
                   <Box className={styles.wrapperFormRecord__footer} sx={{ borderColor: 'bgmode.light', paddingTop: '8px !important' }} >
                      <Typography variant="caption" color="inherit">{new Date().toLocaleTimeString().slice(0, 5)}</Typography>
