@@ -380,7 +380,9 @@ export const api = {
     // return storageRecords
   },
   deleteDailyRecord: (id: string) => {
-    const daily = JSON.parse(localStorage.daily)
+    // debugger
+    let daily = localStorage.records ? JSON.parse(localStorage.daily) : {} 
+    // console.log(daily[id])
     delete daily[id]
     localStorage.daily = JSON.stringify(daily)
     return daily

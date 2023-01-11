@@ -73,6 +73,7 @@ export const CreateRecord: React.FC<RecordsByTagType> = React.memo(({ isEditMode
          setSelectedDate(new Date(+dataMark[0]))
          setTitle(selctedItem[id].title)
          setText(selctedItem[id].text)
+         setSelectedTags(selctedItem[id].tags)
       } else {
          setSelectedDate(new Date())
       }
@@ -81,48 +82,28 @@ export const CreateRecord: React.FC<RecordsByTagType> = React.memo(({ isEditMode
    const toggleTagsMenu = () => {
       setisTagsMenuOpen((prev: boolean) => !prev)
    }
-
+   const handleCloseWithSave=()=>{
+      dispatch(setNewDailyRecord(currDate, title, text, selectedTags, selectedDate))
+      handleClose()
+   }
    const handleClose = () => {
       setIsEditMode(false);
       setTitle('')
       setText('')
       setSelectedDate(new Date())
       setSelctedItem({} as DailyRecordType)
+
    }
-   const saveRecord = () => {
-      dispatch(setNewDailyRecord(currDate, title, text, [], selectedDate))
-      setIsEditMode(false)
-      setTitle('')
-      setText('')
-      setSelectedDate(new Date())
-      setSelctedItem({} as DailyRecordType)
-   }
+
    return (
       <div>
          <TagsSelect isTagsMenuOpen={isTagsMenuOpen} toggleTagsMenu={toggleTagsMenu} setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
          <Dialog
             fullScreen
             open={isEditMode}
-            onClose={handleClose}
+            onClose={handleCloseWithSave}
             TransitionComponent={Transition}
          >
-            <Zoom in={true}>
-               <Fab
-                  onClick={() => { saveRecord() }}
-                  aria-label="edit"
-                  sx={{
-                     position: 'fixed',
-                     bottom: '20px',
-                     right: '16px',
-                     backgroundColor: 'bgmode.light',
-                     color: 'bgmode.circle',
-                     '&:hover': {
-                        backgroundColor: 'bgmode.dark'
-                     }
-                  }}>
-                  <CheckIcon />
-               </Fab>
-            </Zoom>
             <AppBar sx={{ position: 'relative' }}>
                <Toolbar>
                   <Box sx={{ flexGrow: 1 }}>
@@ -130,7 +111,7 @@ export const CreateRecord: React.FC<RecordsByTagType> = React.memo(({ isEditMode
                      <IconButton
                         edge="start"
                         color="inherit"
-                        onClick={handleClose}
+                        onClick={handleCloseWithSave}
                         aria-label="close"
 
                      >
