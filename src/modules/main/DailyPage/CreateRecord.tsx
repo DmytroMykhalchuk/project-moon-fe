@@ -45,7 +45,7 @@ type RecordsByTagType = {
    selctedItem: DailyRecordType
    setSelctedItem: (arg1: DailyRecordType) => void
 }
-export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEditMode, selctedItem, setSelctedItem }) => {
+export const CreateRecord: React.FC<RecordsByTagType> = React.memo(({ isEditMode, setIsEditMode, selctedItem, setSelctedItem }) => {
    const dispatch: AppDispatch = useDispatch()
    const currDate = useSelector(getCurrentDay)
    const [isEditDate, setIsEditDate] = useState(false)
@@ -62,7 +62,9 @@ export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEdit
    const [isOpenConfirmWindow, setisOpenConfirmWindow] = useState(false)
    const [isTagsMenuOpen, setisTagsMenuOpen] = useState(false)
    const [selectedTags, setSelectedTags] = useState([] as Array<string>)
-
+   useEffect(() => {
+      setSelectedTags([] as Array<string>)
+   }, [isEditMode])
    useEffect(() => {
       const dataMark = Object.keys(selctedItem)
       if (dataMark.length > 0) {
@@ -185,14 +187,14 @@ export const CreateRecord: React.FC<RecordsByTagType> = ({ isEditMode, setIsEdit
          </Dialog>
       </div >
    );
-}
+})
 type DailogDatePickerType = {
    isEditDate: boolean
    setSelectedDate: (arg1: Date) => void
    selectedDate: Date
    setIsEditDate: (arg1: boolean) => void
 }
-const DailogDatePicker: React.FC<DailogDatePickerType> = ({ isEditDate, setSelectedDate, setIsEditDate, selectedDate }) => {
+const DailogDatePicker: React.FC<DailogDatePickerType> = React.memo(({ isEditDate, setSelectedDate, setIsEditDate, selectedDate }) => {
    return <Dialog open={isEditDate} aria-labelledby={'data-picker'}>
       <Box sx={{ backgroundColor: grey[800] }}>
          <DialogContent>
@@ -205,4 +207,4 @@ const DailogDatePicker: React.FC<DailogDatePickerType> = ({ isEditDate, setSelec
          </DialogActions>
       </Box>
    </Dialog>
-}
+})

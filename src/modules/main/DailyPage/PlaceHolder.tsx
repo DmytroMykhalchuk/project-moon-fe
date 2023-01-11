@@ -1,3 +1,4 @@
+import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { triggerLetter } from './Records';
@@ -13,7 +14,7 @@ const checkSpelling = (str: string): string => {
    return ''
 }
 
-export const PlaceHolder = () => {
+export const PlaceHolder = React.memo(() => {
    const element = {title:'Запис', text:'Щось тут важливе написане :) '};
    const createDate = new Date();
    const nameMonth = checkSpelling(createDate.toLocaleString('default', { month: 'long' }))
@@ -33,4 +34,4 @@ export const PlaceHolder = () => {
          </Box>
       </Box>
    </div>
-}
+})
