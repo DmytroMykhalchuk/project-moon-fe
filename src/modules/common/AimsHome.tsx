@@ -8,7 +8,7 @@ import { getDay, getMain, getMonth, getWeek } from "../../redux/appStateSelector
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { finishTaskThunk, rePutTaskThunk, editTaskThunk } from '../../redux/appReducer';
-import DialogWindow from './DialogWindow';
+import { DialogWindowCreateAim } from './DialogWindowCreateAim';
 import styles from './style.module.scss'
 
 const isNumberElementsToShow = (list: any, cat: string) => {
@@ -18,7 +18,7 @@ const isNumberElementsToShow = (list: any, cat: string) => {
          counter++;
       }
    }
-   
+
    if (cat === 'main') {
       return true
    }
@@ -133,7 +133,7 @@ export const AimsHome: React.FC<AimsOwnType> = React.memo(({ }) => {
    return (
       <Box sx={{}}>
          {isOpenDialog &&
-            <DialogWindow isOpenDialog={isOpenDialog}
+            <DialogWindowCreateAim isOpenDialog={isOpenDialog}
                setIsOpenDialog={setIsOpenDialog}
                aimDialog={textDW}
                categoryDialog={categoryDW}

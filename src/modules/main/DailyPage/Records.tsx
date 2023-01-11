@@ -18,38 +18,9 @@ export const triggerLetter = ['a', 'у', 'е', 'о', 'и', 'і', 'e', 'u', 'o', 
 export const Records = React.memo(() => {
    const [isEditMode, setIsEditMode] = useState(false)
    const [selctedItem, setSelctedItem] = useState({} as DailyRecordType)
-   // const [renderTag, setRenderTag] = useState('')
-   // const records = useSelector(getRecords)
 
-   // const deleteTag = (tag: string) => {
-   //    console.log(tag)
-   // }
-   // const editTag = (tag: string) => {
-   //    console.log(tag)
-   // }
-   // const showRecords = (tag: string) => {
-   //    setRenderTag(tag)
-   // }
 
-   // const renderTags = () => {
-   //    let tags = [] as Array<JSX.Element>
-   //    for (const tag in records) {
-   //       if (Object.prototype.hasOwnProperty.call(records, tag)) {
-   //          const element = records[tag];
-   //          tags.push(<Paper elevation={isEditMode ? 2 : 21} className={styles.editRecords} key={tag} onClick={() => showRecords(tag)}>
-   //             <Typography variant="subtitle1" component='div' color="inherit">
-   //                {tag}
-   //                {isEditMode && <Box>
-   //                   <ModeEditIcon onClick={() => editTag(tag)} />
-   //                   <DeleteIcon onClick={() => deleteTag(tag)} />
-   //                </Box>}
-   //             </Typography>
-   //          </Paper>)
-   //       }
-   //    }
-   //    return tags
-   // }
-
+ 
    const checkSpelling = (str: string): string => {
       const sizeShrink = 3;
       for (let i = sizeShrink; i < str.length; i++) {

@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material"
 import { BLUE, WHITE, YELLOW, RED, PURPLE, BLACK,GREEN } from "./redux/appReducer"
 
 export const THEME = 'theme'
-
+export const BACKGROUND_COLOR_CARDS='#2e2e2ec9'
 export const themes = {
    [THEME + WHITE]: createTheme({
       palette: {

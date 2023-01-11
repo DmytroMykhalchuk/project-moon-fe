@@ -8,8 +8,9 @@ import { getDay, getMain, getMonth, getWeek } from "../../redux/appStateSelector
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { finishTaskThunk, rePutTaskThunk, editTaskThunk } from '../../redux/appReducer';
-import DialogWindow from './DialogWindow';
+import { DialogWindowCreateAim } from './DialogWindowCreateAim';
 import styles from './style.module.scss'
+
 
 const isNumberElementsToShow = (list: any, cat: string) => {
    let counter = 0;
@@ -496,7 +497,7 @@ const mapDispatchToProps = (dispatch: any) => {
    return (
       <Box sx={{}}>
          {isOpenDialog &&
-            <DialogWindow isOpenDialog={isOpenDialog}
+            <DialogWindowCreateAim isOpenDialog={isOpenDialog}
                setIsOpenDialog={setIsOpenDialog}
                aimDialog={textDW}
                categoryDialog={categoryDW}

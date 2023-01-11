@@ -354,7 +354,7 @@ export const api = {
   },
   createNewTag: (tag: string) => {
     const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : {}
-    const rec = { ...storageRecords, [tag]: {} };
+    const rec = [...storageRecords, tag];
     localStorage.records = JSON.stringify(rec)
     return rec
   },
@@ -381,7 +381,7 @@ export const api = {
   },
   deleteDailyRecord: (id: string) => {
     // debugger
-    let daily = localStorage.records ? JSON.parse(localStorage.daily) : {} 
+    let daily = localStorage.records ? JSON.parse(localStorage.daily) : {}
     // console.log(daily[id])
     delete daily[id]
     localStorage.daily = JSON.stringify(daily)

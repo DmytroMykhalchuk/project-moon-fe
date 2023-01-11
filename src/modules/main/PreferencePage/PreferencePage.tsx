@@ -1,12 +1,10 @@
 import React, { useState } from "react"
-import { Fab } from "@mui/material";
-import { Box } from "@mui/system"
-import DialogWindow from "../../common/DialogWindow";
-import { getDay, getListDay, getListMain, getListMonth, getListWeek, getMain, getMonth, getWeek } from "../../../redux/appStateSelector";
+import Box from "@mui/material/Box"
+import { getDay, getListDay, getListMain, getListMonth, getListWeek, getMain, getMonth, getTags, getWeek } from "../../../redux/appStateSelector";
 import { useSelector } from "react-redux";
-import AddIcon from '@mui/icons-material/Add';
 import { CardPreferenceItem } from "../../common/CardPreferenceItem";
-import { CreateTag } from "./CreateTag";
+import { SpeedDialTooltip } from "./SpeedDial";
+import { PreferenceTags } from "./PreferenceTags";
 
 
 export const PreferencePage: React.FC = React.memo(() => {
@@ -23,34 +21,19 @@ export const PreferencePage: React.FC = React.memo(() => {
    const [openTrash, setOpenTrash] = useState('')
    const [isOpenDialog, setIsOpenDialog] = useState(false);
 
-  
+
+
 
    return (
       <Box sx={{ pb: 3 }}>
 
-         <DialogWindow isOpenDialog={isOpenDialog} setIsOpenDialog={setIsOpenDialog} />
-         <Fab color="secondary"
-            onClick={() => { setIsOpenDialog(true); }}
-            aria-label="edit"
-            sx={{
-               position: 'fixed',
-               bottom: '80px',
-               right: '16px',
-               backgroundColor: 'bgmode.light',
-               color: 'bgmode.circle',
-               '&:hover': {
-                  backgroundColor: 'bgmode.dark'
-               }
-            }
-            } >
-            <AddIcon />
-         </Fab>
-
+         <SpeedDialTooltip />
          <PreferenceItemDay />
          <PreferenceItemWeek />
          <PreferenceItemMonth />
          <PreferenceItemMain />
-         <CreateTag />
+         <PreferenceItemDay />
+         <PreferenceTags />
       </Box >
    )
 })

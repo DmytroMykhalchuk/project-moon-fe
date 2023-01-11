@@ -13,6 +13,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import DoneAllIcon from '@mui/icons-material/DoneAll'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import { BACKGROUND_COLOR_CARDS } from '../../themes'
 
 const trashName = 'Корзина'
 const finishedName = 'Завершені'
@@ -27,9 +28,9 @@ export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo((
    const [openTrash, setOpenTrash] = useState(false)
 
    return (
-      <Card variant='outlined' sx={{ mb: 3, backgroundColor: '#2e2e2ec9' }}  >
+      <Card variant='outlined' sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS }}  >
          <CardContent>
-            <Typography variant="h5" component="div" sx={{ pb: 2, color: '#fff' }}>
+            <Typography variant="h5" component="div" sx={{ pb: 2, color: 'fpage.main' }}>
                {header}
             </Typography>
             <Aims listName={nameList} list={list} />

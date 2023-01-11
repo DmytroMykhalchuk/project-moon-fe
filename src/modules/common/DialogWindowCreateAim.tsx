@@ -1,3 +1,4 @@
+import React from 'react'
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -24,7 +25,7 @@ type DialogWindowType = {
    editItemWindow?: (arg1: string, arg2: string) => void
 
 }
-const DialogWindow: React.FC<DialogWindowType> = ({
+export const DialogWindowCreateAim: React.FC<DialogWindowType> =React.memo(({
    isOpenDialog,
    setIsOpenDialog,
    categoryDialog = "",
@@ -98,11 +99,9 @@ const DialogWindow: React.FC<DialogWindowType> = ({
                <Button onClick={() => {
                   setIsOpenDialog(false);
                   sendForm();
-               }}>Підтвердити</Button>
+               }}>Зберегти</Button>
             </DialogActions>
          </Box>
       </Dialog>
    )
-
-}
-export default DialogWindow;
+})
