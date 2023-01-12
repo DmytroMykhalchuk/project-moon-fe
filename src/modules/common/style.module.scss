@@ -74,7 +74,11 @@
 }
 
 .listItem {
-   height: '50px';
-   padding: '0 10px';
-   border:none !important;
+   height: 50px;
+   // border: none !important;
+   background-color: none;
+
+   &__dense {
+      padding: 0 10px !important;
+   }
 }

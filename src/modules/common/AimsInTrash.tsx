@@ -38,19 +38,20 @@ export const AimsInTrash: React.FC<AimsInTrashType> = ({ listName, list }) => {
       dispatch(deleteTaskThunk(category, id, object))
    }
    const renderList = () => {
+      let numberActiveItems = 0
       const ret = [];
       for (const key in list) {
          if (Object.prototype.hasOwnProperty.call(list, key)) {
             const element = list[key];
+            numberActiveItems += element.isInTrash
             ret.push(
-               <Collapse in={element.isInTrash} key={key} unmountOnExit>
+               <Collapse in={element.isInTrash} key={key}>
                   <ListItem
-                     className={styles.listItem}
+                     className={styles.listItem + " " + styles.listItem__dense}
                      key={key}
                      disablePadding
                      disableGutters
                      divider
-
                      secondaryAction={
                         <ActionButtonsTrash
                            restoreTask={restoreTask}
@@ -74,8 +75,10 @@ export const AimsInTrash: React.FC<AimsInTrashType> = ({ listName, list }) => {
             )
          }
       }
-      if (ret.length === 0) return <ListItemNotFound />
-      return <TransitionGroup>{ret}</TransitionGroup>
+      if (numberActiveItems === 0) return <ListItemNotFound />
+      return <List sx={{ width: '100%' }}>
+         {ret}
+      </List>
    }
    return <Box>
       <ListItemButton data-list-name={`trash-${listName}`} onClick={() => setIsOpen((prev: boolean) => !prev)}>
@@ -86,9 +89,7 @@ export const AimsInTrash: React.FC<AimsInTrashType> = ({ listName, list }) => {
          {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen}>
-         <List sx={{ width: '100%', backgroundColor: BACKGROUND_COLOR_CARDS }}>
-            {renderList()}
-         </List>
+         {renderList()}
       </Collapse>
    </Box>
 }

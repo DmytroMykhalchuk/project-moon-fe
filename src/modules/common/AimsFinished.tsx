@@ -39,13 +39,15 @@ export const AimsFinished: React.FC<AimsInTrashType> = React.memo(({ listName, l
    }
    const renderList = () => {
       const ret = [];
+      let numberActiveItems = 0
       for (const key in list) {
          if (Object.prototype.hasOwnProperty.call(list, key)) {
             const element = list[key];
+            numberActiveItems += element.isFinished && !element.isInTrash
             ret.push(
-               <Collapse in={element.isFinished && !element.isInTrash} key={key} unmountOnExit>
+               <Collapse in={!!element.isFinished && !element.isInTrash} key={key}>
                   <ListItem
-                     className={styles.listItem}
+                     className={styles.listItem + " " + styles.listItem__dense}
                      key={key}
                      disablePadding
                      disableGutters
@@ -73,9 +75,11 @@ export const AimsFinished: React.FC<AimsInTrashType> = React.memo(({ listName, l
             )
          }
       }
-      if (ret.length === 0) return <ListItemNotFound />
-      // return <TransitionGroup>{ret}</TransitionGroup>
-      return <>{ret}</>
+      if (numberActiveItems === 0) return <ListItemNotFound />
+      return <List sx={{ width: '100%', backgroundColor: BACKGROUND_COLOR_CARDS  }}>
+            {ret}
+         </List>
+    
    }
 
    return <Box>
@@ -87,9 +91,7 @@ export const AimsFinished: React.FC<AimsInTrashType> = React.memo(({ listName, l
          {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen}>
-         <List sx={{ width: '100%', backgroundColor: BACKGROUND_COLOR_CARDS }}>
-            {renderList()}
-         </List>
+         {renderList()}
       </Collapse>
    </Box>
 })

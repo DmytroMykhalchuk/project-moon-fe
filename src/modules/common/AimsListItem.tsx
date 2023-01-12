@@ -51,7 +51,7 @@ export const AimsListItem: React.FC<AimsListItemType> = React.memo(({
 }) => {
 
    const createTask = () => {
-      if (!listAims) return <Typography variant="subtitle1" color="inherit">Not found</Typography>
+      if (!listAims) return <Typography variant="subtitle1" color="inherit">Не знайдено</Typography>
 
       let i = 0;
       let listItems = [];

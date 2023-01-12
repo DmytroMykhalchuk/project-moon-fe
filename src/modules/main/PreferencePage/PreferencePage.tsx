@@ -32,7 +32,6 @@ export const PreferencePage: React.FC = React.memo(() => {
          <PreferenceItemWeek />
          <PreferenceItemMonth />
          <PreferenceItemMain />
-         <PreferenceItemDay />
          <PreferenceTags />
       </Box >
    )

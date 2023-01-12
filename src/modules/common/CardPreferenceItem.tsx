@@ -14,11 +14,8 @@ type CardPreferenceItemType = {
    header: string
 }
 export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo(({ list, nameList, header = '' }) => {
-   const [openFinished, setOpenFinished] = useState(false)
-   const [openTrash, setOpenTrash] = useState(false)
-
    return (
-      <Box sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS }}  >
+      <Box sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS, pb: 2 }}  >
          <Box>
             <Typography variant="h5" component="div" sx={{ p: 2, color: 'fpage.main' }}>
                {header}
