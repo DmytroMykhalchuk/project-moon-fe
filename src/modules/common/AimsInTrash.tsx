@@ -76,9 +76,11 @@ export const AimsInTrash: React.FC<AimsInTrashType> = ({ listName, list }) => {
          }
       }
       if (numberActiveItems === 0) return <ListItemNotFound />
-      return <List sx={{ width: '100%' }}>
-         {ret}
-      </List>
+      return <TransitionGroup>
+         <List sx={{ width: '100%'}}>
+            {ret}
+         </List>
+      </TransitionGroup>
    }
    return <Box>
       <ListItemButton data-list-name={`trash-${listName}`} onClick={() => setIsOpen((prev: boolean) => !prev)}>
