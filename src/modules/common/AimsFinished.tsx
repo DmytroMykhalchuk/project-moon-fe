@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
 import ListItemText from '@mui/material/ListItemText';
@@ -10,7 +10,6 @@ import Collapse from '@mui/material/Collapse'
 import Box from '@mui/material/Box'
 import { TransitionGroup } from 'react-transition-group'
 import { ActionButtonsTrash } from './ActionButtons'
-import { BACKGROUND_COLOR_CARDS } from '../../themes';
 import { ListItemNotFound } from './ListItemNotFound';
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
@@ -39,13 +38,11 @@ export const AimsFinished: React.FC<AimsInTrashType> = React.memo(({ listName, l
    }
    const renderList = () => {
       const ret = [];
-      let numberActiveItems = 0
       for (const key in list) {
          if (Object.prototype.hasOwnProperty.call(list, key)) {
             const element = list[key];
-            numberActiveItems += element.isFinished && !element.isInTrash
-            ret.push(
-               <Collapse in={!!element.isFinished && !element.isInTrash} key={key}>
+            element.isFinished && !element.isInTrash && ret.push(
+               <Collapse key={key} unmountOnExit>
                   <ListItem
                      className={styles.listItem + " " + styles.listItem__dense}
                      key={key}
@@ -75,11 +72,13 @@ export const AimsFinished: React.FC<AimsInTrashType> = React.memo(({ listName, l
             )
          }
       }
-      if (numberActiveItems === 0) return <ListItemNotFound />
-      return <List sx={{ width: '100%', backgroundColor: BACKGROUND_COLOR_CARDS  }}>
+      if (ret.length === 0) return <ListItemNotFound />
+      return <List sx={{ width: '100%' }}>
+         <TransitionGroup>
             {ret}
-         </List>
-    
+         </TransitionGroup>
+      </List>
+
    }
 
    return <Box>
@@ -90,7 +89,7 @@ export const AimsFinished: React.FC<AimsInTrashType> = React.memo(({ listName, l
          <ListItemText primary={titleOfButton} />
          {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={isOpen}>
+      <Collapse in={isOpen} unmountOnExit>
          {renderList()}
       </Collapse>
    </Box>

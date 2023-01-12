@@ -33,7 +33,7 @@ type AimsOwnType = {
    list: any
 }
 
-export const Aims: React.FC<AimsOwnType> = React.memo(({ listName = '', list }) => {
+export const AimsNotFinished: React.FC<AimsOwnType> = React.memo(({ listName = '', list }) => {
 
    const dispatch: AppDispatch = useDispatch();
    const [currentItem, setCurrentItem] = useState('');
@@ -44,7 +44,6 @@ export const Aims: React.FC<AimsOwnType> = React.memo(({ listName = '', list }) 
    const [idWindow, setIdWindow] = useState('')
    const [task, setTask] = useState({} as any);
    const [oldCategory, setOldCategory] = useState('')
-   const [listElements, setListElements] = useState(['day', 'week', 'month', 'main'])
 
    const switchList = (fn: Function, cat: string, id: string | number) => {
       dispatch(fn(cat, id, list[id]));
