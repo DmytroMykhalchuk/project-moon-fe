@@ -7,7 +7,7 @@ import TagIcon from '@mui/icons-material/Tag';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { DialogWindowCreateAim } from '../../common/DialogWindowCreateAim';
 import { DialogWindowCreateTag } from '../../common/DialogWindowCreateTag';
-
+import styles from './styles.module.scss'
 
 
 export const SpeedDialTooltip = React.memo(() => {
@@ -34,8 +34,9 @@ export const SpeedDialTooltip = React.memo(() => {
          <Backdrop open={open} sx={{ zIndex: 1 }} />
          <SpeedDial
             ariaLabel="SpeedDial tooltip example"
-            sx={{ position: 'fixed', bottom: 80, right: 16 }}
-            icon={<AddIcon />}
+            className={styles.fabButton}
+            sx={{ position: 'fixed', bottom: 80, right: 16, '& button, & button:hover': { backgroundColor: 'bgmode.light' } }}
+            icon={<AddIcon sx={{ color: 'fpage.main',transition:'all 0.6s' }} className={open ? styles._activeRotate : ''} />}
             onClose={handleClose}
             onOpen={handleOpen}
             open={open}

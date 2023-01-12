@@ -36,13 +36,13 @@ export const PreferenceTags = () => {
       let tagsComponent = [] as Array<JSX.Element>
       for (const tag of tags) {
          tagsComponent.push(<Paper elevation={2} className={styles.editRecords} key={tag}>
-            <Typography variant="subtitle1" component='div' color="inherit">
+            <Box sx={{ minWidth: '50%', justifyContent: 'start' }}>
                {tag}
-               <Box>
-                  <ModeEditIcon onClick={() => editTag(tag)} />
-                  <DeleteOutlineIcon onClick={() => deleteTag(tag)} />
-               </Box>
-            </Typography>
+            </Box>
+            <Box>
+               <ModeEditIcon onClick={() => editTag(tag)} />
+               <DeleteOutlineIcon onClick={() => deleteTag(tag)} />
+            </Box>
 
          </Paper>)
       }
@@ -50,24 +50,15 @@ export const PreferenceTags = () => {
    }
 
    return (<Box>
-      <Card variant='outlined' sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS }}  >
-         <CardContent>
-            <Typography variant="h5" component="div" sx={{ pb: 2, color: 'fpage.main' }}>
+      <Box sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS ,p:0}}  >
+         <Box>
+            <Typography variant="h5" component="div" sx={{ p: 2, color: 'fpage.main' }}>
                Теги
             </Typography>
             {renderTags()}
-         </CardContent>
-      </Card >
+         </Box>
+      </Box >
       <DialogWindowCreateTag isOpenDialog={isOpenDialogCreateTag} setIsOpenDialog={setIsOpenDialogCreateTag} tagDialog={currTag} />
       <ConfirmWindowDeleteTag isOpenConfirmation={isOpenDialogDeleteTag} setIsOpenConfirmation={setIsOpenDialogDeleteTag} tag={currTag} />
-   </Box>)
-
-
-
-
-
-   return (<Box sx={{ backgroundColor: BACKGROUND_COLOR_CARDS, mb: 4 }} >
-      <Typography variant="h5" component="div" sx={{ pb: 2, color: 'fpage.main' }}>Теги</Typography>
-      {tags && tags.length > 0 && renderTags()}
    </Box>)
 }

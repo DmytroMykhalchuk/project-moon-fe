@@ -698,6 +698,21 @@ export const createTag = (tag: string): ThunksTypes => {
       dispatch(actions.updateRecords(api.createNewTag(tag)))
    }
 }
+export const updateTag = (oldTag: string, newTag: string): ThunksTypes => {
+   return async (dispatch) => {
+      const [tags, daily] = api.updateTag(oldTag, newTag)
+      dispatch(actions.initDaily(daily))
+      dispatch(actions.updateRecords(tags))
+   }
+}
+export const deleteTag = (tag: string): ThunksTypes => {
+   return async (dispatch) => {
+      const [tags, daily] = api.deleteTag(tag)
+      dispatch(actions.initDaily(daily))
+      dispatch(actions.updateRecords(tags))
+   }
+}
+
 export const deleteDailyRecord = (id: string): ThunksTypes => {
    return async (dispatch) => {
       dispatch(actions.initDaily(api.deleteDailyRecord(id)))

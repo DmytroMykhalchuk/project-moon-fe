@@ -353,36 +353,47 @@ export const api = {
     localStorage.themeColor = color;
   },
   createNewTag: (tag: string) => {
-    const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : {}
+    const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : []
     const rec = [...storageRecords, tag];
     localStorage.records = JSON.stringify(rec)
     return rec
   },
   deleteTag: (tag: string) => {
-    const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : {}
-    delete storageRecords[tag]
+    const storageRecords = localStorage.records ? JSON.parse(localStorage.records).filter((item: string) => item !== tag) : []
+    let daily = localStorage.records ? JSON.parse(localStorage.daily) : {}
+    for (const records in daily) {
+      if (Object.prototype.hasOwnProperty.call(daily, records)) {
+        const element = daily[records];
+        if (element.tags.includes(tag)) {
+          element.tags = element.tags.filter((item: string) => item != tag)
+        }
+
+      }
+    }
+    localStorage.daily = JSON.stringify(daily);
     localStorage.records = JSON.stringify(storageRecords)
-    return storageRecords
+    return [storageRecords, daily]
   },
-  renameTag: (oldTag: string, newTag: string) => {
-    // const daily=JSON.parse(localStorage.daily)
-    // for (const tag in daily) {
-    //   if (Object.prototype.hasOwnProperty.call(daily, tag)) {
-    //     const element = daily[tag];
+  updateTag: (oldTag: string, newTag: string) => {
+    const storageRecords = localStorage.records
+      ? JSON.parse(localStorage.records).map((item: string) => { if (item === oldTag) { return newTag } return item })
+      : []
+    let daily = localStorage.records ? JSON.parse(localStorage.daily) : {}
+    for (const records in daily) {
+      if (Object.prototype.hasOwnProperty.call(daily, records)) {
+        const element = daily[records];
+        if (element.tags.includes(oldTag)) {
+          element.tags = element.tags.map((item: string) => { if (item === oldTag) { return newTag } return item })
+        }
 
-    //   }
-    // }
-
-
-    // const storageRecords = localStorage.records ? JSON.parse(localStorage.records) : {}
-    // delete storageRecords[tag]
-    // localStorage.records = JSON.stringify(storageRecords)
-    // return storageRecords
+      }
+    }
+    localStorage.daily = JSON.stringify(daily);
+    localStorage.records = JSON.stringify(storageRecords)
+    return [storageRecords, daily]
   },
   deleteDailyRecord: (id: string) => {
-    // debugger
     let daily = localStorage.records ? JSON.parse(localStorage.daily) : {}
-    // console.log(daily[id])
     delete daily[id]
     localStorage.daily = JSON.stringify(daily)
     return daily

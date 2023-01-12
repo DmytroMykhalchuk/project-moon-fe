@@ -4,9 +4,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { TaskType } from '../../redux/appReducer';
+import { deleteTag, TaskType } from '../../redux/appReducer';
 import { grey } from '@mui/material/colors'
 import Box from '@mui/material/Box'
+import { useDispatch } from 'react-redux';
 
 type ConfirmWindowType = {
    isOpenConfirmation: boolean,
@@ -20,6 +21,11 @@ export const ConfirmWindowDeleteTag: React.FC<ConfirmWindowType> = ({
    setIsOpenConfirmation,
    tag
 }) => {
+   const dispatch: any = useDispatch()
+   const onConfirm = () => {
+      setIsOpenConfirmation(false);
+      dispatch(deleteTag(tag))
+   }
    return (
       <Dialog
          open={isOpenConfirmation}
@@ -39,11 +45,7 @@ export const ConfirmWindowDeleteTag: React.FC<ConfirmWindowType> = ({
             </DialogContent>
             <DialogActions>
                <Button onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
-               <Button onClick={() => {
-                  setIsOpenConfirmation(false);
-               }} autoFocus>
-                  Підтвердити
-               </Button>
+               <Button onClick={onConfirm}>Підтвердити</Button>
             </DialogActions></Box>
       </Dialog>
    )

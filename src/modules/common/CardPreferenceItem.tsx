@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react'
-import Card from '@mui/material/Card'
+import Box from '@mui/material/Box'
 import ListItemButton from '@mui/material/ListItemButton'
-import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Collapse from '@mui/material/Collapse'
 import { Aims } from "./Aims"
@@ -28,9 +27,9 @@ export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo((
    const [openTrash, setOpenTrash] = useState(false)
 
    return (
-      <Card variant='outlined' sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS }}  >
-         <CardContent>
-            <Typography variant="h5" component="div" sx={{ pb: 2, color: 'fpage.main' }}>
+      <Box sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS }}  >
+         <Box>
+            <Typography variant="h5" component="div" sx={{ p: 2, color: 'fpage.main' }}>
                {header}
             </Typography>
             <Aims listName={nameList} list={list} />
@@ -54,7 +53,7 @@ export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo((
             <Collapse in={openTrash}>
                <AimsPreference listName={nameList} listInTrash={list} />
             </Collapse>
-         </CardContent>
-      </Card >
+         </Box>
+      </Box >
    )
 })
