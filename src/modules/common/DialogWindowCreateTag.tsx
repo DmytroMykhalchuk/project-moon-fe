@@ -17,11 +17,12 @@ type DialogWindowCreateTagType = {
    isOpenDialog: boolean
    setIsOpenDialog: (bool: boolean) => void
    tagDialog?: string
+   closeSpeedDial?: () => void
 }
 export const DialogWindowCreateTag: React.FC<DialogWindowCreateTagType> = React.memo(({
    isOpenDialog,
    setIsOpenDialog,
-   tagDialog = "",
+   tagDialog = "", closeSpeedDial
 }) => {
    const dispatch: AppDispatch = useDispatch()
    const [onChangeField, setOnChangeField] = useState('#' + tagDialog)
@@ -40,13 +41,13 @@ export const DialogWindowCreateTag: React.FC<DialogWindowCreateTagType> = React.
    const saveTag = () => {
       if (onChangeField.length > 1) {
          dispatch(updateTag(tagDialog, onChangeField.slice(1)))
-         setOnChangeField('#')
       }
-      setIsOpenDialog(false)
+      closeDialog()
    }
    const closeDialog = () => {
-      setIsOpenDialog(false)
       setOnChangeField('#')
+      closeSpeedDial&&setTimeout(closeSpeedDial,10)
+      setIsOpenDialog(false)
    }
    return (
       <Dialog open={isOpenDialog}

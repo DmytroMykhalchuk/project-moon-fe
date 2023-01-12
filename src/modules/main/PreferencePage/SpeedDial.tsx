@@ -18,16 +18,17 @@ export const SpeedDialTooltip = React.memo(() => {
    const handleOpen = () => setOpen(true);
    const handleClose = () => setOpen(false);
    const openDialogCreateAim = () => {
-      setOpen(false)
+      // handleClose()
       setIsOpenDialog(true)
    }
    const openDialogCreateTag = () => {
-      setOpen(false)
+      // handleClose()
       setIsOpenDialogCreateTag(true)
    }
+
    const actions = [
-      { icon: <ReceiptLongIcon />, name: 'Ціль', fn: openDialogCreateAim },
       { icon: <TagIcon />, name: 'Тег', fn: openDialogCreateTag },
+      { icon: <ReceiptLongIcon />, name: 'Ціль', fn: openDialogCreateAim },
    ];
    return (
       <>
@@ -36,7 +37,7 @@ export const SpeedDialTooltip = React.memo(() => {
             ariaLabel="SpeedDial tooltip example"
             className={styles.fabButton}
             sx={{ position: 'fixed', bottom: 80, right: 16, '& button, & button:hover': { backgroundColor: 'bgmode.light' } }}
-            icon={<AddIcon sx={{ color: 'fpage.main',transition:'all 0.6s' }} className={open ? styles._activeRotate : ''} />}
+            icon={<AddIcon sx={{ color: 'fpage.main', transition: 'all 0.6s' }} className={open ? styles._activeRotate : ''} />}
             onClose={handleClose}
             onOpen={handleOpen}
             open={open}
@@ -51,8 +52,8 @@ export const SpeedDialTooltip = React.memo(() => {
                />
             ))}
          </SpeedDial>
-         <DialogWindowCreateAim isOpenDialog={isOpenDialog} setIsOpenDialog={setIsOpenDialog} />
-         <DialogWindowCreateTag isOpenDialog={isOpenDialogCreateTag} setIsOpenDialog={setIsOpenDialogCreateTag} />
+         <DialogWindowCreateAim isOpenDialog={isOpenDialog} setIsOpenDialog={setIsOpenDialog} closeSpeedDial={handleClose}/>
+         <DialogWindowCreateTag isOpenDialog={isOpenDialogCreateTag} setIsOpenDialog={setIsOpenDialogCreateTag} closeSpeedDial={handleClose} />
       </>
    );
 })

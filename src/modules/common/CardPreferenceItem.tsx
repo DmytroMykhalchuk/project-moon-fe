@@ -1,21 +1,12 @@
 
 import React, { useState } from 'react'
 import Box from '@mui/material/Box'
-import ListItemButton from '@mui/material/ListItemButton'
 import Typography from '@mui/material/Typography'
-import Collapse from '@mui/material/Collapse'
 import { Aims } from "./Aims"
-import AimsPreference from "./AimsPrefrence"
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import DoneAllIcon from '@mui/icons-material/DoneAll'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { BACKGROUND_COLOR_CARDS } from '../../themes'
+import { AimsInTrash } from './AimsInTrash'
+import { AimsFinished } from './AimsFinished'
 
-const trashName = 'Корзина'
-const finishedName = 'Завершені'
 
 type CardPreferenceItemType = {
    list: any
@@ -33,26 +24,8 @@ export const CardPreferenceItem: React.FC<CardPreferenceItemType> = React.memo((
                {header}
             </Typography>
             <Aims listName={nameList} list={list} />
-            <ListItemButton data-list-name={`finished-${nameList}`} onClick={() => setOpenFinished((prev: boolean) => !prev)}>
-               <ListItemIcon sx={{color:'bgmode.light'}}>
-                  <DoneAllIcon />
-               </ListItemIcon>
-               <ListItemText primary={finishedName} />
-               {openFinished ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={openFinished}>
-               <AimsPreference listName={nameList} listFinished={list} />
-            </Collapse>
-            <ListItemButton data-list-name={`trash-${nameList}`} onClick={() => setOpenTrash((prev: boolean) => !prev)}>
-               <ListItemIcon sx={{color:'bgmode.light'}}>
-                  <DeleteOutlineIcon />
-               </ListItemIcon>
-               <ListItemText primary={trashName} />
-               {openTrash ? <ExpandLess /> : <ExpandMore />}
-            </ListItemButton>
-            <Collapse in={openTrash}>
-               <AimsPreference listName={nameList} listInTrash={list} />
-            </Collapse>
+            <AimsFinished listName={nameList} list={list} />
+            <AimsInTrash listName={nameList} list={list} />
          </Box>
       </Box >
    )

@@ -23,13 +23,14 @@ type DialogWindowType = {
    categoryDialog?: string
    aimDialog?: string
    editItemWindow?: (arg1: string, arg2: string) => void
-
+   closeSpeedDial?: () => void
 }
-export const DialogWindowCreateAim: React.FC<DialogWindowType> =React.memo(({
+export const DialogWindowCreateAim: React.FC<DialogWindowType> = React.memo(({
    isOpenDialog,
    setIsOpenDialog,
    categoryDialog = "",
    aimDialog = "",
+   closeSpeedDial,
    ...props
 }) => {
    const [category, setCategory] = useState(categoryDialog);
@@ -48,10 +49,14 @@ export const DialogWindowCreateAim: React.FC<DialogWindowType> =React.memo(({
       } else {
          createAim(category, aim)
       }
-      setAim('')
-      setCategory('');
+      handleClose()
    }
-
+   const handleClose = () => {
+      setIsOpenDialog(false)
+      setAim('')
+      setCategory('')
+      closeSpeedDial && setTimeout(closeSpeedDial, 10)
+   }
    return (
       <Dialog open={isOpenDialog}
          onClose={() => { setIsOpenDialog(false) }}
@@ -95,11 +100,8 @@ export const DialogWindowCreateAim: React.FC<DialogWindowType> =React.memo(({
                </FormControl>
             </DialogContent>
             <DialogActions>
-               <Button onClick={() => { setIsOpenDialog(false) }}>Скасувати</Button>
-               <Button onClick={() => {
-                  setIsOpenDialog(false);
-                  sendForm();
-               }}>Зберегти</Button>
+               <Button onClick={handleClose}>Скасувати</Button>
+               <Button onClick={sendForm}>Зберегти</Button>
             </DialogActions>
          </Box>
       </Dialog>

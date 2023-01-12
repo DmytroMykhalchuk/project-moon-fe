@@ -27,9 +27,7 @@ export const PreferenceTags = () => {
    const editTag = (tag: string) => {
       setCurrTag(tag)
       setIsOpenDialogCreateTag(true)
-   }
-   const showRecords = (tag: string) => {
-      console.log(tag)
+      
    }
    const renderTags = () => {
       if (!tags) return <div></div>
