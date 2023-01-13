@@ -718,6 +718,11 @@ export const deleteDailyRecord = (id: string): ThunksTypes => {
       dispatch(actions.initDaily(api.deleteDailyRecord(id)))
    }
 }
+export const filterDailyRecords=(tags?:string[]):ThunksTypes=>{
+   return async(dispatch)=>{
+      dispatch(actions.initDaily(api.filterDailyRecords(tags)))
+   }
+}
 export default appReducer;
 export type TaskType = {
    aim: string

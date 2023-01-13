@@ -24,11 +24,6 @@ type TagsSelectType = {
 export const TagsSelect: React.FC<TagsSelectType> = React.memo(({ isTagsMenuOpen, toggleTagsMenu, setSelectedTags, selectedTags }) => {
 
   const tags = useSelector(getTags)
-  // console.log(tags.map((tag: string, index: number) => {
-  //   if (selectedTags.includes(tag)) {
-  //     return index
-  //   }
-  // }).filter((tag: string) => tag !== undefined))
   const [selected, setSelected] = useState(() => tags.map((tag: string, index: number) => {
     if (selectedTags.includes(tag)) {
       return index

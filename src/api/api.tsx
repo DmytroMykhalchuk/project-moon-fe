@@ -397,5 +397,25 @@ export const api = {
     delete daily[id]
     localStorage.daily = JSON.stringify(daily)
     return daily
+  },
+  filterDailyRecords: (tags?: string[]) => {
+    let daily = localStorage.records ? JSON.parse(localStorage.daily) : {}
+    if (tags) {
+      for (const key in daily) {
+        let isFilteredConditions = false
+        if (Object.prototype.hasOwnProperty.call(daily, key)) {
+          const element = daily[key];
+          for (const tag of tags) {
+            if (element.tags.includes(tag)) {
+              isFilteredConditions = true
+              break
+            }
+          }
+          isFilteredConditions || delete daily[key]
+        }
+      }
+
+    }
+    return daily
   }
 };

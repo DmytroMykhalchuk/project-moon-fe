@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getDaily } from '../../../redux/appStateSelector'
 import styles from './styles.module.scss'
 import Typography from '@mui/material/Typography'
@@ -8,19 +8,28 @@ import Box from '@mui/material/Box'
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { CreateRecord } from './CreateRecord'
-import { DailyRecordType } from '../../../redux/appReducer'
+import { DailyRecordType, filterDailyRecords } from '../../../redux/appReducer'
 import { PlaceHolder } from './PlaceHolder'
-
-
+import AppBar from '@mui/material/AppBar';
+import CssBaseline from '@mui/material/CssBaseline';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import { TagsSelect } from './TagsSelect'
+import { grey } from '@mui/material/colors'
 
 export const triggerLetter = ['a', 'у', 'е', 'о', 'и', 'і', 'e', 'u', 'o', 'i', 'a']
 
 export const Records = React.memo(() => {
+   const dispatch: any = useDispatch()
    const [isEditMode, setIsEditMode] = useState(false)
    const [selctedItem, setSelctedItem] = useState({} as DailyRecordType)
-
-
- 
+   const [selectedTags, setSelectedTags] = useState([] as string[])
+   const [isOpenFilter, setIsOpenFilter] = useState(false)
+   const toggleOpenFilter = () => {
+      setIsOpenFilter((prev: boolean) => !prev)
+   }
    const checkSpelling = (str: string): string => {
       const sizeShrink = 3;
       for (let i = sizeShrink; i < str.length; i++) {
@@ -31,6 +40,9 @@ export const Records = React.memo(() => {
       return ''
    }
    const records = useSelector(getDaily)
+   useEffect(() => {
+      selectedTags.length > 0 && dispatch(filterDailyRecords(selectedTags))
+   }, [selectedTags])
    const showAllRecords = () => {
       let elementRecords = [];
       const recordsKeys = Object.keys(records)
@@ -65,27 +77,26 @@ export const Records = React.memo(() => {
    }
    return (
       <Box>
-
+         <Box sx={{ display: 'flex', }}>
+            <CssBaseline />
+            <AppBar component="nav">
+               <Toolbar className='row' sx={{ backgroundColor: grey[900], p: 0 }} >
+                  <Box sx={{ flexGrow: '1', pl: 1 }}>
+                     <Typography variant="h6" color="inherit">Щоденник</Typography>
+                  </Box>
+                  <Button onClick={() => { setIsEditMode(true) }}>
+                     <PlaylistAddIcon sx={{color:'bgmode.light'}} />
+                  </Button>
+                  <Button onClick={toggleOpenFilter}>
+                     <FilterListIcon sx={{color:'bgmode.light'}} />
+                  </Button>
+               </Toolbar>
+            </AppBar>
+            <CreateRecord isEditMode={isEditMode} setIsEditMode={setIsEditMode} selctedItem={selctedItem} setSelctedItem={setSelctedItem} />
+            <TagsSelect toggleTagsMenu={toggleOpenFilter} isTagsMenuOpen={isOpenFilter} setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
+         </Box>
 
          {showAllRecords()}
-         <Zoom in={true}>
-            <Fab
-               onClick={() => { setIsEditMode(true) }}
-               aria-label="edit"
-               sx={{
-                  position: 'fixed',
-                  bottom: '80px',
-                  right: '16px',
-                  backgroundColor: 'bgmode.light',
-                  color: 'bgmode.circle',
-                  '&:hover': {
-                     backgroundColor: 'bgmode.dark'
-                  }
-               }}>
-               <AddIcon />
-            </Fab>
-         </Zoom>
-         <CreateRecord isEditMode={isEditMode} setIsEditMode={setIsEditMode} selctedItem={selctedItem} setSelctedItem={setSelctedItem} />
       </Box>
    )
 })
