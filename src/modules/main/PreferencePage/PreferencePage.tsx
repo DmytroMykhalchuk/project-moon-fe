@@ -1,38 +1,45 @@
 import React, { useState } from "react"
 import Box from "@mui/material/Box"
-import { getDay, getListDay, getListMain, getListMonth, getListWeek, getMain, getMonth, getTags, getWeek } from "../../../redux/appStateSelector";
+import { getListDay, getListMain, getListMonth, getListWeek } from "../../../redux/appStateSelector";
 import { useSelector } from "react-redux";
 import { CardPreferenceItem } from "../../common/CardPreferenceItem";
-import { SpeedDialTooltip } from "./SpeedDial";
 import { PreferenceTags } from "./PreferenceTags";
-
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import TagIcon from '@mui/icons-material/Tag';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import { DialogWindowCreateAim } from '../../common/DialogWindowCreateAim';
+import { DialogWindowCreateTag } from '../../common/DialogWindowCreateTag';
 
 export const PreferencePage: React.FC = React.memo(() => {
 
-   const listConfig: any = {
-      main: { list: useSelector(getMain), header: "Мрія" },
-      month: { list: useSelector(getMonth), header: "Цілі на місяць" },
-      week: { list: useSelector(getWeek), header: "Цілі на тиждень" },
-      day: { list: useSelector(getDay), header: "Цілі на день" },
-      trashName: 'Корзина',
-      finishedName: 'Завершені'
+   const [isOpenDialogDeleteTag, setIsOpenDialogDeleteTag] = useState(false);
+   const [isOpenDialogCreateTag, setIsOpenDialogCreateTag] = useState(false);
+   const openDialogCreateAim = () => {
+      setIsOpenDialogDeleteTag(true)
    }
-   const [openFinished, setOpenFinished] = useState('')
-   const [openTrash, setOpenTrash] = useState('')
-   const [isOpenDialog, setIsOpenDialog] = useState(false);
-
-
-
+   const openDialogCreateTag = () => {
+      setIsOpenDialogCreateTag(true)
+   }
 
    return (
       <Box sx={{ pb: 3 }}>
-
-         <SpeedDialTooltip />
+         <Stack direction='row' justifyContent='space-between' sx={{ p: 1, mt: 3 }}>
+            <Button variant="contained" endIcon={<ReceiptLongIcon />} onClick={openDialogCreateAim}>
+               Створити ціль
+            </Button>
+            <Button variant="contained" endIcon={<TagIcon />} onClick={openDialogCreateTag}>
+               Створити тег
+            </Button>
+         </Stack>
          <PreferenceItemDay />
          <PreferenceItemWeek />
          <PreferenceItemMonth />
          <PreferenceItemMain />
+
          <PreferenceTags />
+         <DialogWindowCreateAim isOpenDialog={isOpenDialogDeleteTag} setIsOpenDialog={setIsOpenDialogDeleteTag} />
+         <DialogWindowCreateTag isOpenDialog={isOpenDialogCreateTag} setIsOpenDialog={setIsOpenDialogCreateTag} />
       </Box >
    )
 })
