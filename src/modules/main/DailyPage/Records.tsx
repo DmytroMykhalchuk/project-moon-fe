@@ -41,7 +41,10 @@ export const Records = React.memo(() => {
    }
    const records = useSelector(getDaily)
    useEffect(() => {
-      selectedTags.length > 0 && dispatch(filterDailyRecords(selectedTags))
+
+      selectedTags.length > 0
+         ? dispatch(filterDailyRecords(selectedTags))
+         : dispatch(filterDailyRecords())
    }, [selectedTags])
    const showAllRecords = () => {
       let elementRecords = [];
@@ -85,10 +88,10 @@ export const Records = React.memo(() => {
                      <Typography variant="h6" color="inherit">Щоденник</Typography>
                   </Box>
                   <Button onClick={() => { setIsEditMode(true) }}>
-                     <PlaylistAddIcon sx={{color:'bgmode.light'}} />
+                     <PlaylistAddIcon sx={{ color: 'bgmode.light' }} />
                   </Button>
                   <Button onClick={toggleOpenFilter}>
-                     <FilterListIcon sx={{color:'bgmode.light'}} />
+                     <FilterListIcon sx={{ color: 'bgmode.light' }} />
                   </Button>
                </Toolbar>
             </AppBar>

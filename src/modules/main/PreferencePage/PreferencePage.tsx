@@ -24,7 +24,7 @@ export const PreferencePage: React.FC = React.memo(() => {
 
    return (
       <Box sx={{ pb: 3 }}>
-         <Stack direction='row' justifyContent='space-between' sx={{ p: 1, mt: 3 }}>
+         <Stack direction='row' justifyContent='space-between' sx={{ p: 1,mb:1 }}>
             <Button variant="contained" endIcon={<ReceiptLongIcon />} onClick={openDialogCreateAim}>
                Створити ціль
             </Button>
