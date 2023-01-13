@@ -8,6 +8,7 @@ import CommentBankIcon from '@mui/icons-material/CommentBank';
 import Badge from '@mui/material/Badge';
 import BookIcon from '@mui/icons-material/Book';
 import HubIcon from '@mui/icons-material/Hub';
+import { grey } from '@mui/material/colors'
 
 type AppBottomBarType = {
    setPage: (page: number) => void
@@ -24,15 +25,15 @@ const styles = {
 };
 const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) => {
    return (
-      <Box sx={{ pb: 5, opacity: '0.85', zIndex: 2, position: 'relative' }}>
-         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20 }} elevation={3} square={false} >
+      <Box sx={{ pb: 5, zIndex: 2, position: 'relative' }}>
+         <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }}  >
             <BottomNavigation
                value={page}
-               sx={{ color: '#fff', }}
+               sx={{ color: '#fff', backgroundColor: grey[900] }}
 
                onChange={(event, newValue) => {
                   //@ts-ignore
-                  setPage((oldValue): number => {
+                  setPage((oldValue: number) => {
                      setOldPage(oldValue)
                      return newValue
                   });
@@ -53,7 +54,7 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
                <BottomNavigationAction sx={styles}
                   icon={<TodayIcon />} />
             </BottomNavigation>
-         </Paper>
+         </Box>
       </Box>
    )
 }

@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import styles from './styles.module.scss'
-import Fab from '@mui/material/Fab';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -12,12 +11,10 @@ import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import Zoom from '@mui/material/Zoom'
 import InputBase from '@mui/material/InputBase';
 import { grey } from '@mui/material/colors'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
-import CheckIcon from '@mui/icons-material/Check';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '../../../redux/store';

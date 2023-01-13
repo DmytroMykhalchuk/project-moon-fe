@@ -3,7 +3,6 @@ import { citesObj } from "../../../api/cites"
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-
 export const CiteDisplay: React.FC = React.memo(() => {
    const randomId = getRandomElementFromArray(Object.keys(citesObj));
    const languageCite = localStorage.langCites ? localStorage.langCites : 'Ua';

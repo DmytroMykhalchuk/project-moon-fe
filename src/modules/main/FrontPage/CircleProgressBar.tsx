@@ -114,7 +114,6 @@ export const CircleProgressBar: React.FC = React.memo(() => {
    />;
 })
 
-
 function getSecondsToTomorrow() {
    let now = new Date();
    let hour = now.getHours();
