@@ -28,7 +28,7 @@ const isNumberElementsToShow = (list: any, cat: string) => {
 type AimsOwnType = {
 }
 
-export const AimsHome: React.FC<AimsOwnType> = React.memo(({ }) => {
+export const AimsHome: React.FC<AimsOwnType> = React.memo(() => {
    const listConfig: any = {
       main: { list: useSelector(getMain), header: "Мрія" },
       month: { list: useSelector(getMonth), header: "Цілі на місяць" },

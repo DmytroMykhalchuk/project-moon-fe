@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AvTimerOutlinedIcon from '@mui/icons-material/AvTimerOutlined';
@@ -24,7 +23,7 @@ export const StatisticPomodoro: React.FC = React.memo(() => {
                <ListItemText primary={
                   <Box sx={{ display: 'flex' }}>
                      <Typography variant="body1" sx={{ flexGrow: 1 }}>{key}</Typography>
-                     <Typography variant="body1" >{hours > 0 && `${hours}год`} {element}хв</Typography>
+                     <Typography variant="body1" >{hours > 0 && `${hours}год`} {minutes}хв</Typography>
                   </Box>
                } />
             </ListItem>)

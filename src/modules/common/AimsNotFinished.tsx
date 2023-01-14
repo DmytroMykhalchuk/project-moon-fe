@@ -2,31 +2,13 @@ import React from 'react'
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import { useSwipeable } from "react-swipeable";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AimsListItem } from './AimsListItem'
-import { getDay, getMain, getMonth, getWeek } from "../../redux/appStateSelector";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { finishTaskThunk, rePutTaskThunk, editTaskThunk } from '../../redux/appReducer';
 import { DialogWindowCreateAim } from './DialogWindowCreateAim';
 import styles from './style.module.scss'
-
-
-const isNumberElementsToShow = (list: any, cat: string) => {
-   let counter = 0;
-   for (const item in list) {
-      if (!list[item].isFinished) {
-         counter++;
-      }
-   }
-   if (cat === 'day') {
-      return true
-   }
-   if (cat === 'main') {
-      return true
-   }
-   return counter !== 0;
-}
 
 type AimsOwnType = {
    listName?: string

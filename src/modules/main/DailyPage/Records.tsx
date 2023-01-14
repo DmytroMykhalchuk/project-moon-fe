@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getDaily } from '../../../redux/appStateSelector'
 import styles from './styles.module.scss'
 import Typography from '@mui/material/Typography'
-import Zoom from '@mui/material/Zoom'
 import Box from '@mui/material/Box'
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
 import { CreateRecord } from './CreateRecord'
 import { DailyRecordType, filterDailyRecords } from '../../../redux/appReducer'
 import { PlaceHolder } from './PlaceHolder'

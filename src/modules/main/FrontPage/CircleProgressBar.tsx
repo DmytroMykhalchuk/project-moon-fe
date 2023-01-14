@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import Collapse from '@mui/material/Collapse';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import styles from './styles.module.scss'
@@ -10,8 +9,6 @@ import { useDispatch } from 'react-redux';
 import { completeAllDayTaskThunk } from '../../../redux/appReducer';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
 import { CircleTime } from './CircleTime';
-import { PomodoroTimer } from './PomodoroTimer';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { PomodorTimerContainer } from './PomodorTimerContainer';
 
 export const CircleProgressBar: React.FC = React.memo(() => {

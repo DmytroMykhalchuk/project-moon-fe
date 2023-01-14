@@ -39,7 +39,6 @@ export const DialogConfirmation: React.FC<ConfirmWindowType> = React.memo(({
    header,
    fnToConfirmation, actions
 }) => {
-   const themeColor = useSelector(getThemeColor)
    const [selectedItem, setSelectedItem] = useState(localStorage.langCites);
    const [onChangeField, setOnChangeField] = useState('')
    const onChangeHandle = (number: string) => {

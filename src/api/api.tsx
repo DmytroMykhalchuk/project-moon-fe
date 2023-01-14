@@ -96,7 +96,7 @@ export const api = {
         statisticday: localStorage.statisticday ? localStorage.statisticday : 0,
         statisticweek: localStorage.statisticweek ? localStorage.statisticweek : 0,
         statisticmonth: localStorage.statisticmonth ? localStorage.statisticmonth : 0,
-        records: localStorage.records ? JSON.parse(localStorage.records) : {},
+        records: localStorage.records ? JSON.parse(localStorage.records) : [],
         pomodoroStatistic: localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {},
       }
 
@@ -366,14 +366,18 @@ export const api = {
       if (Object.prototype.hasOwnProperty.call(daily, records)) {
         const element = daily[records];
         if (element.tags.includes(tag)) {
-          element.tags = element.tags.filter((item: string) => item != tag)
+          element.tags = element.tags.filter((item: string) => item !== tag)
         }
 
       }
     }
+    const pomodoroStatistic = localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {}
+    delete pomodoroStatistic[tag]
+
+    localStorage.pomodoroStatistic = JSON.stringify(pomodoroStatistic)
     localStorage.daily = JSON.stringify(daily);
     localStorage.records = JSON.stringify(storageRecords)
-    return [storageRecords, daily]
+    return [storageRecords, daily, pomodoroStatistic]
   },
   updateTag: (oldTag: string, newTag: string) => {
     const storageRecords = localStorage.records
@@ -389,9 +393,14 @@ export const api = {
 
       }
     }
+    const pomodoroStatistic = localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {}
+    pomodoroStatistic[newTag] = pomodoroStatistic[oldTag]
+    delete pomodoroStatistic[oldTag]
+
+    localStorage.pomodoroStatistic = JSON.stringify(pomodoroStatistic)
     localStorage.daily = JSON.stringify(daily);
     localStorage.records = JSON.stringify(storageRecords)
-    return [storageRecords, daily]
+    return [storageRecords, daily, pomodoroStatistic]
   },
   deleteDailyRecord: (id: string) => {
     let daily = localStorage.records ? JSON.parse(localStorage.daily) : {}

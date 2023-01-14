@@ -1,10 +1,10 @@
 import "./App.css";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import AppRouter from "./modules/main/AppRouter";
 import Box from '@mui/material/Box'
 import './modules/common/bg.css'
-import { createTheme, ThemeProvider } from "@mui/material"
+import { ThemeProvider } from "@mui/material"
 import { getThemeColor } from "./redux/appStateSelector";
 import { THEME, themes } from "./themes";
 

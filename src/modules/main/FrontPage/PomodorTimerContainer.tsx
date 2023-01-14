@@ -14,7 +14,7 @@ import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useSound from 'use-sound';
 //@ts-ignore
@@ -41,8 +41,8 @@ export const PomodorTimerContainer: React.FC<RecordsByTagType> = React.memo(({ i
    const [selectedTag, setSelectedTag] = useState('')
    const [isPause, setIsPause] = useState(true)
    const [percentOfCircle, setPercentOfCircle] = useState(0)
-   const [constTimeWork, setConstTimeWork] = useState(25)
-   const [constTimeBreak, setConstTimeBreak] = useState(5)
+   const constTimeWork = 25
+   const constTimeBreak = 5
    const [timeFocus, setTimeFocus] = useState(60 * constTimeWork)
    const [isBreak, setIsBreak] = useState(false)
    const [playSfx] = useSound(clickSfx2, { volume: 1 })
@@ -142,7 +142,7 @@ export const PomodorTimerContainer: React.FC<RecordsByTagType> = React.memo(({ i
                            <MenuItem value="">
                               <em></em>
                            </MenuItem>
-                           {tags.map((tag: string) => <MenuItem key={tag} value={tag}>{tag}</MenuItem>)}
+                           {tags.length > 0 && tags.map((tag: string) => <MenuItem key={tag} value={tag}>{tag}</MenuItem>)}
                         </Select>
                      </FormControl>
                   </Stack>

@@ -81,6 +81,7 @@ const initialState: any = {
    isInitialize: false,
    themeColor: localStorage.getItem('themeColor') ? localStorage.getItem('themeColor') : "RED",
    pomodoroStatistic: {},
+   records: [],
    main: {
    },
    month: {
@@ -709,14 +710,16 @@ export const createTag = (tag: string): ThunksTypes => {
 }
 export const updateTag = (oldTag: string, newTag: string): ThunksTypes => {
    return async (dispatch) => {
-      const [tags, daily] = api.updateTag(oldTag, newTag)
+      const [tags, daily, pomodoro] = api.updateTag(oldTag, newTag)
+      dispatch(actions.initPomodoro(pomodoro))
       dispatch(actions.initDaily(daily))
       dispatch(actions.updateRecords(tags))
    }
 }
 export const deleteTag = (tag: string): ThunksTypes => {
    return async (dispatch) => {
-      const [tags, daily] = api.deleteTag(tag)
+      const [tags, daily, pomodoro] = api.deleteTag(tag)
+      dispatch(actions.initPomodoro(pomodoro))
       dispatch(actions.initDaily(daily))
       dispatch(actions.updateRecords(tags))
    }

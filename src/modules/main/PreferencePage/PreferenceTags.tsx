@@ -7,11 +7,8 @@ import { BACKGROUND_COLOR_CARDS } from "../../../themes"
 import { useSelector } from 'react-redux'
 import { getTags } from '../../../redux/appStateSelector'
 import styles from './styles.module.scss'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
 import { DialogWindowCreateTag } from '../../common/DialogWindowCreateTag';
 import { useState } from 'react';
-import { ConfirmWindow } from '../../common/ConfirmWindow';
 import { ConfirmWindowDeleteTag } from '../../common/ConfirmWindowDeleteTag';
 
 export const PreferenceTags = () => {
@@ -27,10 +24,10 @@ export const PreferenceTags = () => {
    const editTag = (tag: string) => {
       setCurrTag(tag)
       setIsOpenDialogCreateTag(true)
-      
+
    }
    const renderTags = () => {
-      if (!tags) return <div></div>
+      if (!tags || tags.length === 0 || !Array.isArray(tags)) return <div></div>
       let tagsComponent = [] as Array<JSX.Element>
       for (const tag of tags) {
          tagsComponent.push(<Paper elevation={2} className={styles.editRecords} key={tag}>
@@ -48,12 +45,14 @@ export const PreferenceTags = () => {
    }
 
    return (<Box>
-      <Box sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS ,p:0,pb:2}}  >
+      <Box sx={{ mb: 3, backgroundColor: BACKGROUND_COLOR_CARDS, p: 0, pb: 2 }}  >
          <Box>
             <Typography variant="h5" component="div" sx={{ p: 2, color: 'fpage.main' }}>
                Теги
             </Typography>
-            {renderTags()}
+            {tags.length > 0
+               ? renderTags()
+               : <Typography variant="body1" color="inherit" sx={{pl:2}}>Не знайдено</Typography>}
          </Box>
       </Box >
       <DialogWindowCreateTag isOpenDialog={isOpenDialogCreateTag} setIsOpenDialog={setIsOpenDialogCreateTag} tagDialog={currTag} />

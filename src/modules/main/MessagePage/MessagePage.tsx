@@ -7,7 +7,6 @@ import DrawerSwipe from './DrawerSwipe';
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
 import { getIsBadge, getMessagesState } from "../../../redux/appStateSelector";
-import Collapse from '@mui/material/Collapse';
 import DoneIcon from '@mui/icons-material/Done';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { checkMessageThunk } from "../../../redux/appReducer";

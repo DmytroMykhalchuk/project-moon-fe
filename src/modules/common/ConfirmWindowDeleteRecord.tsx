@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { deleteDailyRecord, TaskType } from '../../redux/appReducer';
+import { deleteDailyRecord } from '../../redux/appReducer';
 import { grey } from '@mui/material/colors'
 import Box from '@mui/material/Box'
 import { AppDispatch } from '../../redux/store';

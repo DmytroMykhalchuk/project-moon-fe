@@ -26,7 +26,7 @@ export const citesObj:any = {
    25: { textEng: 'Selenophile - a person who leves the moon', textUa: 'Селенофіл - людина, яка любить місяць' },
    26: { textEng: 'But i love you so much more than just to the moon and back', textUa: 'Але я люблю тебе набагато більше, ніж просто до місяця і назад' },
    27: { textEng: 'Who has a night in  his life, the moon will come in his life', textUa: 'Хто має ніч у своєму житті ніч, до того прийде місяць' },
-   28: { textEng: 'In my dream, I\m with you', textUa: 'Уві сні я з тобою' },
+   28: { textEng: 'In my dream, I\'m with you', textUa: 'Уві сні я з тобою' },
    29: { textEng: "Lovers are patient and know that the moon needs time to become full", textUa: 'Закохані терплячі і знають, що місяцю потрібен час, щоб стати повним' },
    30: { textEng: 'Scars can be wonderful too', textUa: 'Шрами також можуть бути чудовими' },
    31: { textEng: "The moon will guide you through the night with its brightness, but it will always live in the dark to be seen", textUa: "Місяць буде вести вас крізь ніч своєю яскравістю, але вiн завжди буде жити в темряві, щоб його бачили" },
