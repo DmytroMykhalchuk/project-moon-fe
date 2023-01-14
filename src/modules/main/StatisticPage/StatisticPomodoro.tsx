@@ -7,8 +7,31 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AvTimerOutlinedIcon from '@mui/icons-material/AvTimerOutlined';
+import { useSelector } from 'react-redux';
+import { getPomodoroStatistic } from '../../../redux/appStateSelector';
 
 export const StatisticPomodoro: React.FC = React.memo(() => {
+   const pomodoroStatistic = useSelector(getPomodoroStatistic)
+
+   const renderStatistic = () => {
+      const items = []
+      for (const key in pomodoroStatistic) {
+         if (Object.prototype.hasOwnProperty.call(pomodoroStatistic, key)) {
+            const element = pomodoroStatistic[key];
+            const hours = Math.trunc(element / 60)
+            const minutes = element % 60
+            items.push(<ListItem key={key}>
+               <ListItemText primary={
+                  <Box sx={{ display: 'flex' }}>
+                     <Typography variant="body1" sx={{ flexGrow: 1 }}>{key}</Typography>
+                     <Typography variant="body1" >{hours > 0 && `${hours}год`} {element}хв</Typography>
+                  </Box>
+               } />
+            </ListItem>)
+         }
+      }
+      return items
+   }
    return (
       <Box sx={{ width: '100%', pb: 3 }}>
          <List
@@ -20,25 +43,17 @@ export const StatisticPomodoro: React.FC = React.memo(() => {
             }}
             aria-label="contacts"
          >
-            <ListItem disablePadding
-            >
-               <ListItemButton disabled>
-
-                  <ListItemText primary="Таймер pomodoro" />
-               </ListItemButton>
-            </ListItem>
-
             <ListItem >
-               <ListItemIcon sx={{color:'bgmode.light'}}>
+               <ListItemIcon sx={{ color: 'bgmode.light' }}>
                   <AvTimerOutlinedIcon />
                </ListItemIcon>
                <ListItemText primary={
                   <Box sx={{ display: 'flex' }}>
-                     <Typography variant="body1" sx={{ flexGrow: 1 }}>У розробці</Typography>
-                     <Typography variant="body1" >...</Typography>
+                     <Typography variant="body1" sx={{ flexGrow: 1 }}>Pomodoro</Typography>
                   </Box>
                } />
             </ListItem>
+            {renderStatistic()}
 
          </List>
       </Box>

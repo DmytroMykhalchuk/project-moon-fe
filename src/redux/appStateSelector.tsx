@@ -73,3 +73,6 @@ export const getListMain = (state: AppStateType) => {
 export const getTags = (state: AppStateType) => {
    return state.app.records
 }
+export const getPomodoroStatistic = (state: AppStateType) => {
+   return state.app.pomodoroStatistic
+}

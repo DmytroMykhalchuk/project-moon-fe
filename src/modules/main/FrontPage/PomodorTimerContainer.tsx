@@ -95,7 +95,7 @@ export const PomodorTimerContainer: React.FC<RecordsByTagType> = React.memo(({ i
       if (!isPause) {
          const timeId = setInterval(() => {
             if (timeFocus === 0) { isBreak ? startWorking() : savePomodoroCycle() }
-            setPercentOfCircle(Math.round(((timeFocus) / totalTime) * 100))
+            setPercentOfCircle((timeFocus / totalTime) * 100)
             setTimeFocus((prev: number) => prev - 1)
          }, 1000)
          return () => {
