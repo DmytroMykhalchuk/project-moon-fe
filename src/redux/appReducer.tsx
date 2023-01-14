@@ -26,6 +26,7 @@ const SET_DATE_CREATE = 'SET_DATE_CREATE'
 const CHANGE_THEME_COLOR = 'CHANGE_THEME_COLOR'
 const CREATE_TAG = 'CREATE_TAG'
 const INIT_SET_DAILY = 'INIT_SET_DAILY'
+const INIT_POMODORO = 'INIT_POMODORO'
 
 export const RED = 'RED'
 export const BLACK = 'BLACK'
@@ -79,6 +80,7 @@ const initialState: any = {
    isFetching: false,
    isInitialize: false,
    themeColor: localStorage.getItem('themeColor') ? localStorage.getItem('themeColor') : "RED",
+   pomodoroStatistic: {},
    main: {
    },
    month: {
@@ -329,6 +331,12 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
             daily: { ...action.daily }
          }
       }
+      case INIT_POMODORO: {
+         return {
+            ...state,
+            pomodoroStatistic: action.pomodoroStatistic
+         }
+      }
       default: return state;
    }
 }
@@ -479,7 +487,8 @@ export const actions = {
    },
    changeThemeColor: (color: ThemeColorType) => { return { type: CHANGE_THEME_COLOR, color } as const },
    updateRecords: (records: any) => { return { type: CREATE_TAG, records } as const },
-   initDaily: (daily: any) => { return { type: INIT_SET_DAILY, daily } as const }
+   initDaily: (daily: any) => { return { type: INIT_SET_DAILY, daily } as const },
+   initPomodoro: (pomodoroStatistic: any) => { return { type: INIT_POMODORO, pomodoroStatistic } as const }
 }
 
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
@@ -718,9 +727,14 @@ export const deleteDailyRecord = (id: string): ThunksTypes => {
       dispatch(actions.initDaily(api.deleteDailyRecord(id)))
    }
 }
-export const filterDailyRecords=(tags?:string[]):ThunksTypes=>{
-   return async(dispatch)=>{
+export const filterDailyRecords = (tags?: string[]): ThunksTypes => {
+   return async (dispatch) => {
       dispatch(actions.initDaily(api.filterDailyRecords(tags)))
+   }
+}
+export const savePomodoroThunk = (tag: string, time: number): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(actions.initPomodoro(api.savePomodoro(tag, time)))
    }
 }
 export default appReducer;

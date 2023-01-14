@@ -96,7 +96,8 @@ export const api = {
         statisticday: localStorage.statisticday ? localStorage.statisticday : 0,
         statisticweek: localStorage.statisticweek ? localStorage.statisticweek : 0,
         statisticmonth: localStorage.statisticmonth ? localStorage.statisticmonth : 0,
-        records: localStorage.records ? JSON.parse(localStorage.records) : {}
+        records: localStorage.records ? JSON.parse(localStorage.records) : {},
+        pomodoroStatistic: localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {},
       }
 
       return new Promise((resolve) => { resolve(state) })
@@ -417,5 +418,12 @@ export const api = {
 
     }
     return daily
+  },
+  savePomodoro: (tag: string, time: number) => {
+    const pomodoroStatistic = localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {}
+    pomodoroStatistic[tag] = pomodoroStatistic[tag] + Math.trunc(time / 60)
+
+    localStorage.pomodoroStatistic = JSON.stringify(pomodoroStatistic)
+    return pomodoroStatistic
   }
 };
