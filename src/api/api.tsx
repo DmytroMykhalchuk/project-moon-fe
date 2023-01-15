@@ -429,6 +429,7 @@ export const api = {
     return daily
   },
   savePomodoro: (tag: string, time: number) => {
+    tag = tag ? tag : 'Інше'
     const pomodoroStatistic = localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {}
 
     pomodoroStatistic[tag] = pomodoroStatistic[tag]

@@ -47,9 +47,7 @@ export const PomodorTimerContainer: React.FC<RecordsByTagType> = React.memo(({ i
    const [isBreak, setIsBreak] = useState(false)
    const [playSfx] = useSound(clickSfx2, { volume: 1 })
    const [play] = useSound(clickSfx, { volume: 1 })
-   useEffect(() => {
-      tags.length > 0 && setSelectedTag(tags[0])
-   }, [tags])
+
    const handleCloseWithSave = () => {
       handleClose()
    }

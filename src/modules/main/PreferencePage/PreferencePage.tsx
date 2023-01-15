@@ -10,6 +10,7 @@ import TagIcon from '@mui/icons-material/Tag';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { DialogWindowCreateAim } from '../../common/DialogWindowCreateAim';
 import { DialogWindowCreateTag } from '../../common/DialogWindowCreateTag';
+import { PreferenceDeleteStatistic } from "./PreferenceDeleteStatistic";
 
 export const PreferencePage: React.FC = React.memo(() => {
 
@@ -38,6 +39,8 @@ export const PreferencePage: React.FC = React.memo(() => {
          <PreferenceItemMain />
 
          <PreferenceTags />
+         {/* <PreferenceDeleteStatistic /> */}
+
          <DialogWindowCreateAim isOpenDialog={isOpenDialogDeleteTag} setIsOpenDialog={setIsOpenDialogDeleteTag} />
          <DialogWindowCreateTag isOpenDialog={isOpenDialogCreateTag} setIsOpenDialog={setIsOpenDialogCreateTag} />
       </Box >
