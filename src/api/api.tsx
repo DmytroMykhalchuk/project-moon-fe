@@ -430,8 +430,10 @@ export const api = {
   },
   savePomodoro: (tag: string, time: number) => {
     const pomodoroStatistic = localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {}
-    pomodoroStatistic[tag] = pomodoroStatistic[tag] + Math.trunc(time / 60)
 
+    pomodoroStatistic[tag] = pomodoroStatistic[tag]
+      ? pomodoroStatistic[tag] + Math.trunc(time / 60)
+      : Math.trunc(time / 60)
     localStorage.pomodoroStatistic = JSON.stringify(pomodoroStatistic)
     return pomodoroStatistic
   }

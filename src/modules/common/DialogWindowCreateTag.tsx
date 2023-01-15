@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateTag } from '../../redux/appReducer';
+import { createTag, updateTag } from '../../redux/appReducer';
 import { AppDispatch } from '../../redux/store';
 import { grey } from '@mui/material/colors'
 import Box from '@mui/material/Box'
@@ -40,7 +40,9 @@ export const DialogWindowCreateTag: React.FC<DialogWindowCreateTagType> = React.
 
    const saveTag = () => {
       if (onChangeField.length > 1) {
-         dispatch(updateTag(tagDialog, onChangeField.slice(1)))
+         tagDialog
+            ? dispatch(updateTag(tagDialog, onChangeField.slice(1)))
+            : dispatch(createTag(onChangeField.slice(1)))
       }
       closeDialog()
    }
