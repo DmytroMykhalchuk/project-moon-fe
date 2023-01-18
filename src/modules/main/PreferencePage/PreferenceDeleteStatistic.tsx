@@ -15,9 +15,16 @@ import { getPomodoroStatistic } from '../../../redux/appStateSelector'
 import { grey } from '@mui/material/colors'
 import { deleteStatisticSection, hardReset, removeStatisticPomodoro } from '../../../redux/appReducer';
 
+
 const GLOBAL_DELETE = 'GLOBAL_DELETE'
 const STATISTIC = 'STATISTIC'
 const POMODORO = 'POMODORO'
+const textDialog={
+   [`${STATISTIC}day`]:'',
+   [`${STATISTIC}week`]:'',
+   [`${STATISTIC}month`]:'',
+
+}
 
 export const PreferenceDeleteStatistic = React.memo(() => {
    const dispatch: any = useDispatch()
@@ -75,7 +82,7 @@ export const PreferenceDeleteStatistic = React.memo(() => {
                Очистити
             </Button>
          </Box>
-         <ConfirmWindowDelete title='' text={sectionOfStat}
+         <ConfirmWindowDelete title='Ви впевнені?' text='Відновити дані буде неможливо.'
             deleting={deleteHandler}
             isOpenConfirmation={isOpenConfirmation}
             setIsOpenConfirmation={setIsOpenConfirmation}
