@@ -4,7 +4,6 @@ import Stack from '@mui/material/Stack';
 import styles from './styles.module.scss'
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { IconButton } from '@mui/material';
-import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
 import { completeAllDayTaskThunk } from '../../../redux/appReducer';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
@@ -16,7 +15,7 @@ export const CircleProgressBar: React.FC = React.memo(() => {
    const togglePomodoro = () => {
       setIsPomodoro((prev: boolean) => !prev)
    }
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: any = useDispatch();
    return (
       <>
          <Box className={styles.circleSection}>

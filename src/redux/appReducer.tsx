@@ -27,7 +27,7 @@ const CHANGE_THEME_COLOR = 'CHANGE_THEME_COLOR'
 const CREATE_TAG = 'CREATE_TAG'
 const INIT_SET_DAILY = 'INIT_SET_DAILY'
 const INIT_POMODORO = 'INIT_POMODORO'
-
+const INIT_STATISTIC = 'INIT_STATISTIC'
 export const RED = 'RED'
 export const BLACK = 'BLACK'
 export const WHITE = 'WHITE'
@@ -338,6 +338,13 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
             pomodoroStatistic: action.pomodoroStatistic
          }
       }
+      case INIT_STATISTIC: {
+         // console.log()
+         return {
+            ...state,
+            ...action.statistic
+         }
+      }
       default: return state;
    }
 }
@@ -489,7 +496,9 @@ export const actions = {
    changeThemeColor: (color: ThemeColorType) => { return { type: CHANGE_THEME_COLOR, color } as const },
    updateRecords: (records: any) => { return { type: CREATE_TAG, records } as const },
    initDaily: (daily: any) => { return { type: INIT_SET_DAILY, daily } as const },
-   initPomodoro: (pomodoroStatistic: any) => { return { type: INIT_POMODORO, pomodoroStatistic } as const }
+   initPomodoro: (pomodoroStatistic: any) => { return { type: INIT_POMODORO, pomodoroStatistic } as const },
+   initStatistic: (statistic: Object) => { return { type: INIT_STATISTIC, statistic: { [`statistic${statistic}`]: 0 } } as const },
+
 }
 
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
@@ -738,6 +747,22 @@ export const filterDailyRecords = (tags?: string[]): ThunksTypes => {
 export const savePomodoroThunk = (tag: string, time: number): ThunksTypes => {
    return async (dispatch) => {
       dispatch(actions.initPomodoro(api.savePomodoro(tag, time)))
+   }
+}
+export const deleteStatisticSection = (section: string): ThunksTypes => {
+   return async (dispatch) => {
+      api.deleteStatisticSection(section)
+      dispatch(actions.initStatistic(section))
+   }
+}
+export const removeStatisticPomodoro = (tag: string): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(actions.initPomodoro(api.removedPomodoroStatistic(tag)))
+   }
+}
+export const hardReset = (): ThunksTypes => {
+   return async (dispatch) => {
+      dispatch(actions.init(api.hardReset))
    }
 }
 export default appReducer;

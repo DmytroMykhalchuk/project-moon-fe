@@ -26,7 +26,7 @@ type AimsInTrashType = {
 }
 
 export const AimsFinished: React.FC<AimsInTrashType> = React.memo(({ listName, list }) => {
-   const dispatch: AppDispatch = useDispatch()
+   const dispatch: any = useDispatch()
    const [isOpen, setIsOpen] = useState(false)
    const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
 

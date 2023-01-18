@@ -26,10 +26,10 @@ export const PreferencePage: React.FC = React.memo(() => {
    return (
       <Box sx={{ pb: 3 }}>
          <Stack direction='row' justifyContent='space-between' sx={{ p: 1,mb:1 }}>
-            <Button variant="contained" endIcon={<ReceiptLongIcon />} onClick={openDialogCreateAim}>
+            <Button variant="contained" endIcon={<ReceiptLongIcon />} onClick={openDialogCreateAim} sx={{width:'48%'}}>
                Створити ціль
             </Button>
-            <Button variant="contained" endIcon={<TagIcon />} onClick={openDialogCreateTag}>
+            <Button variant="contained" endIcon={<TagIcon />} onClick={openDialogCreateTag} sx={{width:'48%'}}>
                Створити тег
             </Button>
          </Stack>
@@ -39,7 +39,7 @@ export const PreferencePage: React.FC = React.memo(() => {
          <PreferenceItemMain />
 
          <PreferenceTags />
-         {/* <PreferenceDeleteStatistic /> */}
+         <PreferenceDeleteStatistic />
 
          <DialogWindowCreateAim isOpenDialog={isOpenDialogDeleteTag} setIsOpenDialog={setIsOpenDialogDeleteTag} />
          <DialogWindowCreateTag isOpenDialog={isOpenDialogCreateTag} setIsOpenDialog={setIsOpenDialogCreateTag} />

@@ -7,13 +7,12 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Button from '@mui/material/Button'
-import { AppDispatch } from '../../../redux/store'
 import { createTag } from '../../../redux/appReducer'
 import { useDispatch } from 'react-redux'
 import styles from './styles.module.scss'
 
 export const CreateTag = () => {
-   const dispatch: AppDispatch = useDispatch()
+   const dispatch: any = useDispatch()
    const [onChangeField, setOnChangeField] = useState('#')
 
    const onCHangeHandler = (text: string) => {

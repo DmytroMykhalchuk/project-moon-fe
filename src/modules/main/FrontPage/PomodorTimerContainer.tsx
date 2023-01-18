@@ -5,7 +5,6 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import Stack from '@mui/material/Stack';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
 import { getTags } from '../../../redux/appStateSelector';
 import { savePomodoroThunk } from '../../../redux/appReducer';
 import { PomodoroTimer } from './PomodoroTimer';
@@ -36,7 +35,7 @@ type RecordsByTagType = {
    togglePomodoro: () => void
 }
 export const PomodorTimerContainer: React.FC<RecordsByTagType> = React.memo(({ isPomodoro, togglePomodoro }) => {
-   const dispatch: AppDispatch = useDispatch()
+   const dispatch: any = useDispatch()
    const tags = useSelector(getTags)
    const [selectedTag, setSelectedTag] = useState('')
    const [isPause, setIsPause] = useState(true)

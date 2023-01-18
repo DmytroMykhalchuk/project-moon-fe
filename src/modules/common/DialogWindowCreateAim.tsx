@@ -36,7 +36,7 @@ export const DialogWindowCreateAim: React.FC<DialogWindowType> = React.memo(({
    const [category, setCategory] = useState(categoryDialog);
    const [aim, setAim] = useState(aimDialog)
 
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: any = useDispatch();
    const createAim = (category: string, text: string) => {
       dispatch(createTaskThunk(category, text))
    }

@@ -5,7 +5,7 @@ import Fab from '@mui/material/Fab';
 import { useEffect, useRef } from 'react';
 import DrawerSwipe from './DrawerSwipe';
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../../redux/store";
+
 import { getIsBadge, getMessagesState } from "../../../redux/appStateSelector";
 import DoneIcon from '@mui/icons-material/Done';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -16,7 +16,7 @@ import Grow from '@mui/material/Grow'
 export const MessagePage: React.FC = React.memo(() => {
    const dummy = useRef<HTMLDivElement>(null);
    const wrapperMessagesRef = useRef();
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: any = useDispatch();
    const [open, setOpen] = useState(false);
 
 

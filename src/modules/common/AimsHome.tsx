@@ -35,7 +35,7 @@ export const AimsHome: React.FC<AimsOwnType> = React.memo(() => {
       week: { list: useSelector(getWeek), header: "Цілі на тиждень" },
       day: { list: useSelector(getDay), header: "Цілі на день" }
    }
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: any = useDispatch();
    const [currentItem, setCurrentItem] = useState('');
    const [side, setSide] = useState('');
    const [isOpenDialog, setIsOpenDialog] = useState(false)

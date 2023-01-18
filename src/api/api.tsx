@@ -50,11 +50,40 @@ instance.interceptors.response.use(
 );
 
 export const api = {
-  register: function (formData: Object) {
-    return instance.post("users", { ...formData }).then((response) => {
-      localStorage.access_token = response.data.access_token;
-    });
+  hardReset: () => {
+    const currTime = new Date();
+    const onlineDay = new Date(currTime.getFullYear(), currTime.getMonth(), currTime.getDate())
+    localStorage.main = JSON.stringify({})
+    localStorage.month = JSON.stringify({})
+    localStorage.week = JSON.stringify({})
+    localStorage.day = JSON.stringify({})
+    localStorage.daily = JSON.stringify({})
+    localStorage.createdAt = JSON.stringify(0)
+    localStorage.lastOnline = JSON.stringify(onlineDay)
+    localStorage.created_at = JSON.stringify(currTime)
+    localStorage.statisticday = JSON.stringify(0)
+    localStorage.statisticweek = JSON.stringify(0)
+    localStorage.statisticmonth = JSON.stringify(0)
+    localStorage.records = JSON.stringify([])
+    localStorage.pomodoroStatistic = JSON.stringify({})
+    let state = {
+      main: {},
+      month: {},
+      week: {},
+      day: {},
+      daily: "{}",
+      createdAt: 0,
+      lastOnline: onlineDay,
+      created_at: currTime,
+      statisticday: 0,
+      statisticweek: 0,
+      statisticmonth: 0,
+      records: [],
+      pomodoroStatistic: {},
+    }
+    return state;
   },
+<<<<<<< HEAD
   login: function (formData: Object) {
     return instance.post("auth/login", { ...formData }).then((response) => {
       localStorage.access_token = response.data.access_token;
@@ -65,6 +94,8 @@ export const api = {
       localStorage.removeItem("access_token");
     });
   },
+=======
+>>>>>>> b971801 (injected deleting category)
   me: function () {
     if (isConnected) {
       return instance.get("auth/users/me").then((responce) => {
@@ -99,6 +130,7 @@ export const api = {
         records: localStorage.records ? JSON.parse(localStorage.records) : [],
         pomodoroStatistic: localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {},
       }
+
 
       return new Promise((resolve) => { resolve(state) })
 >>>>>>> d5b297a (minimal functioanal completed)
@@ -437,5 +469,15 @@ export const api = {
       : Math.trunc(time / 60)
     localStorage.pomodoroStatistic = JSON.stringify(pomodoroStatistic)
     return pomodoroStatistic
+  },
+  deleteStatisticSection: (section: string) => {
+    localStorage.setItem('statistic' + section, '0')
+    return 0
+  },
+  removedPomodoroStatistic: (tag: string) => {
+    let statistic = JSON.parse(localStorage.pomodoroStatistic)
+    delete statistic[tag]
+    localStorage.pomodoroStatistic = JSON.stringify(statistic)
+    return statistic
   }
 };

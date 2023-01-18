@@ -17,7 +17,7 @@ type AimsOwnType = {
 
 export const AimsNotFinished: React.FC<AimsOwnType> = React.memo(({ listName = '', list }) => {
 
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: any = useDispatch();
    const [currentItem, setCurrentItem] = useState('');
    const [side, setSide] = useState('');
    const [isOpenDialog, setIsOpenDialog] = useState(false)

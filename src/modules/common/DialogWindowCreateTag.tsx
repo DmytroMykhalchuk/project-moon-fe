@@ -24,7 +24,7 @@ export const DialogWindowCreateTag: React.FC<DialogWindowCreateTagType> = React.
    setIsOpenDialog,
    tagDialog = "", closeSpeedDial
 }) => {
-   const dispatch: AppDispatch = useDispatch()
+   const dispatch: any = useDispatch()
    const [onChangeField, setOnChangeField] = useState('#' + tagDialog)
 
    useEffect(() => {

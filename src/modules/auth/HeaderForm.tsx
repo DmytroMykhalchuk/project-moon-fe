@@ -8,7 +8,7 @@ type FormHeaderType = {
    link: string
 }
 
-const FormHeader = ({ title, textLink, text, link }: FormHeaderType) => {
+const FormHeader:React.FC<FormHeaderType> = ({ title, textLink, text, link } ) => {
    return (
       <div className={styles.headerForm}>
          <h3 className={styles.headerForm__title}>{title}</h3>

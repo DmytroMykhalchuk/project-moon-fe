@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { DialogConfirmation } from "./DialogConfirmation";
-import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
 import { changeLangCites, changeThemeColor, deleteMessageHistory, setCurrentDay, setNewMessage, ThemeColorType, themeValues } from '../../../redux/appReducer';
 
@@ -36,7 +35,7 @@ type DrawerSwipeType = {
 }
 
 const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, open, setOpen, sendMessageHandler, window, onScrollDummy }: DrawerSwipeType) => {
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: any = useDispatch();
    const [isOpenConfirmation, setIsOpenConfirmation] = useState(false)
    const [fnToConfirmation, setfnToConfirmation] = useState('')
    const [dialogHeader, setDialogHeader] = useState('')

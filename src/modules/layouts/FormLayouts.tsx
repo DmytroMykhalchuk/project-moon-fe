@@ -1,6 +1,6 @@
 import styles from './styleFormLayouts.module.scss';
 import backgr from './../../img/pixel-back.jpg'
-import FormHeader from '../auth/HeaderForm';
+import FormHeader from './../auth/HeaderForm';
 
 type FormLayoutsType={
    title:string,

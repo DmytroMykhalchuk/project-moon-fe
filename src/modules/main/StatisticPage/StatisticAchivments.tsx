@@ -7,14 +7,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SchoolIcon from '@mui/icons-material/School';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
 import { initAchivments } from '../../../redux/appReducer';
 import { getAchivments } from '../../../redux/appStateSelector';
 import Grid from '@mui/material/Grid';
 
 
 export const StatisticAchivments: React.FC = React.memo(() => {
-   const dispatch: AppDispatch = useDispatch();
+   const dispatch: any = useDispatch();
    const achivments = useSelector(getAchivments)
 
    useEffect(() => {

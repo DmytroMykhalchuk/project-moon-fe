@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import { Records } from '../main/DailyPage/Records';
 
 export const AppLayouts: React.FC = React.memo(() => {
-   const dispatch: AppDispatch = useDispatch()
+   const dispatch: any = useDispatch()
    const isBadge = useSelector(getIsBadge)
 
    useEffect(() => {

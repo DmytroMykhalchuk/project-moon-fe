@@ -17,7 +17,6 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../../redux/store';
 import { getCurrentDay } from '../../../redux/appStateSelector';
 import { DailyRecordType, setNewDailyRecord } from '../../../redux/appReducer';
 import TagIcon from '@mui/icons-material/Tag';
@@ -43,7 +42,7 @@ type RecordsByTagType = {
    setSelctedItem: (arg1: DailyRecordType) => void
 }
 export const CreateRecord: React.FC<RecordsByTagType> = React.memo(({ isEditMode, setIsEditMode, selctedItem, setSelctedItem }) => {
-   const dispatch: AppDispatch = useDispatch()
+   const dispatch: any = useDispatch()
    const currDate = useSelector(getCurrentDay)
    const [isEditDate, setIsEditDate] = useState(false)
    const [selectedDate, setSelectedDate] = useState(() => {
