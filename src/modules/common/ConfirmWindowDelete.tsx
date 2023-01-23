@@ -38,7 +38,7 @@ export const ConfirmWindowDelete = ({
             </DialogContent>
             <DialogActions>
                <Button onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
-               <Button sx={{color:'bgmode.light'}} onClick={() => {
+               <Button onClick={() => {
                   deleting()
                   setIsOpenConfirmation(false);
                }} autoFocus>

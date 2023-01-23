@@ -8,11 +8,12 @@ import Badge from '@mui/material/Badge';
 import BookIcon from '@mui/icons-material/Book';
 import HubIcon from '@mui/icons-material/Hub';
 import { grey } from '@mui/material/colors'
+import Typography from '@mui/material/Typography'
 
 type AppBottomBarType = {
    setPage: (page: number) => void
    page: number,
-   isBadge: boolean, setOldPage: (arg1: number) => void
+   isBadge: boolean,
 }
 const styles = {
    // fontSize:'0.5em',
@@ -23,28 +24,26 @@ const styles = {
       color: "bgmode.light",
    }
 };
-const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge, setOldPage }) => {
+const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge }) => {
    return (
       <Box sx={{ pb: 5, zIndex: 2, position: 'relative' }}>
          <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }}  >
             <BottomNavigation
                value={page}
                showLabels
-               sx={{ color: '#fff', backgroundColor: grey[900] }}
-
-               onChange={(event, newValue) => {
-                  //@ts-ignore
-                  setPage((oldValue: number) => {
-                     setOldPage(oldValue)
-                     return newValue
-                  });
+               sx={{
+                  color: '#fff', backgroundColor: grey[900],
+                  '& button': { minWidth: 'auto', p: 0 }
+               }}
+               onChange={(event, newValue: number) => {
+                  setPage(newValue)
                }}
             >
                <BottomNavigationAction sx={styles}
-                  label="Статистика"
+                  label={<Typography variant="caption" color="inherit">Статистика</Typography>}
                   icon={<BubbleChartIcon />} />
                <BottomNavigationAction sx={styles}
-                  label="Чат"
+                  label={<Typography variant="caption" color="inherit">Чат</Typography>}
 
                   icon={
                      <Badge color="error" variant="dot" invisible={!isBadge}>
@@ -52,15 +51,15 @@ const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge, setO
                      </Badge>
                   } />
                <BottomNavigationAction sx={styles}
-                  label="Головна"
+                  label={<Typography variant="caption" color="inherit">Головна</Typography>}
 
                   icon={<HubIcon />} />
                <BottomNavigationAction sx={styles}
-                  label="Записи"
+                  label={<Typography variant="caption" color="inherit">Записи</Typography>}
 
                   icon={<BookIcon />} />
                <BottomNavigationAction sx={styles}
-                  label="Щоденник"
+                  label={<Typography variant="caption" color="inherit">Щоденник</Typography>}
 
                   icon={<TodayIcon />} />
             </BottomNavigation>

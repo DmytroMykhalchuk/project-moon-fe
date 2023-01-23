@@ -8,7 +8,6 @@ import { StatisticPageContainer } from '../main/StatisticPage/StatisticPageConta
 import AppTitle from './AppTitle';
 import AppBottomBar from './AppBottomBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
 import { setMessages } from '../../redux/appReducer';
 import { getIsBadge } from '../../redux/appStateSelector';
 import Fade from '@mui/material/Fade';
@@ -22,11 +21,11 @@ export const AppLayouts: React.FC = React.memo(() => {
    useEffect(() => {
       dispatch(setMessages())
    }, [])
+   
    const [page, setPage] = useState(2)
-   const [oldPage, setOldPage] = useState(2)
-   if (oldPage !== page) {
+   useEffect(() => {
       window.scrollTo(0, 0)
-   }
+   }, [page])
 
    return <article className={styles.appWrapper}
    >
@@ -68,7 +67,7 @@ export const AppLayouts: React.FC = React.memo(() => {
             </Fade>
          </Box>
       </Container>
-      <AppBottomBar page={page} setPage={setPage} setOldPage={setOldPage} isBadge={isBadge} />
+      <AppBottomBar page={page} setPage={setPage} isBadge={isBadge} />
    </article >;
 })
 

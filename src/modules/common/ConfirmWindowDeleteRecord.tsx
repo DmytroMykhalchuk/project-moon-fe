@@ -41,7 +41,7 @@ export const ConfirmWindowDeleteRecord = ({
             </DialogContent>
             <DialogActions>
                <Button onClick={() => { setIsOpenConfirmation(false) }}>Скасувати</Button>
-               <Button sx={{ color: 'bgmode.light' }} onClick={() => {
+               <Button onClick={() => {
                   dispatch(deleteDailyRecord(id))
                   setIsOpenConfirmation(false);
                   handleCloseDialog()
