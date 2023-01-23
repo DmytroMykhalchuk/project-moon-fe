@@ -441,23 +441,30 @@ export const api = {
     return daily
   },
   filterDailyRecords: (tags?: string[]) => {
-    let daily = localStorage.records ? JSON.parse(localStorage.daily) : {}
+    let daily = localStorage.daily ? JSON.parse(localStorage.daily) : {}
+    let isNeededSave = false
     if (tags) {
       for (const key in daily) {
         let isFilteredConditions = false
         if (Object.prototype.hasOwnProperty.call(daily, key)) {
           const element = daily[key];
-          for (const tag of tags) {
-            if (element.tags.includes(tag)) {
-              isFilteredConditions = true
-              break
+          if (element.tags) {
+            for (const tag of tags) {
+              if (element.tags.includes(tag)) {
+                isFilteredConditions = true
+                break
+              }
             }
+            isFilteredConditions || delete daily[key]
+          } else { //support tags
+            element.tags = []
+            isNeededSave = true
           }
-          isFilteredConditions || delete daily[key]
         }
       }
 
     }
+    if (isNeededSave) localStorage.daily = JSON.stringify(daily)
     return daily
   },
   savePomodoro: (tag: string, time: number) => {
@@ -481,3 +488,14 @@ export const api = {
     return statistic
   }
 };
+
+const injectingTagsToRecords = () => {
+  let daily = localStorage.daily ? JSON.parse(localStorage.daily) : {}
+  for (const key in daily) {
+    if (Object.prototype.hasOwnProperty.call(daily, key)) {
+      const element = daily[key]
+      element.tags = []
+    }
+  }
+  localStorage.daily = daily
+} 

@@ -35,8 +35,8 @@ export const PreferenceTags = () => {
                {tag}
             </Box>
             <Box>
-               <ModeEditIcon onClick={() => editTag(tag)} />
-               <DeleteOutlineIcon onClick={() => deleteTag(tag)} />
+               <ModeEditIcon sx={{color:'bgmode.light'}} onClick={() => editTag(tag)} />
+               <DeleteOutlineIcon sx={{color:'bgmode.light'}} onClick={() => deleteTag(tag)} />
             </Box>
 
          </Paper>)

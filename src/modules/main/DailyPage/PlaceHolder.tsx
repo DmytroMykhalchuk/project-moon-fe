@@ -15,7 +15,7 @@ const checkSpelling = (str: string): string => {
 }
 
 export const PlaceHolder = React.memo(() => {
-   const element = {title:'Запис', text:'Щось тут важливе написане :) '};
+   const element = {title:'Не знайдено (', text:'Щось тут важливе написано :) '};
    const createDate = new Date();
    const nameMonth = checkSpelling(createDate.toLocaleString('default', { month: 'long' }))
    return <div>
