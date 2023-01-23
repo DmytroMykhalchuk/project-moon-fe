@@ -15,6 +15,7 @@ type AppBottomBarType = {
    isBadge: boolean, setOldPage: (arg1: number) => void
 }
 const styles = {
+   // fontSize:'0.5em',
    "&.MuiBottomNavigationAction-root": {
       color: "#898989"
    },
@@ -28,6 +29,7 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
          <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }}  >
             <BottomNavigation
                value={page}
+               showLabels
                sx={{ color: '#fff', backgroundColor: grey[900] }}
 
                onChange={(event, newValue) => {
@@ -39,18 +41,27 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
                }}
             >
                <BottomNavigationAction sx={styles}
+                  label="Статистика"
                   icon={<BubbleChartIcon />} />
                <BottomNavigationAction sx={styles}
+                  label="Чат"
+                  
                   icon={
                      <Badge color="error" variant="dot" invisible={!isBadge}>
                         <CommentBankIcon />
                      </Badge>
                   } />
                <BottomNavigationAction sx={styles}
+                  label="Головна"
+                  
                   icon={<HubIcon />} />
                <BottomNavigationAction sx={styles}
+                  label="Записи"
+                  
                   icon={<BookIcon />} />
                <BottomNavigationAction sx={styles}
+                  label="Щоденник"
+                  
                   icon={<TodayIcon />} />
             </BottomNavigation>
          </Box>
