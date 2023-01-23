@@ -32,7 +32,7 @@ export const FrontPageContainer: React.FC = React.memo(() => {
          dispatch(getInfoUser())
       }
       setTimeout(() => { setisShowCite(false); dispatch(checkOnline()); }, 5000)
-   }, [])
+   }, [isInit])
 
    return (<>
       <Backdrop
