@@ -56,8 +56,9 @@ export const PreferenceDeleteStatistic = React.memo(() => {
                <InputLabel size='small' htmlFor="grouped-select">Cекція статистики</InputLabel>
                <Select defaultValue="" id="grouped-select"
                   label="Cекція статистики"
+                  autoWidth
                   onChange={(el) => onChangeSelectHandler(el.target.value)}
-                  size='small' autoWidth sx={{}}>
+                  size='small' sx={{}}>
                   <MenuItem value="">
                      <em>None</em>
                   </MenuItem>

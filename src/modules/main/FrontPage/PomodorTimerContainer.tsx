@@ -132,9 +132,8 @@ export const PomodorTimerContainer: React.FC<RecordsByTagType> = React.memo(({ i
                            labelId="demo-simple-select-standard-label"
                            id="demo-simple-select-standard"
                            value={selectedTag}
-                           // sx={{ ml: 5, mr: 5 }}
+                           autoWidth
                            onChange={(el) => { setSelectedTag(el.target.value) }}
-                        // label="Age"
                         >
                            <MenuItem value="">
                               <em></em>

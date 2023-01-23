@@ -34,7 +34,6 @@ export const MessagePage: React.FC = React.memo(() => {
 
    const switcherHandler = () => {
       setOpen(!open)
-      console.log('dd')
    }
    const checkMessage = () => {
       dispatch(checkMessageThunk())

@@ -67,7 +67,7 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
          setTimeout(() => { onScrollDummy() }, 800);
       },
       changeTheme: (color: ThemeColorType) => {
-         const theme=themeValues.filter(item=>item.value===color)
+         const theme = themeValues.filter(item => item.value === color)
          const text = 'Колір теми змінено на ' + theme[0].labelUa.toLowerCase();
          dispatch(setNewMessage(text));
          dispatch(changeThemeColor(color))
@@ -116,14 +116,14 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                   right: 0,
                   left: 0,
                   zIndex: '-1',
-                  backgroundColor:'bgmode.light'
+                  backgroundColor: 'bgmode.light'
                }}
             >
                <Puller />
             </StyledBox>
             <StyledBox
                sx={{
-                  px: 2,
+                  // px: 2,
                   pb: 2,
                   height: '98%',
                   overflow: 'auto',
@@ -132,7 +132,7 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                   flexDirection: 'column'
                }}
             >
-               <Stack direction="row" spacing={1} sx={{p:0}}>
+               <Stack direction="row" spacing={1} sx={{ p: 0 }}>
 
                   <Chip
                      label="Видалити історію повідомлень"
@@ -142,7 +142,7 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                      onClick={() => { setfnToConfirmation('deleteMessageHistory'); setDialogHeader('Дійсно хочете очистити історію повідомлень?'); setIsOpenConfirmation(true) }}
                   />
                   <Chip
-                     label="Встановити день"
+                     label="Змінити день"
                      component="button"
                      variant="outlined"
                      clickable
@@ -154,6 +154,13 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                      variant="outlined"
                      clickable
                      onClick={() => { setfnToConfirmation('changeLanguageCites'); setDialogHeader("Оберіть мову"); setIsOpenConfirmation(true) }}
+                  />
+                  <Chip
+                     label="Змінити колір теми"
+                     component="button"
+                     variant="outlined"
+                     clickable
+                     onClick={() => { setfnToConfirmation('changeTheme'); setDialogHeader('Виберіть колір теми'); setIsOpenConfirmation(true) }}
                   />
                   <Chip
                      label="Підтримати проєкт"
@@ -176,13 +183,7 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                      clickable
                      onClick={() => { actions.contactWithDev() }}
                   />
-                  <Chip
-                     label="Змінити колір теми"
-                     component="button"
-                     variant="outlined"
-                     clickable
-                     onClick={() => { setfnToConfirmation('changeTheme'); setDialogHeader('Виберіть колір теми'); setIsOpenConfirmation(true) }}
-                  />
+
                </Stack>
             </StyledBox>
          </SwipeableDrawer>
