@@ -7,7 +7,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { deleteDailyRecord } from '../../redux/appReducer';
 import { grey } from '@mui/material/colors'
 import Box from '@mui/material/Box'
-import { AppDispatch } from '../../redux/store';
 import { useDispatch } from 'react-redux';
 
 type ConfirmWindowType = {

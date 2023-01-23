@@ -13,7 +13,6 @@ import Select from '@mui/material/Select';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createTaskThunk } from '../../redux/appReducer';
-import { AppDispatch } from '../../redux/store';
 import { grey } from '@mui/material/colors'
 import Box from '@mui/material/Box'
 

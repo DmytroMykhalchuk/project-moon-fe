@@ -4,7 +4,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ConfirmWindow } from './ConfirmWindow'
-import { TaskType } from './../../redux/appReducer'
+import { TaskType } from '../../redux/appReducer'
 import { useState } from "react";
 
 type ActionButtonsType = {

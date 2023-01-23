@@ -21,7 +21,7 @@ import { getCurrentDay } from '../../../redux/appStateSelector';
 import { DailyRecordType, setNewDailyRecord } from '../../../redux/appReducer';
 import TagIcon from '@mui/icons-material/Tag';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { ConfirmWindowDeleteRecord } from '../../common/ConfirmWindowDeleteRecord';
+import { ConfirmWindowDeleteRecord } from '../../Common/ConfirmWindowDeleteRecord';
 import { TagsSelect } from './TagsSelect';
 
 
@@ -78,7 +78,7 @@ export const CreateRecord: React.FC<RecordsByTagType> = React.memo(({ isEditMode
    const toggleTagsMenu = () => {
       setisTagsMenuOpen((prev: boolean) => !prev)
    }
-   const handleCloseWithSave=()=>{
+   const handleCloseWithSave = () => {
       dispatch(setNewDailyRecord(currDate, title, text, selectedTags, selectedDate))
       handleClose()
    }

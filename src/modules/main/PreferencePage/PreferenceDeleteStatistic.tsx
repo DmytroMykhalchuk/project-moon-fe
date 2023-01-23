@@ -9,21 +9,19 @@ import Typography from '@mui/material/Typography'
 import { BACKGROUND_COLOR_CARDS } from '../../../themes';
 import Button from '@mui/material/Button'
 import styles from './styles.module.scss'
-import { ConfirmWindowDelete } from '../../common/ConfirmWindowDelete';
+import { ConfirmWindowDelete } from '../../Common/ConfirmWindowDelete';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPomodoroStatistic } from '../../../redux/appStateSelector'
-import { grey } from '@mui/material/colors'
 import { deleteStatisticSection, hardReset, removeStatisticPomodoro } from '../../../redux/appReducer';
 
 
 const GLOBAL_DELETE = 'GLOBAL_DELETE'
 const STATISTIC = 'STATISTIC'
 const POMODORO = 'POMODORO'
-const textDialog={
-   [`${STATISTIC}day`]:'',
-   [`${STATISTIC}week`]:'',
-   [`${STATISTIC}month`]:'',
-
+const textDialog = {
+   [`${STATISTIC}day`]: '',
+   [`${STATISTIC}week`]: '',
+   [`${STATISTIC}month`]: '',
 }
 
 export const PreferenceDeleteStatistic = React.memo(() => {
