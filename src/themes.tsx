@@ -83,7 +83,7 @@ export const themes = {
             dark: "#ccc",
          },
          bgmode:{
-            light:'#dbdb00',
+            light:'#f9f900',
             main:'#999900',
             dark:'#e34f00',
             circle:'#fff'
