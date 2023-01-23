@@ -14,7 +14,9 @@ export const FrontPageContainer: React.FC = React.memo(() => {
 
    const isInit = useSelector(getiSInitApp);
    const isFetching = useSelector(getIsFetchingApp)
-   const lastOnline = useSelector(getLastOnline);
+   const lastOnline = useSelector(getLastOnline)
+
+   const [isRender, setIsRender] = useState(false)
    const [isShowCite, setisShowCite] = useState(true)
 
    useEffect(() => {
@@ -24,15 +26,20 @@ export const FrontPageContainer: React.FC = React.memo(() => {
          let last = new Date(lastOnline);
          if (last.getTime() !== onlineDay.getTime()) {
             setisShowCite(true)
-
          } else {
             setisShowCite(false)
          }
+         setIsRender(true)
       } else {
          dispatch(getInfoUser())
       }
       setTimeout(() => { setisShowCite(false); dispatch(checkOnline()); }, 5000)
    }, [isInit])
+
+
+   if(!isRender){
+      return <div></div>
+   }
 
    return (<>
       <Backdrop
@@ -41,13 +48,13 @@ export const FrontPageContainer: React.FC = React.memo(() => {
       >
          <CircularProgress color="inherit" />
       </Backdrop>
-      {isShowCite &&
+      {/* {isShowCite && */}
          <Fade in={isShowCite} unmountOnExit >
             <Box>
                <CiteDisplay />
             </Box>
          </Fade>
-      }
+      {/* // } */}
       <Fade in={!isShowCite} unmountOnExit >
          <Box>
             <FrontPage />

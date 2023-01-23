@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIsBadge, getMessagesState } from "../../../redux/appStateSelector";
 import DoneIcon from '@mui/icons-material/Done';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { checkMessageThunk } from "../../../redux/appReducer";
+import { checkMessageThunk, initStart } from "../../../redux/appReducer";
 import Grow from '@mui/material/Grow'
 
 
@@ -18,16 +18,23 @@ export const MessagePage: React.FC = React.memo(() => {
    const wrapperMessagesRef = useRef();
    const dispatch: any = useDispatch();
    const [open, setOpen] = useState(false);
-
-
    const messages = useSelector(getMessagesState)
    const isBadge = useSelector(getIsBadge)
+
+   useEffect(() => {
+      if (isBadge === false) {
+         dispatch(initStart())
+      }
+   }, [isBadge])
+
+
    const sendMessageHandler = () => {
       setOpen(false);
    }
 
    const switcherHandler = () => {
       setOpen(!open)
+      console.log('dd')
    }
    const checkMessage = () => {
       dispatch(checkMessageThunk())
@@ -41,6 +48,8 @@ export const MessagePage: React.FC = React.memo(() => {
       onScrollDummy()
    }, []);
 
+
+
    useEffect(() => {
       dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
       //@ts-ignore
@@ -53,7 +62,6 @@ export const MessagePage: React.FC = React.memo(() => {
             ret.push(
                <Grow in={element.isChecked} key={item} mountOnEnter unmountOnExit>
                   <Box sx={{
-                     //  backgroundColor: '#3d3', 
                      backgroundColor: '#fff',
                      color: '#000',
                      width: '75%', margin: '0 0 30px 20px', p: 2, borderRadius: '20px'
@@ -76,7 +84,6 @@ export const MessagePage: React.FC = React.memo(() => {
                } else {
                   setOpen(true);
                }
-
             }}
             aria-label="edit"
             sx={{
@@ -87,7 +94,7 @@ export const MessagePage: React.FC = React.memo(() => {
                color: 'bgmode.circle',
 
                '&:hover': {
-                  backgroundColor: 'bgmode.light'
+                  backgroundColor: 'bgmode.dark'
                }
             }}>
             {isBadge ? <DoneIcon /> : <SettingsIcon />}

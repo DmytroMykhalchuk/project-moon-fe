@@ -66,6 +66,7 @@ export const api = {
     localStorage.statisticmonth = JSON.stringify(0)
     localStorage.records = JSON.stringify([])
     localStorage.pomodoroStatistic = JSON.stringify({})
+    localStorage.isStarted = false
     let state = {
       main: {},
       month: {},
@@ -129,6 +130,7 @@ export const api = {
         statisticmonth: localStorage.statisticmonth ? localStorage.statisticmonth : 0,
         records: localStorage.records ? JSON.parse(localStorage.records) : [],
         pomodoroStatistic: localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {},
+        isStarted: localStorage.isStarted ? localStorage.isStarted : false,
       }
 
 
@@ -492,6 +494,9 @@ export const api = {
     delete statistic[tag]
     localStorage.pomodoroStatistic = JSON.stringify(statistic)
     return statistic
+  },
+  initStart: () => {
+    localStorage.isStarted = true
   }
 };
 
@@ -500,8 +505,8 @@ const injectingTagsToRecords = () => {
   for (const key in daily) {
     if (Object.prototype.hasOwnProperty.call(daily, key)) {
       const element = daily[key]
-      if(!element.tags)
-      element.tags = []
+      if (!element.tags)
+        element.tags = []
     }
   }
   localStorage.daily = JSON.stringify(daily)

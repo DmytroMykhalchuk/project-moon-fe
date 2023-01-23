@@ -9,7 +9,7 @@ import AppTitle from './AppTitle';
 import AppBottomBar from './AppBottomBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessages } from '../../redux/appReducer';
-import { getIsBadge } from '../../redux/appStateSelector';
+import { getIsBadge, getIsStarted } from '../../redux/appStateSelector';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
 import { Records } from '../main/DailyPage/Records';
@@ -18,11 +18,13 @@ export const AppLayouts: React.FC = React.memo(() => {
    const dispatch: any = useDispatch()
    const isBadge = useSelector(getIsBadge)
 
+   const isStarted = useSelector(getIsStarted)
+
    useEffect(() => {
       dispatch(setMessages())
    }, [])
 
-   const [page, setPage] = useState(2)
+   const [page, setPage] = useState(isStarted ? 2 : 1)
    useEffect(() => {
       page !== 1 ? window.scrollTo(0, 0) : window.scrollTo(0, 4000)
    }, [page])
@@ -45,6 +47,7 @@ export const AppLayouts: React.FC = React.memo(() => {
                </Box>
             </Fade>
          </Box>
+
          <Box sx={{ display: page === 2 ? 'block' : 'none' }}>
             <Fade in={page === 2} appear={false}>
                <Box >
@@ -52,6 +55,7 @@ export const AppLayouts: React.FC = React.memo(() => {
                </Box>
             </Fade>
          </Box>
+
          <Box sx={{ display: page === 3 ? 'block' : 'none' }}>
             <Fade in={page === 3} appear={false}>
                <Box >
@@ -67,7 +71,7 @@ export const AppLayouts: React.FC = React.memo(() => {
             </Fade>
          </Box>
       </Container>
-      <AppBottomBar page={page} setPage={setPage} isBadge={isBadge} />
+      <AppBottomBar page={page} setPage={setPage} isBadge={isBadge}  />
    </article >;
 })
 

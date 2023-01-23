@@ -76,3 +76,7 @@ export const getTags = (state: AppStateType) => {
 export const getPomodoroStatistic = (state: AppStateType) => {
    return state.app.pomodoroStatistic
 }
+
+export const getIsStarted = (state: AppStateType) => {
+   return state.app.isStarted
+}

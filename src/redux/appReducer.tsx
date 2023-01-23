@@ -28,6 +28,8 @@ const CREATE_TAG = 'CREATE_TAG'
 const INIT_SET_DAILY = 'INIT_SET_DAILY'
 const INIT_POMODORO = 'INIT_POMODORO'
 const INIT_STATISTIC = 'INIT_STATISTIC'
+const INIT_START = 'INIT_START'
+
 export const RED = 'RED'
 export const BLACK = 'BLACK'
 export const WHITE = 'WHITE'
@@ -82,6 +84,7 @@ const initialState: any = {
    themeColor: localStorage.getItem('themeColor') ? localStorage.getItem('themeColor') : "RED",
    pomodoroStatistic: {},
    records: [],
+   isStarted: localStorage.isStarted ? localStorage.isStarted : false,
    main: {
    },
    month: {
@@ -339,10 +342,15 @@ const appReducer = (state = initialState, action: ActionsTypes): any => {
          }
       }
       case INIT_STATISTIC: {
-         // console.log()
          return {
             ...state,
             ...action.statistic
+         }
+      }
+      case INIT_START: {
+         return {
+            ...state,
+            isStarted: true
          }
       }
       default: return state;
@@ -498,7 +506,7 @@ export const actions = {
    initDaily: (daily: any) => { return { type: INIT_SET_DAILY, daily } as const },
    initPomodoro: (pomodoroStatistic: any) => { return { type: INIT_POMODORO, pomodoroStatistic } as const },
    initStatistic: (statistic: Object) => { return { type: INIT_STATISTIC, statistic: { [`statistic${statistic}`]: 0 } } as const },
-
+   initStart: () => { return { type: INIT_START } as const }
 }
 
 type ThunksTypes = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
@@ -651,7 +659,6 @@ export const initAchivments = (): ThunksTypes => {
 export const setMessages = (): ThunksTypes => {
    return async (dispatch) => {
       api.getMessages()?.then((responce: any) => {
-         // console.log('')
          dispatch(actions.setMessagesAction(responce))
       })
    }
@@ -763,6 +770,12 @@ export const removeStatisticPomodoro = (tag: string): ThunksTypes => {
 export const hardReset = (): ThunksTypes => {
    return async (dispatch) => {
       dispatch(actions.init(api.hardReset))
+   }
+}
+export const initStart = (): ThunksTypes => {
+   return async (dispatch) => {
+      api.initStart()
+      dispatch(actions.initStart())
    }
 }
 export default appReducer;

@@ -9,6 +9,8 @@ import BookIcon from '@mui/icons-material/Book';
 import HubIcon from '@mui/icons-material/Hub';
 import { grey } from '@mui/material/colors'
 import Typography from '@mui/material/Typography'
+import { useSelector } from 'react-redux';
+import { getIsStarted } from '../../redux/appStateSelector';
 
 type AppBottomBarType = {
    setPage: (page: number) => void
@@ -25,6 +27,7 @@ const styles = {
    }
 };
 const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge }) => {
+   const isStarted = useSelector(getIsStarted)
    return (
       <Box sx={{ pb: 5, zIndex: 2, position: 'relative' }}>
          <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }}  >
@@ -36,7 +39,7 @@ const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge }) =>
                   '& button': { minWidth: 'auto', p: 0 }
                }}
                onChange={(event, newValue: number) => {
-                  setPage(newValue)
+                  isStarted && setPage(newValue)
                }}
             >
                <BottomNavigationAction sx={styles}
@@ -44,7 +47,6 @@ const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge }) =>
                   icon={<BubbleChartIcon />} />
                <BottomNavigationAction sx={styles}
                   label={<Typography variant="caption" color="inherit">Чат</Typography>}
-
                   icon={
                      <Badge color="error" variant="dot" invisible={!isBadge}>
                         <CommentBankIcon />
@@ -52,15 +54,12 @@ const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge }) =>
                   } />
                <BottomNavigationAction sx={styles}
                   label={<Typography variant="caption" color="inherit">Головна</Typography>}
-
                   icon={<HubIcon />} />
                <BottomNavigationAction sx={styles}
                   label={<Typography variant="caption" color="inherit">Записи</Typography>}
-
                   icon={<BookIcon />} />
                <BottomNavigationAction sx={styles}
                   label={<Typography variant="caption" color="inherit">Щоденник</Typography>}
-
                   icon={<TodayIcon />} />
             </BottomNavigation>
          </Box>
