@@ -56,7 +56,7 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
       contactWithDev: () => {
          const text = `Пишіть мені: \n
          Instagram: @night__tramway 
-         Twitter: @kaiderivor`;
+         `;
          dispatch(setNewMessage(text));
          setTimeout(() => { onScrollDummy() }, 800);
 
@@ -125,14 +125,14 @@ const DrawerSwipe: React.FC<DrawerSwipeType> = React.memo(({ switcherHandler, op
                sx={{
                   px: 2,
                   pb: 2,
-                  height: '100%',
+                  height: '98%',
                   overflow: 'auto',
                   display: 'flex',
                   justifyContent: 'center',
                   flexDirection: 'column'
                }}
             >
-               <Stack direction="row" spacing={1}>
+               <Stack direction="row" spacing={1} sx={{p:0}}>
 
                   <Chip
                      label="Видалити історію повідомлень"
