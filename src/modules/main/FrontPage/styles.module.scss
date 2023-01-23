@@ -1,0 +1,24 @@
+.circleSection {
+   padding: 0 10px 40px;
+
+   .circleWrapper {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+   }
+
+   .circle {
+      filter: drop-shadow(0px 0px 25px rgba(255, 255, 255, 0.459));
+   }
+}
+
+.decorElement {
+   color: #f3f3f3
+}
+
+.boxSide {
+   display: flex;
+   justify-content: center;
+   align-content: center;
+   flex-direction: column;
+}
