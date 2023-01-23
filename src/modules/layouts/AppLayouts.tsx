@@ -21,10 +21,10 @@ export const AppLayouts: React.FC = React.memo(() => {
    useEffect(() => {
       dispatch(setMessages())
    }, [])
-   
+
    const [page, setPage] = useState(2)
    useEffect(() => {
-      window.scrollTo(0, 0)
+      page !== 1 ? window.scrollTo(0, 0) : window.scrollTo(0, 4000)
    }, [page])
 
    return <article className={styles.appWrapper}

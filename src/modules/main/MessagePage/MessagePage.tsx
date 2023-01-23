@@ -34,10 +34,13 @@ export const MessagePage: React.FC = React.memo(() => {
    }
    const onScrollDummy = () => {
       dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
+
    }
+
    useEffect(() => {
       onScrollDummy()
    }, []);
+
    useEffect(() => {
       dummy.current && dummy.current.scrollIntoView({ behavior: 'smooth' });
       //@ts-ignore
@@ -81,7 +84,7 @@ export const MessagePage: React.FC = React.memo(() => {
                bottom: '80px',
                right: '16px',
                backgroundColor: 'bgmode.dark',
-               color:'bgmode.circle',
+               color: 'bgmode.circle',
 
                '&:hover': {
                   backgroundColor: 'bgmode.light'
