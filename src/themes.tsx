@@ -85,7 +85,7 @@ export const themes = {
          bgmode:{
             light:'#dbdb00',
             main:'#999900',
-            dark:'#b5b525',
+            dark:'#e34f00',
             circle:'#fff'
          }
       },
@@ -106,7 +106,7 @@ export const themes = {
             dark: "#ccc",
          },
          bgmode:{
-            light:'rgb(167 5 5)',
+            light:'rgb(203 0 0)',
             main:'rgb(153 28 28)',
             dark:'rgb(74 0 0)',
             circle:'#fff'
@@ -129,7 +129,7 @@ export const themes = {
             light: "#262335",
          },
          bgmode:{
-            light:'#8f1f8f',
+            light:'#d728d7',
             main:'#700170',
             dark:'#4e014e',
             circle:'#fff'

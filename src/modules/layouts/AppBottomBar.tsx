@@ -23,7 +23,7 @@ const styles = {
       color: "bgmode.light",
    }
 };
-const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) => {
+const AppBottomBar: React.FC<AppBottomBarType> = ({ page, setPage, isBadge, setOldPage }) => {
    return (
       <Box sx={{ pb: 5, zIndex: 2, position: 'relative' }}>
          <Box sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 20, }}  >
@@ -45,7 +45,7 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
                   icon={<BubbleChartIcon />} />
                <BottomNavigationAction sx={styles}
                   label="Чат"
-                  
+
                   icon={
                      <Badge color="error" variant="dot" invisible={!isBadge}>
                         <CommentBankIcon />
@@ -53,15 +53,15 @@ const AppBottomBar = ({ page, setPage, isBadge, setOldPage }: AppBottomBarType) 
                   } />
                <BottomNavigationAction sx={styles}
                   label="Головна"
-                  
+
                   icon={<HubIcon />} />
                <BottomNavigationAction sx={styles}
                   label="Записи"
-                  
+
                   icon={<BookIcon />} />
                <BottomNavigationAction sx={styles}
                   label="Щоденник"
-                  
+
                   icon={<TodayIcon />} />
             </BottomNavigation>
          </Box>
