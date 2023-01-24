@@ -8,6 +8,7 @@ import { ThemeProvider } from "@mui/material"
 import { getThemeColor } from "./redux/appStateSelector";
 import { THEME, themes } from "./themes";
 
+
 export const App = () => {
   const themeColor = useSelector(getThemeColor)
   return <ThemeProvider theme={themes[THEME + themeColor]}>
