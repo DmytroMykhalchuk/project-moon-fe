@@ -7,10 +7,13 @@ import './modules/Common/bg.css'
 import { ThemeProvider } from "@mui/material"
 import { getThemeColor } from "./redux/appStateSelector";
 import { THEME, themes } from "./themes";
-
+import { useEffect } from 'react'
+import { useNotifications } from "./utils/useNotification";
+import logo from './../src/img/pixel-back.jpg'
 
 export const App = () => {
   const themeColor = useSelector(getThemeColor)
+
   return <ThemeProvider theme={themes[THEME + themeColor]}>
     <Box>
       <Routes>
