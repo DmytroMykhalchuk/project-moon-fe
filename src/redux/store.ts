@@ -1,10 +1,8 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from "redux";
 import thunkMiddleware from 'redux-thunk'
-import { reducer as formReducer } from 'redux-form'
 import appReducer from "./appReducer";
 
 let rootReducer = combineReducers({
-   form: formReducer,
    app: appReducer
 
 });
