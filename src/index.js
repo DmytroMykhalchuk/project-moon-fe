@@ -6,36 +6,7 @@ import { App } from "./App";
 import { Provider } from "react-redux";
 import store from "./redux/store.ts";
 import { BrowserRouter } from "react-router-dom";
-<<<<<<< HEAD
-//@ts-ignore
-<<<<<<< HEAD
-const theme = createTheme({
-  palette: {
-    mode: "dark",
-    background: {
-<<<<<<< HEAD
-      default: "#3F2046",
-      paper: "#46505A",
-=======
-      // default: "#333",
-      paper: "#333",
-    },
-    primary:{
-      main:'#fff'
->>>>>>> 451bce3 (fixed bug with starting page, added animation with stars to background)
-    },
-    //@ts-ignore
-    fpage: {
-      main: "#EF8B6B",
-      light: "#262335",
-    },
-  },
-});
-=======
-=======
->>>>>>> 54a5c04 (injected service-worker)
 
->>>>>>> 08d4752 (fixed smooth on PreferencePage)
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>

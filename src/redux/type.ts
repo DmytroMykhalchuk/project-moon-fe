@@ -1,6 +1,3 @@
-import { ActionTypes } from '@mui/base';
-import { Dispatch } from 'redux';
-
 export type FormDataReg={
    name:string
    email:string
@@ -12,4 +9,3 @@ export type FormDataLog={
    email:string
    password:string
 }
-// export type DispatchType=Dispatch<Acti

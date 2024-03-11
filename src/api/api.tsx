@@ -2,30 +2,7 @@ import { ThemeColorType } from "../redux/appReducer"
 import { achivmentsObj } from "./achivments"
 import { messagesObj } from "./messages"
 
-<<<<<<< HEAD
-    // }
-    if (error.response.data.message === "Token has expired") {
-      instance
-        .post(
-          "auth/refresh",
-          {},
-          {
-            headers: {
-              authorization: `Bearer ${localStorage.access_token}`,
-            },
-          }
-        )
-        .then((response) => {
-          localStorage.access_token = response.data.access_token;
-          error.config.headers.authorization = `Bearer ${localStorage.access_token}`;
-          return instance.request(error.config);
-        });
-    }
-  }
-);
-=======
 const placeHolderRecords = ['🎒 Навчання', '👟 Тренування', '💰 Фінанси', '📚 Книги', '✨ Сюрприз']
->>>>>>> 5dd9af6 (refactored api)
 
 export const api = {
   hardReset: () => {
@@ -62,60 +39,7 @@ export const api = {
     }
     return state;
   },
-<<<<<<< HEAD
-  login: function (formData: Object) {
-    return instance.post("auth/login", { ...formData }).then((response) => {
-      localStorage.access_token = response.data.access_token;
-    });
-  },
-  logout: function () {
-    return instance.post("auth/logout").then(() => {
-      localStorage.removeItem("access_token");
-    });
-  },
-=======
->>>>>>> b971801 (injected deleting category)
   me: function () {
-<<<<<<< HEAD
-    if (isConnected) {
-      return instance.get("auth/users/me").then((responce) => {
-        return responce.data;
-      });
-    } else {
-      const currTime = new Date();
-      const onlineDay = new Date(currTime.getFullYear(), currTime.getMonth(), currTime.getDate())
-      let state = {
-        main: localStorage.main ? JSON.parse(localStorage.main) : {},
-        month: localStorage.month ? JSON.parse(localStorage.month) : {},
-        week: localStorage.week ? JSON.parse(localStorage.week) : {},
-        day: localStorage.day ? JSON.parse(localStorage.day) : {},
-<<<<<<< HEAD
-        daily: localStorage.daily ? localStorage.daily : '{}',
-        finishedMonth: localStorage.finishedMonth ? localStorage.finishedMonth : 0,
-        finishedWeek: localStorage.finishedWeek ? localStorage.finishedWeek : 0,
-        finishedDay: localStorage.finishedDay ? localStorage.finishedDay : 0,
-        createdAt: localStorage.createdAt ? localStorage.createdAt : 0,
-        lastOnline: localStorage.lastOnline ? localStorage.lastOnline : 0,
-        created_at: localStorage.created_at ? localStorage.created_at : localStorage.created_at= new Date()
-      };
-      return new Promise((resolve, reject) => { resolve(state) })
-=======
-        daily: localStorage.daily ? localStorage.daily : "{}",
-        createdAt: localStorage.createdAt ? localStorage.createdAt : 0,
-        lastOnline: localStorage.lastOnline ? localStorage.lastOnline : onlineDay,
-        created_at: localStorage.created_at ? localStorage.created_at : localStorage.created_at = new Date(),
-        statisticday: localStorage.statisticday ? localStorage.statisticday : 0,
-        statisticweek: localStorage.statisticweek ? localStorage.statisticweek : 0,
-        statisticmonth: localStorage.statisticmonth ? localStorage.statisticmonth : 0,
-        records: localStorage.records ? JSON.parse(localStorage.records) : [],
-        pomodoroStatistic: localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {},
-        isStarted: localStorage.isStarted ? localStorage.isStarted : false,
-      }
-
-
-      return new Promise((resolve) => { resolve(state) })
->>>>>>> d5b297a (minimal functioanal completed)
-=======
     const currTime = new Date();
     const onlineDay = new Date(currTime.getFullYear(), currTime.getMonth(), currTime.getDate())
     localStorage.records = localStorage.records ? localStorage.records : JSON.stringify(placeHolderRecords)
@@ -135,7 +59,6 @@ export const api = {
       records: localStorage.records ? JSON.parse(localStorage.records) : placeHolderRecords,
       pomodoroStatistic: localStorage.pomodoroStatistic ? JSON.parse(localStorage.pomodoroStatistic) : {},
       isStarted: localStorage.isStarted ? localStorage.isStarted : false,
->>>>>>> 5dd9af6 (refactored api)
     }
 
 
@@ -185,31 +108,6 @@ export const api = {
     })
   },
   createDailyRecord: function (day: string, title: string, text: string, tags: Array<string>, date: Date) {
-<<<<<<< HEAD
-    if (isConnected) {
-      return instance
-        .post("auth/daily", { day, title, text, tags, date })
-        .then((responce) => {
-          return responce.data;
-        });
-    } else {
-      let daily = localStorage.daily ? JSON.parse(localStorage.daily) : {};
-<<<<<<< HEAD
-      const id = new Date().getTime();
-      daily[id]={text:record.text,day:record.day}
-      localStorage.daily=JSON.stringify(daily);
-      return new Promise(resolve => {
-        resolve([{[id]:{text:record.text,day:record.day}}])
-=======
-      const id = date.getTime();
-      daily[id] = { text, day, title, tags }
-      localStorage.daily = JSON.stringify(daily);
-      return new Promise(resolve => {
-        resolve([{ [id]: { text, day, title, tags } }])
->>>>>>> 434780e (updated Daily page)
-      })
-    }
-=======
     let daily = localStorage.daily ? JSON.parse(localStorage.daily) : {};
     const id = date.getTime();
     daily[id] = { text, day, title, tags }
@@ -217,7 +115,6 @@ export const api = {
     return new Promise(resolve => {
       resolve([{ [id]: { text, day, title, tags } }])
     })
->>>>>>> 5dd9af6 (refactored api)
   },
   completeAllDayTasks: function () {
     const state = JSON.parse(localStorage.day);
