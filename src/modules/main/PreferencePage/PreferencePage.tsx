@@ -2,14 +2,14 @@ import React, { useState } from "react"
 import Box from "@mui/material/Box"
 import { getListDay, getListMain, getListMonth, getListWeek } from "../../../redux/appStateSelector";
 import { useSelector } from "react-redux";
-import { CardPreferenceItem } from "../../common!/CardPreferenceItem";
+import { CardPreferenceItem } from "../../Common/CardPreferenceItem";
 import { PreferenceTags } from "./PreferenceTags";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TagIcon from '@mui/icons-material/Tag';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import { DialogWindowCreateAim } from '../../common!/DialogWindowCreateAim'
-import { DialogWindowCreateTag } from '../../common!/DialogWindowCreateTag';
+import { DialogWindowCreateAim } from '../../Common/DialogWindowCreateAim'
+import { DialogWindowCreateTag } from '../../Common/DialogWindowCreateTag';
 import { PreferenceDeleteStatistic } from "./PreferenceDeleteStatistic";
 
 export const PreferencePage: React.FC = React.memo(() => {

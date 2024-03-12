@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import AppRouter from "./modules/main/AppRouter";
 import Box from '@mui/material/Box'
-import './modules/common!/bg.css'
+import './modules/Common/bg.css'
 import { ThemeProvider } from "@mui/material"
 import { getThemeColor } from "./redux/appStateSelector";
 import { THEME, themes } from "./themes";

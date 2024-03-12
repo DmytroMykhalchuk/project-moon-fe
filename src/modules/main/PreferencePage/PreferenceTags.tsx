@@ -7,9 +7,9 @@ import { BACKGROUND_COLOR_CARDS } from "../../../themes"
 import { useSelector } from 'react-redux'
 import { getTags } from '../../../redux/appStateSelector'
 import styles from './styles.module.scss'
-import { DialogWindowCreateTag } from '../../common!/DialogWindowCreateTag';
+import { DialogWindowCreateTag } from '../../Common/DialogWindowCreateTag';
 import { useState } from 'react';
-import { ConfirmWindowDeleteTag } from '../../common!/ConfirmWindowDeleteTag';
+import { ConfirmWindowDeleteTag } from '../../Common/ConfirmWindowDeleteTag';
 
 export const PreferenceTags = () => {
    const tags = useSelector(getTags)
