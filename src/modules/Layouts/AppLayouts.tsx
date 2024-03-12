@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import Container from '@mui/material/Container';
-import styles from './styleAppLayouts.module.scss';
-import { FrontPageContainer } from '../main/FrontPage/FrontPageContainer'
-import { PreferencePageContainer } from '../main/PreferencePage/PreferencePageContainer';
-import MessagePageContainer from '../main/MessagePage/MessagePageContainer';
-import { StatisticPageContainer } from '../main/StatisticPage/StatisticPageContainer';
-import AppTitle from './AppTitle';
 import AppBottomBar from './AppBottomBar';
-import { useDispatch, useSelector } from 'react-redux';
-import { setMessages } from '../../redux/appReducer';
-import { getIsBadge, getIsStarted } from '../../redux/appStateSelector';
-import Fade from '@mui/material/Fade';
+import AppTitle from './AppTitle';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Fade from '@mui/material/Fade';
+import MessagePageContainer from '../main/MessagePage/MessagePageContainer';
+import React, { useEffect, useState } from 'react';
+import styles from './styleAppLayouts.module.scss';
+import { FrontPageContainer } from '../main/FrontPage/FrontPageContainer';
+import { getIsBadge, getIsStarted } from '../../redux/appStateSelector';
+import { PreferencePageContainer } from '../main/PreferencePage/PreferencePageContainer';
 import { Records } from '../main/DailyPage/Records';
+import { setMessages } from '../../redux/appReducer';
+import { StatisticPageContainer } from '../main/StatisticPage/StatisticPageContainer';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const AppLayouts: React.FC = React.memo(() => {
    const dispatch: any = useDispatch()
