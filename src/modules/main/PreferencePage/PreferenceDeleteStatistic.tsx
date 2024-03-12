@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import { BACKGROUND_COLOR_CARDS } from '../../../themes';
 import Button from '@mui/material/Button'
 import styles from './styles.module.scss'
-import { ConfirmWindowDelete } from '../../Common/ConfirmWindowDelete';
+import { ConfirmWindowDelete } from '../../common!/ConfirmWindowDelete';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPomodoroStatistic } from '../../../redux/appStateSelector'
 import { deleteStatisticSection, hardReset, removeStatisticPomodoro } from '../../../redux/appReducer';

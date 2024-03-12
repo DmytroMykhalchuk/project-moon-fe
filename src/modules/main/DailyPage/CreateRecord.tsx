@@ -21,7 +21,7 @@ import { getCurrentDay } from '../../../redux/appStateSelector';
 import { DailyRecordType, setNewDailyRecord } from '../../../redux/appReducer';
 import TagIcon from '@mui/icons-material/Tag';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { ConfirmWindowDeleteRecord } from '../../Common/ConfirmWindowDeleteRecord';
+import { ConfirmWindowDeleteRecord } from '../../common!/ConfirmWindowDeleteRecord';
 import { TagsSelect } from './TagsSelect';
 
 

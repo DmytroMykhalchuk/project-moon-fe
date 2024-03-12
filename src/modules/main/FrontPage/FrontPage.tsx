@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import { CircleProgressBar } from './CircleProgressBar';
-import { AimsHome } from '../../Common/AimsHome';
+import { AimsHome } from '../../common!/AimsHome';
 
 export const FrontPage = React.memo(() => {
   return (
