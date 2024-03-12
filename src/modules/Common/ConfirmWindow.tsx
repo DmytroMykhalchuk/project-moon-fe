@@ -18,12 +18,7 @@ type ConfirmWindowType = {
    setId: (arg1: string) => void
 }
 
-export const ConfirmWindow = ({
-   isOpenConfirmation,
-   setIsOpenConfirmation,
-   category, id, object,
-   deleteTask, setId
-}: ConfirmWindowType) => {
+export const ConfirmWindow: React.FC<ConfirmWindowType> = ({ isOpenConfirmation, setIsOpenConfirmation, category, id, object, deleteTask, setId }) => {
    return (
       <Dialog
          open={isOpenConfirmation}

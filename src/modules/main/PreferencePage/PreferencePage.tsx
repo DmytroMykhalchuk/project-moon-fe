@@ -8,8 +8,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TagIcon from '@mui/icons-material/Tag';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import { DialogWindowCreateAim } from './../../Common/DialogWindowCreateAim'
-import { DialogWindowCreateTag } from './../../Common/DialogWindowCreateTag';
+import { DialogWindowCreateAim } from '../../Common/DialogWindowCreateAim'
+import { DialogWindowCreateTag } from '../../Common/DialogWindowCreateTag';
 import { PreferenceDeleteStatistic } from "./PreferenceDeleteStatistic";
 
 export const PreferencePage: React.FC = React.memo(() => {
